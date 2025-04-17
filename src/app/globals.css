@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .neon-text {
+    @apply text-cyan-400 font-extrabold;
+    text-shadow: 0 0 7px #00ffff, 0 0 10px #00ffff, 0 0 21px #00ffff,
+      0 0 42px #0fa, 0 0 82px #0fa, 0 0 92px #0fa;
+    animation: neon-pulse 1.5s infinite alternate;
+  }
+
+  .glass-card {
+    @apply relative overflow-hidden p-8 rounded-2xl border border-white/20 shadow-glass transition-transform duration-300;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .fade-in-section {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .section-transition {
+    @apply opacity-0 translate-y-12 transition-opacity duration-700 ease-out;
+  }
+}
+.glass-overlay {
+  @apply absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/80;
+}
+@layer utilities {
+  .hero-background {
+    @apply fixed top-0 left-0 w-full h-screen bg-cover bg-center z-[-1];
+    /* Removed transition-all to prevent it from affecting transform property */
+    background-image: url("/leaves.jpg");
+    background-repeat: repeat;
+    will-change: transform, opacity;
+  }
+}
