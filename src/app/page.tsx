@@ -7,6 +7,7 @@ import { Typography, Box, Container, Button } from "@mui/material";
 import AISection from "./component/HomePageSections/AISection";
 import CampaignSection from "./component/HomePageSections/CampaignSection";
 import VisitContactSection from "./component/HomePageSections/VisitContactSection";
+import CombinedSection from "./component/HomePageSections/CombinedSection";
 export default function HomePage() {
   const [blurStrength, setBlurStrength] = useState(20);
   const [parallaxY, setParallaxY] = useState(0);
@@ -383,15 +384,31 @@ export default function HomePage() {
 
         {/* Second Image Section */}
         <section className="min-h-[80vh] bg-[url('/earth.jpg')] bg-cover bg-center bg-fixed flex items-center justify-center relative px-6">
-          <AISection />
+          <CombinedSection />
         </section>
 
         {/* Third Image Section */}
-        <CampaignSection />
+        {/* <CampaignSection /> */}
+
+        <div className="relative z-10">
+          <svg
+            className="w-full h-24 -mb-1"
+            viewBox="0 0 1440 100"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,0 C480,100 960,0 1440,100 L1440,0 L0,0 Z"
+              fill="#ecfdf5" // minty green? update based on your palette
+            />
+          </svg>
+        </div>
 
         <VisitContactSection />
 
         {/* Second Image Section */}
+        <div className="relative h-24 w-full flex justify-center items-center overflow-hidden">
+          <div className="absolute w-72 h-72 rounded-full bg-gradient-to-br from-emerald-300/20 to-purple-700/30 blur-2xl" />
+        </div>
         <section className="min-h-[80vh] bg-[url('/forest.jpg')] bg-cover bg-center bg-fixed flex items-center justify-center relative px-6">
           <div className="bg-black/60 backdrop-blur-sm p-12 rounded-xl flex flex-col items-center max-w-2xl w-full text-center">
             <h2 className="text-white text-3xl md:text-4xl font-bold mb-6">
