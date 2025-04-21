@@ -8,6 +8,7 @@ import AISection from "./component/HomePageSections/AISection";
 import CampaignSection from "./component/HomePageSections/CampaignSection";
 import VisitContactSection from "./component/HomePageSections/VisitContactSection";
 import CombinedSection from "./component/HomePageSections/CombinedSection";
+import Link from "next/link";
 export default function HomePage() {
   const [blurStrength, setBlurStrength] = useState(20);
   const [parallaxY, setParallaxY] = useState(0);
@@ -168,32 +169,6 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-
-          {/* Reveal-on-scroll CTA block */}
-          <div
-            ref={ctaRef}
-            className={`relative z-10 max-w-2xl w-full mt-32 transition-all duration-700 ease-out ${
-              ctaVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
-            }`}
-          >
-            <p className="text-white text-lg md:text-xl mb-6">
-              Ready to level up? Enter your email to learn how we blend AI and
-              ethics to transform marketing.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
-              <input
-                type="email"
-                placeholder="Email address"
-                className="w-full px-4 py-3 rounded-full bg-white/10 text-white placeholder-white/60 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white"
-              />
-              <button className="bg-red-600 text-white font-medium px-6 py-3 rounded-full hover:bg-red-700 transition">
-                Get Started →
-              </button>
-            </div>
-          </div>
         </section>
 
         {/* Content Section that appears on scroll */}
@@ -201,6 +176,7 @@ export default function HomePage() {
         {/* Combined Wave + Bridge Element Transition */}
 
         {/* Wave Transition - Creates the curved shape */}
+
         <div className="relative z-10 mt-8">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -294,6 +270,7 @@ export default function HomePage() {
             padding-top: 80px; /* Add top padding to create space between the wave and content */
           }
         `}</style>
+
         <section className="py-24 px-6 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
           {/* Background Circles - Similar to the green glass morphism images */}
           <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-gradient-to-br from-teal-200/20 to-teal-400/30 blur-xl"></div>
@@ -308,7 +285,6 @@ export default function HomePage() {
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-cyan-400 mx-auto rounded-full"></div>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Glass Morphism Card 1 */}
               <div className="rounded-2xl overflow-hidden relative group">
@@ -373,11 +349,12 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-
             <div className="text-center mt-12">
-              <button className="px-6 py-3 bg-gradient-to-r from-teal-400 to-cyan-500 text-white rounded-md font-medium uppercase tracking-wide hover:-translate-y-1 transition-transform duration-300 shadow-lg shadow-teal-300/20">
-                Explore All Services
-              </button>
+              <Link href="/services">
+                <div className="inline-block px-6 py-3 bg-gradient-to-r from-teal-400 to-cyan-500 text-white rounded-md font-medium uppercase tracking-wide hover:-translate-y-1 transition-transform duration-300 shadow-lg shadow-teal-300/20">
+                  Explore All Services
+                </div>
+              </Link>
             </div>
           </div>
         </section>
