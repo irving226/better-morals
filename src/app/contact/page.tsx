@@ -225,7 +225,7 @@ export default function ContactPage() {
               Message Sent!
             </h3>
             <p className="text-gray-300">
-              Thank you for reaching out. We'll be in touch soon.
+              Thank you for reaching out. We&apos;ll be in touch soon.
             </p>
           </motion.div>
         ) : (

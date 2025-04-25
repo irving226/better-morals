@@ -284,7 +284,7 @@ export default function DiscoverSection() {
             <span className="absolute inset-0 border-2 border-cyan-400 rounded-lg"></span>
             <span className="absolute inset-0 scale-0 rounded-lg bg-gradient-to-r from-cyan-600 to-purple-600 transition-transform duration-500 group-hover:scale-100"></span>
             <span className="relative text-cyan-300 group-hover:text-white transition-colors duration-300 flex items-center">
-              Join Our Vision
+              Join The Movement
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300"

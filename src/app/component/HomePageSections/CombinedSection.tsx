@@ -21,7 +21,7 @@ const campaigns: Campaign[] = [
     client: "GreenTech",
     description:
       "This campaign for GreenTech focused on promoting their eco-friendly products, significantly enhancing brand awareness and customer engagement.",
-    image: "/eco-friendly-campaigns.jpg",
+    image: "/eco-friendly-campaign.jpg",
     tags: [
       "Increased Brand Awareness",
       "Enhanced Customer Engagement",
@@ -149,7 +149,7 @@ export default function CombinedSection() {
   };
 
   return (
-    <section className="relative pt-16 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative bg-gradient-to-b from-[#ecfdf5] to-white pt-16 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Top curve transition */}
       <div className="absolute top-0 left-0 w-full -translate-y-full z-0 pointer-events-none">
         <svg

@@ -1,44 +1,44 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useRef, SetStateAction } from "react";
+import { motion, AnimatePresence, useInView, MotionValue } from "framer-motion";
 import Link from "next/link";
+import OurEthos from "../component/OurServicesComponents/OurEthos";
 
 const services = [
   {
-    id: "sustainable-marketing",
-    title: "Sustainable Marketing",
-    desc: "Eco-conscious campaigns for modern brands. Build your impact without the waste.",
-    icon: "leaf",
+    id: "ai-automation",
+    title: "AI Automation Systems",
+    desc: "Custom workflows that save time and scale impact",
+    icon: "settings",
     color: "bg-emerald-400",
     darkColor: "bg-emerald-500",
     iconHoverColor: "group-hover:bg-emerald-500",
     shadowColor: "emerald",
     glowColor: "rgba(16, 185, 129, 0.6)",
     detailedContent: {
-      headline:
-        "Create campaigns that make an impact—without the environmental toll",
+      headline: "Custom workflows that save time and scale impact",
       paragraphs: [
-        "Our sustainable marketing approach integrates eco-friendly practices at every stage of campaign development, from digital-first strategies that minimize physical waste to carbon-neutral hosting for all your web assets.",
-        "We analyze your entire marketing footprint and identify opportunities to reduce environmental impact while actually improving campaign effectiveness—proving that ethical marketing can deliver even stronger ROI.",
-        "Our team specializes in communicating authentic sustainability stories that resonate with today's conscious consumers, helping you avoid greenwashing pitfalls while building genuine brand loyalty.",
+        "Our foundational automations cover everything from CRM and lead generation to email workflows, giving you the strategy and automation backbone needed to show up with confidence—without burning out.",
+        "Our full AI automation suite creates sophisticated client onboarding, scheduling, and follow-up systems that work while you sleep, allowing your work to start compounding.",
+        "For visionaries and thought leaders, we build high-converting AI-enhanced systems across departments (sales, operations, marketing) that truly scale your impact.",
       ],
       stats: [
-        { value: "87%", label: "of consumers prefer eco-conscious brands" },
-        { value: "65%", label: "reduction in campaign carbon footprint" },
-        { value: "2.4×", label: "higher engagement with sustainable content" },
+        { value: "85%", label: "reduction in administrative tasks" },
+        { value: "3×", label: "faster client onboarding" },
+        { value: "24/7", label: "systems working while you rest" },
       ],
       testimonial: {
         quote:
-          "Better Morals helped us transition to fully sustainable marketing practices while actually increasing our conversion rates by 34%.",
-        author: "Maria Chen, CMO at GreenLife Organics",
+          "BetterMorals automation systems transformed our business. What used to take hours now happens automatically with better results.",
+        author: "Creative Studio Founder",
       },
     },
   },
   {
-    id: "ai-driven-insights",
-    title: "AI-Driven Insights",
-    desc: "Real-time data powerups, minus the jargon. Your dashboard just got smarter.",
+    id: "marketing-strategy",
+    title: "Marketing Strategy & Growth",
+    desc: "For purpose-driven brands that want real traction",
     icon: "chart",
     color: "bg-blue-400",
     darkColor: "bg-blue-500",
@@ -46,28 +46,31 @@ const services = [
     shadowColor: "blue",
     glowColor: "rgba(59, 130, 246, 0.6)",
     detailedContent: {
-      headline: "Actionable intelligence that drives real business outcomes",
+      headline: "Purpose-driven strategies that deliver real traction",
       paragraphs: [
-        "Our proprietary AI engine processes millions of data points across your entire marketing ecosystem, transforming complex patterns into clear, actionable insights delivered in real-time.",
-        "Unlike black-box solutions, our transparent AI explains its recommendations in plain language, helping your team understand not just what to do, but why it matters—no data science degree required.",
-        "Predictive analytics capabilities identify emerging trends and opportunities before your competitors, giving you the critical time advantage needed in today's fast-moving markets.",
+        "Our basic content strategy with monthly content calendar helps you build consistent visibility and connect confidently with your audience, even when you're just starting out.",
+        "For growing brands, we develop multi-platform content strategies with ghostwritten posts and comprehensive analytics dashboards to track performance and continuously improve.",
+        "Our full partnership package includes custom content marketing strategy and production alongside paid and organic growth strategies for brands ready to make their mark.",
       ],
       stats: [
-        { value: "12×", label: "faster anomaly detection" },
-        { value: "93%", label: "prediction accuracy rate" },
-        { value: "41%", label: "reduction in wasted ad spend" },
+        { value: "47%", label: "increase in qualified leads" },
+        {
+          value: "62%",
+          label: "higher engagement with purpose-driven content",
+        },
+        { value: "31%", label: "improvement in conversion rates" },
       ],
       testimonial: {
         quote:
-          "The real-time insights transformed our decision-making. We can now adjust campaigns on the fly based on actual performance data.",
-        author: "David Park, Digital Director at NexTech Solutions",
+          "The growth consulting transformed our business approach. We're not just more visible now—we're connecting with exactly the right people.",
+        author: "Ethical Fashion Brand Founder",
       },
     },
   },
   {
-    id: "personalized-journeys",
-    title: "Personalized Journeys",
-    desc: "Every click, tracked with care. Create loyal fans, not just customers.",
+    id: "content-creation",
+    title: "Content Creation & Media Kits",
+    desc: "From social to story, we make you unforgettable",
     icon: "compass",
     color: "bg-purple-400",
     darkColor: "bg-purple-500",
@@ -75,82 +78,194 @@ const services = [
     shadowColor: "purple",
     glowColor: "rgba(139, 92, 246, 0.6)",
     detailedContent: {
-      headline:
-        "Transform casual browsers into brand advocates through tailored experiences",
+      headline: "From social to story, we make your brand unforgettable",
       paragraphs: [
-        "Our journey orchestration platform creates seamless, personalized experiences across all touchpoints, adapting in real-time to each customer's unique behaviors and preferences.",
-        "Privacy-first design ensures all personalization respects user choices and regulatory requirements, building trust while still delivering the relevance today's consumers expect.",
-        "Advanced segmentation goes beyond basic demographics to identify micro-audiences with specific needs, allowing for hyper-targeted messaging that dramatically increases conversion rates.",
+        "Our branding audit and positioning workshop helps new brands establish strong foundations and optimize social media presence to create consistent visibility.",
+        "For established brands, we develop comprehensive brand guides and tone-of-voice frameworks that ensure your message resonates across all platforms and touchpoints.",
+        "Our legacy-level service includes custom content marketing production across video, storytelling, and copy formats, designed to establish you as a thought leader in your space.",
       ],
       stats: [
-        { value: "4.2×", label: "higher customer lifetime value" },
-        { value: "68%", label: "increase in repeat purchases" },
-        { value: "73%", label: "reduction in cart abandonment" },
+        { value: "3.2×", label: "increase in social media engagement" },
+        { value: "78%", label: "improvement in brand recognition" },
+        { value: "67%", label: "higher content sharing rates" },
       ],
       testimonial: {
         quote:
-          "The personalized journey mapping completely transformed our customer relationships. Our NPS scores have never been higher.",
-        author: "Sarah Johnson, Customer Experience Lead at StyleVibe",
+          "The media kit BetterMorals created has opened doors we couldn't even approach before. My brand story finally resonates the way I always imagined.",
+        author: "Independent Artist & Creator",
       },
     },
   },
   {
-    id: "live-performance-tuning",
-    title: "Live Performance Tuning",
-    desc: "AI monitors, you chill. Get auto-optimized campaigns with zero fluff.",
-    icon: "settings",
+    id: "brand-development",
+    title: "Brand & Platform Development",
+    desc: "Launch or revamp with confidence and clarity",
+    icon: "leaf",
     color: "bg-amber-400",
     darkColor: "bg-amber-500",
     iconHoverColor: "group-hover:bg-amber-500",
     shadowColor: "amber",
     glowColor: "rgba(245, 158, 11, 0.6)",
     detailedContent: {
-      headline: "Continuous optimization that never sleeps",
+      headline: "Launch or revamp with confidence and clarity",
       paragraphs: [
-        "Our proprietary AI monitoring system analyzes campaign performance 24/7, making micro-adjustments to bidding strategies, creative deployments, and audience targeting without human intervention.",
-        "A/B testing on autopilot continuously evaluates multiple variations against your KPIs, automatically reallocating budget to top performers while generating new variants to test.",
-        "Adaptive budget management prevents wasted spend by automatically shifting resources to high-performing channels and pausing underperforming initiatives before they drain your resources.",
+        "Our website and social media optimization services give startups and small brands the digital foundation they need to grow with intention and purpose.",
+        "For scaling brands, we offer complete website or sales funnel builds (or revamps) alongside analytics dashboards that ensure your platform truly performs.",
+        "Our comprehensive platform development includes consulting on hiring, delegation, and building your internal media/marketing team so your digital presence can scale with your vision.",
       ],
       stats: [
-        { value: "31%", label: "average improvement in ROAS" },
-        { value: "24/7", label: "continuous optimization" },
-        { value: "50+", label: "variables monitored in real-time" },
+        { value: "56%", label: "increase in website conversion rate" },
+        { value: "83%", label: "improvement in user engagement" },
+        { value: "40%", label: "reduction in bounce rate" },
       ],
       testimonial: {
         quote:
-          "The system caught and corrected a failing ad set at 3 AM on a Sunday. By morning, performance was back on track without any manual intervention.",
-        author: "Alex Rivera, Performance Marketing Lead at TechDrive",
+          "Our platform rebuild changed everything. It's not just beautiful—it actually works, converting visitors and telling our story perfectly.",
+        author: "Sustainable eCommerce Founder",
       },
     },
   },
 ];
 
-// Core values displayed in the ribbon
 const coreValues = [
   {
-    title: "Fast Results",
-    icon: "bolt",
+    title: "Better Systems",
+    icon: "settings",
     bgColor: "bg-emerald-400",
   },
   {
-    title: "Ethics First",
-    icon: "shield",
+    title: "Better Stories",
+    icon: "compass",
     bgColor: "bg-purple-400",
   },
   {
-    title: "Client Focus",
-    icon: "users",
+    title: "Better Morals",
+    icon: "shield",
     bgColor: "bg-amber-400",
   },
 ];
 
+const serviceTiers = [
+  {
+    id: "tier1",
+    title: "Tier 1 – The Spark",
+    subtitle: "For small brands, startups, and artists who need strong roots",
+    desc: "You've got something worth sharing, but the back-end systems and consistent visibility just aren't clicking yet. This starter tier gives you the strategy and automation backbone you need to show up with confidence—without burning out.",
+    features: [
+      "1–2 foundational automations (CRM, lead gen, email, etc.)",
+      "Basic content strategy + monthly content calendar",
+      "Branding audit + positioning workshop",
+      "Website + social media optimization",
+    ],
+  },
+  {
+    id: "tier2",
+    title: "Tier 2 – The System",
+    subtitle:
+      "For growing brands and collectives ready to scale with intention",
+    desc: "You've outgrown the DIY phase. You're ready for better systems, better messaging, and a better way to connect with the right people. This is where the work starts compounding.",
+    features: [
+      "Full AI automation suite (client onboarding, scheduling, follow-up, etc.)",
+      "Multi-platform content strategy + ghostwritten posts",
+      "Brand guide + tone-of-voice development",
+      "Website or sales funnel build (or revamp)",
+      "Analytics dashboard + performance tracking",
+    ],
+  },
+  {
+    id: "tier3",
+    title: "Tier 3 – The Legacy",
+    subtitle:
+      "For visionaries, thought leaders, and mission-driven companies creating deep impact",
+    desc: "This is the full partnership package—consulting, content, and systems working together at scale. You want to be more than seen. You want to make a mark. And we'll make sure your systems, media, and message are aligned for that level of legacy.",
+    features: [
+      "High-converting AI-enhanced systems across departments (sales, ops, marketing)",
+      "Custom content marketing strategy + production (video, storytelling, copy)",
+      "Paid and organic growth strategy",
+      "Consulting on hiring, delegation, or building your internal media/marketing team",
+      "Monthly optimization + strategy calls",
+    ],
+  },
+  {
+    id: "addons",
+    title: "A La Carte Services",
+    subtitle:
+      "Great for artists, creative professionals, and campaign-based clients",
+    desc: "Need something specific? Our flexible add-on services can be tailored to your exact needs without committing to a full package.",
+    features: [
+      "Sales funnel design + email drip sequences",
+      "Consultation Call & Audit",
+      "AI tool training for small-large teams",
+      "Pitch deck or investment branding",
+      "Launch support + short-term campaign strategy",
+    ],
+  },
+];
+
+const clientTypes = [
+  "Creators & artists who want systems that scale",
+  "Ethical, sustainable and cruelty free brands",
+  "Startups and small brands ready for the next level",
+  "Collectives, communities, and ethical companies on a mission",
+  "Entertainment & gaming brands pushing boundaries",
+];
+
+// Custom AnimatedSection component for scroll animations
+const AnimatedSection = ({
+  children = null as React.ReactNode,
+  delay = 0,
+  className = "",
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ y: 50, opacity: 0 }}
+      animate={isInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+      transition={{ duration: 0.6, delay: delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Custom AnimatedItem component for staggered animations
+const AnimatedItem = ({
+  children = null as React.ReactNode,
+  delay = 0,
+  index = 0,
+  className = "",
+  staggerDelay = 0.1,
+  layoutId = "",
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ y: 30, opacity: 0 }}
+      animate={isInView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
+      transition={{ duration: 0.5, delay: delay + index * staggerDelay }}
+      className={className}
+      layoutId={layoutId}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 export default function ServicesSection() {
-  const [expandedService, setExpandedService] = useState(null);
+  const [expandedService, setExpandedService] = useState<string | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [activeTab, setActiveTab] = useState("services");
   const sectionRef = useRef(null);
 
   // Handler for expanding a service card
-  const handleExpand = (serviceId) => {
+  const handleExpand = (serviceId: SetStateAction<string | null>) => {
     if (isAnimating) return;
 
     setIsAnimating(true);
@@ -175,8 +290,20 @@ export default function ServicesSection() {
     }, 600);
   };
 
+  // Switch between services and tiers tabs
+  const handleTabChange = (tab: string) => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setExpandedService(null);
+    setActiveTab(tab);
+
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 600);
+  };
+
   // Render icons based on the type
-  const renderIcon = (iconName, size = 6) => {
+  const renderIcon = (iconName: string, size = 6) => {
     switch (iconName) {
       case "leaf":
         return (
@@ -346,28 +473,7 @@ export default function ServicesSection() {
           ))}
         </div>
 
-        {/* Core values ribbon - similar to your screenshots */}
-        <div className="relative z-10 mx-auto py-6 px-4 max-w-4xl bg-gray-800/40 backdrop-blur-md rounded-2xl border border-gray-700/50 shadow-2xl mb-16 overflow-hidden">
-          {/* Glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-purple-500/5 to-cyan-500/5"></div>
-
-          {/* Content */}
-          <div className="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-16">
-            {coreValues.map((value, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center text-center"
-              >
-                <div
-                  className={`w-12 h-12 ${value.bgColor} rounded-full flex items-center justify-center text-white mb-2 shadow-lg`}
-                >
-                  {renderIcon(value.icon, 5)}
-                </div>
-                <p className="text-white font-medium">{value.title}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <OurEthos />
       </section>
 
       {/* Wave transition */}
@@ -385,7 +491,7 @@ export default function ServicesSection() {
         </svg>
       </div>
 
-      {/* Services section */}
+      {/* Main Content Section */}
       <motion.section
         ref={sectionRef}
         className="relative pt-16 pb-24 px-6 overflow-hidden"
@@ -496,14 +602,34 @@ export default function ServicesSection() {
           )}
         </AnimatePresence>
 
-        {/* Section heading with theme-aware styling */}
-        <div className="relative z-10 max-w-7xl mx-auto text-center mb-16">
-          <motion.h2
-            className="text-4xl font-bold mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+        {/* Mission Statement*/}
+        {!expandedService && (
+          <AnimatedSection
+            className="mb-24 max-w-4xl mx-auto bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-gray-100"
+            delay={0.4}
           >
+            <div className="text-center">
+              <p className="text-gray-700 leading-relaxed">
+                We&apos;re not here to chase trends or push tactics that
+                don&apos;t align. We&apos;re here to help you grow in a way that
+                feels aligned, ethical, and sustainable. Our approach is
+                grounded in compassion, driven by data, and powered by AI that
+                amplifies humanity—not replaces it.
+              </p>
+              <p className="text-gray-700 mt-4 leading-relaxed">
+                If you&apos;re here to change the world (or even just your
+                corner of it), we&apos;re ready to build alongside you.
+              </p>
+            </div>
+          </AnimatedSection>
+        )}
+
+        {/* Section heading  */}
+        <AnimatedSection
+          className="relative z-10 max-w-7xl mx-auto text-center mb-8"
+          delay={0.2}
+        >
+          <h2 className="text-4xl font-bold mb-4">
             <motion.span
               animate={{
                 color: expandedService ? "#ffffff" : "#111827",
@@ -523,12 +649,38 @@ export default function ServicesSection() {
                 }}
                 transition={{ duration: 0.4 }}
               >
-                Services
+                {activeTab === "services" ? " Services" : " Packages"}
               </motion.span>
             </span>
-          </motion.h2>
+          </h2>
 
           <div className="w-24 h-0.5 bg-amber-400 mx-auto mb-6 shadow-neon-amber"></div>
+
+          {/* Tab navigation */}
+          <div className="flex justify-center mb-8">
+            <div className="bg-white/80 backdrop-blur-sm p-1 rounded-full shadow-md">
+              <button
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
+                  activeTab === "services"
+                    ? "bg-amber-400 text-white shadow-md"
+                    : "text-gray-600 hover:bg-gray-100"
+                }`}
+                onClick={() => handleTabChange("services")}
+              >
+                Services
+              </button>
+              <button
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
+                  activeTab === "tiers"
+                    ? "bg-amber-400 text-white shadow-md"
+                    : "text-gray-600 hover:bg-gray-100"
+                }`}
+                onClick={() => handleTabChange("tiers")}
+              >
+                Packages
+              </button>
+            </div>
+          </div>
 
           <motion.p
             animate={{
@@ -536,20 +688,18 @@ export default function ServicesSection() {
             }}
             transition={{ duration: 0.4 }}
             className="max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Cutting-edge solutions that combine ethical AI and human expertise
-            for exceptional results.
+            {activeTab === "services"
+              ? "We specialize in creating ethical systems and powerful stories for brands that want to build a better world."
+              : "Whether you're just starting out, scaling up, or creating your legacy—we've got a package for where you are and where you're going."}
           </motion.p>
-        </div>
+        </AnimatedSection>
 
         {/* Services grid with expanding card functionality */}
         <div className="max-w-7xl mx-auto">
           <AnimatePresence mode="wait">
             {!expandedService ? (
-              // Grid view (4 cards)
+              // Grid view
               <motion.div
                 className="grid grid-cols-1 md:grid-cols-2 gap-8"
                 initial={{ opacity: 1 }}
@@ -557,79 +707,195 @@ export default function ServicesSection() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                {services.map((service, index) => (
-                  <motion.div
-                    key={service.id}
-                    className="relative"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    layoutId={`card-${service.id}`}
-                  >
-                    <div
-                      className={`bg-white rounded-xl overflow-hidden shadow-lg group cursor-pointer hover:shadow-neon-${service.shadowColor} transition-all duration-300`}
-                      onClick={() => handleExpand(service.id)}
-                    >
-                      {/* Card content */}
-                      <div className="p-6">
-                        <div className="flex items-start mb-4">
-                          {/* Icon */}
-                          <motion.div
-                            className={`w-12 h-12 ${service.color} rounded-lg flex items-center justify-center text-white mr-4 shadow-md transition-all duration-300 ${service.iconHoverColor}`}
-                            layoutId={`icon-${service.id}`}
-                          >
-                            {renderIcon(service.icon, 5)}
-                          </motion.div>
-
-                          {/* Title */}
-                          <motion.h3
-                            className="text-xl font-semibold text-gray-900"
-                            layoutId={`title-${service.id}`}
-                          >
-                            {service.title}
-                          </motion.h3>
-                        </div>
-
-                        {/* Description */}
-                        <motion.p
-                          className="text-gray-600 mb-6"
-                          layoutId={`desc-${service.id}`}
+                {activeTab === "services" ? (
+                  // Services cards
+                  <>
+                    {services.map((service, index) => (
+                      <AnimatedItem
+                        key={service.id}
+                        className="relative h-full"
+                        delay={0.4}
+                        index={index}
+                        staggerDelay={0.1}
+                        layoutId={`card-${service.id}`}
+                      >
+                        <div
+                          className={`bg-white rounded-xl overflow-hidden shadow-lg group cursor-pointer hover:shadow-neon-${service.shadowColor} transition-all duration-300 h-full flex flex-col`}
+                          onClick={() => handleExpand(service.id)}
                         >
-                          {service.desc}
-                        </motion.p>
+                          {/* Card content */}
+                          <div className="p-6 flex flex-col flex-grow">
+                            <div className="flex items-start mb-4">
+                              {/* Icon */}
+                              <motion.div
+                                className={`w-12 h-12 ${service.color} rounded-lg flex items-center justify-center text-white mr-4 shadow-md transition-all duration-300 ${service.iconHoverColor}`}
+                                layoutId={`icon-${service.id}`}
+                              >
+                                {renderIcon(service.icon, 5)}
+                              </motion.div>
 
-                        {/* Separator line */}
-                        <div className="w-full h-px bg-gray-200 mb-4 relative overflow-hidden">
-                          <div
-                            className={`absolute inset-y-0 left-0 w-0 bg-${service.shadowColor}-400 group-hover:w-full transition-all duration-500 ease-out`}
-                          ></div>
-                        </div>
+                              {/* Title */}
+                              <motion.h3
+                                className="text-xl font-semibold text-gray-900"
+                                layoutId={`title-${service.id}`}
+                              >
+                                {service.title}
+                              </motion.h3>
+                            </div>
 
-                        {/* Learn more */}
-                        <div className="flex justify-end">
-                          <span className="inline-flex items-center text-gray-500 group-hover:text-amber-500 transition-colors duration-300">
-                            <span className="mr-1">Learn more</span>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              className="transform group-hover:translate-x-1 transition-transform duration-300"
+                            {/* Description */}
+                            <motion.p
+                              className="text-gray-600 mb-6"
+                              layoutId={`desc-${service.id}`}
                             >
-                              <path d="M5 12h14" />
-                              <path d="m12 5 7 7-7 7" />
-                            </svg>
-                          </span>
+                              {service.desc}
+                            </motion.p>
+
+                            {/* Spacer to push separator to bottom */}
+                            <div className="flex-grow"></div>
+
+                            {/* Separator line */}
+                            <div className="w-full h-px bg-gray-200 mb-4 relative overflow-hidden">
+                              <div
+                                className={`absolute inset-y-0 left-0 w-0 bg-${service.shadowColor}-400 group-hover:w-full transition-all duration-500 ease-out`}
+                              ></div>
+                            </div>
+
+                            {/* Learn more */}
+                            <div className="flex justify-end mt-auto">
+                              <span className="inline-flex items-center text-gray-500 group-hover:text-amber-500 transition-colors duration-300">
+                                <span className="mr-1">Learn more</span>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  className="transform group-hover:translate-x-1 transition-transform duration-300"
+                                >
+                                  <path d="M5 12h14" />
+                                  <path d="m12 5 7 7-7 7" />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                      </AnimatedItem>
+                    ))}
+                  </>
+                ) : (
+                  // Tiers cards
+                  <>
+                    {serviceTiers.map((tier, index) => (
+                      <AnimatedItem
+                        key={tier.id}
+                        className="relative h-full"
+                        delay={0.4}
+                        index={index}
+                        staggerDelay={0.1}
+                      >
+                        <div
+                          className={`bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 h-full flex flex-col ${
+                            index === 2
+                              ? "hover:shadow-neon-purple"
+                              : index === 1
+                              ? "hover:shadow-neon-blue"
+                              : index === 0
+                              ? "hover:shadow-neon-emerald"
+                              : "hover:shadow-neon-amber"
+                          }`}
+                        >
+                          {/* Card content */}
+                          <div className="p-6 flex flex-col h-full">
+                            <div className="mb-4">
+                              {/* Title */}
+                              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                                {tier.title}
+                              </h3>
+                              <p className="text-sm text-gray-500 italic">
+                                {tier.subtitle}
+                              </p>
+                            </div>
+
+                            {/* Description */}
+                            <p className="text-gray-600 mb-6">{tier.desc}</p>
+
+                            {/* Features */}
+                            <div className="space-y-2 mb-6 flex-grow">
+                              {tier.features.map((feature, idx) => (
+                                <div key={idx} className="flex items-start">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className={`h-5 w-5 mr-2 flex-shrink-0 ${
+                                      index === 2
+                                        ? "text-purple-500"
+                                        : index === 1
+                                        ? "text-blue-500"
+                                        : index === 0
+                                        ? "text-emerald-500"
+                                        : "text-amber-500"
+                                    }`}
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M5 13l4 4L19 7"
+                                    />
+                                  </svg>
+                                  <span className="text-gray-700">
+                                    {feature}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+
+                            {/* Separator line */}
+                            <div className="w-full h-px bg-gray-200 mb-4 relative overflow-hidden mt-auto">
+                              <div
+                                className={`absolute inset-y-0 left-0 w-0 ${
+                                  index === 2
+                                    ? "bg-purple-400"
+                                    : index === 1
+                                    ? "bg-blue-400"
+                                    : index === 0
+                                    ? "bg-emerald-400"
+                                    : "bg-amber-400"
+                                } group-hover:w-full transition-all duration-500 ease-out`}
+                              ></div>
+                            </div>
+
+                            {/* CTA Button */}
+                            <div className="flex justify-center mt-6">
+                              <Link href="/contact">
+                                <button
+                                  className={`px-6 py-2 rounded-md ${
+                                    index === 2
+                                      ? "bg-purple-500 hover:bg-purple-600"
+                                      : index === 1
+                                      ? "bg-blue-500 hover:bg-blue-600"
+                                      : index === 0
+                                      ? "bg-emerald-500 hover:bg-emerald-600"
+                                      : "bg-amber-500 hover:bg-amber-600"
+                                  } text-white font-medium transition-all`}
+                                >
+                                  Book A Free Strategy Session
+                                </button>
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </AnimatedItem>
+                    ))}
+                  </>
+                )}
               </motion.div>
             ) : (
               // Expanded view (single detailed card) with dark neon theme
@@ -888,21 +1154,17 @@ export default function ServicesSection() {
 
         {/* CTA button - only show when no expanded service */}
         {!expandedService && (
-          <div className="text-center mt-16">
+          <AnimatedSection className="text-center mt-16" delay={0.6}>
             <Link href="/services">
               <motion.button
                 className="group relative inline-flex items-center justify-center px-8 py-3 rounded-lg bg-amber-400 text-white font-medium transition-all duration-300 overflow-hidden"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true }}
                 whileHover={{ scale: 1.05 }}
               >
                 {/* Neon glow effect that pulses on hover */}
                 <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-amber-400 shadow-neon-amber-lg"></span>
 
                 <span className="relative flex items-center">
-                  Explore All Services
+                  Get Your BetterMorals Blueprint
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -921,23 +1183,53 @@ export default function ServicesSection() {
                 </span>
               </motion.button>
             </Link>
-          </div>
+          </AnimatedSection>
         )}
       </motion.section>
 
-      {/* Bottom wave transition with smoother curve */}
-      <div className="relative h-16 bg-gray-50">
-        <svg
-          className="absolute top-0 w-full h-16 rotate-180"
-          viewBox="0 0 1440 120"
-          preserveAspectRatio="none"
+      {/* Changed to dark background for the bottom section */}
+      <div className="relative py-24 bg-gray-900 text-white">
+        {/* Floating particles */}
+        <div className="absolute inset-0 z-0">
+          {Array.from({ length: 15 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: Math.random() * 3 + 1 + "px",
+                height: Math.random() * 3 + 1 + "px",
+                backgroundColor: `hsl(${180 + Math.random() * 60}, 100%, ${
+                  70 + Math.random() * 20
+                }%)`,
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                opacity: Math.random() * 0.4,
+                boxShadow: `0 0 ${Math.random() * 6 + 2}px ${
+                  Math.random() * 2 + 1
+                }px hsl(${180 + Math.random() * 60}, 100%, 80%)`,
+                animation: `float-particle ${
+                  Math.random() * 30 + 20
+                }s linear infinite`,
+              }}
+            />
+          ))}
+        </div>
+
+        <AnimatedSection
+          className="relative z-10 max-w-4xl mx-auto text-center px-6"
+          delay={0.3}
         >
-          <path
-            d="M0,0 C240,80 720,120 1440,40 L1440,120 L0,120 Z"
-            fill="#111827"
-            fillOpacity="1"
-          ></path>
-        </svg>
+          <p className="text-gray-300 leading-relaxed text-lg">
+            We're not here to chase trends or push tactics that don't align.
+            We're here to help you grow in a way that feels aligned, ethical,
+            and sustainable. Our approach is grounded in compassion, driven by
+            data, and powered by AI that amplifies humanity—not replaces it.
+          </p>
+          <p className="text-gray-300 mt-6 leading-relaxed text-lg">
+            If you're here to change the world (or even just your corner of it),
+            we're ready to build alongside you.
+          </p>
+        </AnimatedSection>
       </div>
 
       {/* CSS animations and custom classes */}

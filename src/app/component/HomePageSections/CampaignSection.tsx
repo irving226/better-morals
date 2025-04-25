@@ -22,7 +22,7 @@ const campaigns: Campaign[] = [
     client: "GreenTech",
     description:
       "This campaign for GreenTech focused on promoting their eco-friendly products, significantly enhancing brand awareness and customer engagement.",
-    image: "/eco-friendly-campaigns.jpg", // You'll need to provide actual image paths
+    image: "/eco-friendly-campaigns.jpg",
     tags: [
       "Increased Brand Awareness",
       "Enhanced Customer Engagement",
@@ -37,7 +37,7 @@ const campaigns: Campaign[] = [
     client: "Retail Innovators",
     description:
       "We collaborated with a leading retail brand to implement AI solutions, resulting in a remarkable boost in sales and customer satisfaction.",
-    image: "/ai-retail-project.jpg", // You'll need to provide actual image paths
+    image: "/ai-retail-project.jpg",
     tags: [
       "Boosted Sales",
       "Improved Customer Satisfaction",

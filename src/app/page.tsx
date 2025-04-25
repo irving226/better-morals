@@ -3,22 +3,18 @@
 import { useEffect, useState, useRef } from "react";
 import AppBar from "./component/Appbar/HomeAppbar";
 import "./globals.css";
-import { Typography, Box, Container, Button } from "@mui/material";
-import AISection from "./component/HomePageSections/AISection";
-import CampaignSection from "./component/HomePageSections/CampaignSection";
 import VisitContactSection from "./component/HomePageSections/VisitContactSection";
 import CombinedSection from "./component/HomePageSections/CombinedSection";
-import Link from "next/link";
+import OurServicesSection from "./component/HomePageSections/OurServicesSection";
+import Image from "next/image";
 export default function HomePage() {
   const [blurStrength, setBlurStrength] = useState(20);
   const [parallaxY, setParallaxY] = useState(0);
-  const [contentVisible, setContentVisible] = useState(false);
   const [journeyVisible, setJourneyVisible] = useState(false);
   const [ctaVisible, setCtaVisible] = useState(false);
   const [whiteSection, setWhiteSection] = useState(false);
   const [grayscapeVisible, setGrayscapeVisible] = useState(false);
   const journeyRef = useRef(null);
-  const ctaRef = useRef(null);
   const grayscapeRef = useRef(null);
 
   useEffect(() => {
@@ -73,33 +69,6 @@ export default function HomePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [journeyVisible, ctaVisible, grayscapeVisible]);
 
-  const features = [
-    {
-      title: "AI-Driven Insights",
-      description:
-        "Leverage our AI to gain actionable insights, optimize campaigns, and improve ROI. We provide data-driven strategies for maximum impact.",
-      image: "/ai-insights.jpg",
-    },
-    {
-      title: "Personalized Customer Journeys",
-      description:
-        "Create personalized customer experiences with our AI-powered tools. Enhance engagement and build stronger connections.",
-      image: "/customer-journeys.jpg",
-    },
-    {
-      title: "Sustainable AI Solutions",
-      description:
-        "Our AI solutions are designed with sustainability in mind. We help you create eco-friendly campaigns that resonate with your audience.",
-      image: "/sustainable.jpg",
-    },
-    {
-      title: "Real-Time Optimization",
-      description:
-        "Optimize your marketing efforts in real-time with our AI-powered analytics. Make data-driven decisions and achieve better results faster.",
-      image: "/real-time.jpg",
-    },
-  ];
-
   return (
     <>
       <AppBar />
@@ -143,37 +112,32 @@ export default function HomePage() {
                   Our Journey
                 </h2>
                 <p className="text-white/90 leading-relaxed">
-                  Better Morals Marketing & AI was founded with a vision to
-                  integrate ethical practices into the marketing and AI
-                  landscape. Over the years, we have partnered with prestigious
-                  brands, delivering innovative solutions that prioritize
-                  sustainability and responsibility. Our mission is to lead the
-                  industry by crafting intelligent, sustainable, and tailored
-                  marketing solutions that resonate with our clients’ unique
-                  identities. We value Integrity, Sustainability, Innovation,
-                  and Collaboration, which guide our approach to every project.
-                  Meet our dedicated team who are committed to making a
-                  difference in the marketing world.
+                  At BetterMorals we don’t just do marketing, we co-create
+                  systems and stories with people who want to build a better
+                  world! Every service we offer is designed to free up your
+                  time, sharpen your message, and fuel conscious growth through
+                  powerful automation as well as authentic ethical marketing and
+                  branding. Whether you’re just starting out, scaling up, or
+                  creating your legacy—we’ve got a package for where you are and
+                  where you’re going.
                 </p>
               </div>
 
               <div className="relative">
                 <div className="aspect-video relative rounded-xl overflow-hidden shadow-2xl">
                   <div className="absolute inset-0 bg-gradient-to-tr from-accent-teal/40 to-accent-purple/40 mix-blend-multiply"></div>
-                  <img
-                    src="/api/placeholder/600/400"
+                  <Image
+                    src="/meeting.jpg"
                     alt="Our journey"
                     className="w-full h-full object-cover"
+                    width={800}
+                    height={600}
                   />
                 </div>
               </div>
             </div>
           </div>
         </section>
-
-        {/* Content Section that appears on scroll */}
-        {/* Services Section with Glass Morphism Effect */}
-        {/* Combined Wave + Bridge Element Transition */}
 
         {/* Wave Transition - Creates the curved shape */}
 
@@ -260,112 +224,12 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Adjust the top margin of your services section */}
-        <style jsx>{`
-          /* Add this to reduce the space between the wave and services content */
-          #services-section {
-            margin-top: -60px; /* Adjust as needed to get the right spacing */
-            position: relative;
-            z-index: 5;
-            padding-top: 80px; /* Add top padding to create space between the wave and content */
-          }
-        `}</style>
-
-        <section className="py-24 px-6 bg-gradient-to-br from-gray-50 to-gray-100 relative overflow-hidden">
-          {/* Background Circles - Similar to the green glass morphism images */}
-          <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-gradient-to-br from-teal-200/20 to-teal-400/30 blur-xl"></div>
-          <div className="absolute top-1/4 -right-20 w-72 h-72 rounded-full bg-gradient-to-tr from-teal-300/20 to-green-400/30 blur-xl"></div>
-          <div className="absolute bottom-20 left-1/4 w-60 h-60 rounded-full bg-gradient-to-br from-cyan-200/20 to-green-300/20 blur-xl"></div>
-          <div className="absolute -bottom-20 right-1/3 w-80 h-80 rounded-full bg-gradient-to-tr from-teal-100/20 to-cyan-300/30 blur-xl"></div>
-
-          <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-800 mb-4">
-                Our Services
-              </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-teal-400 to-cyan-400 mx-auto rounded-full"></div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Glass Morphism Card 1 */}
-              <div className="rounded-2xl overflow-hidden relative group">
-                {/* Glass Effect */}
-                <div className="absolute inset-0 backdrop-blur-md bg-white/20 border border-white/30 rounded-2xl transition-all duration-300 group-hover:bg-white/30"></div>
-
-                {/* Floating Element */}
-                <div className="absolute -top-5 -right-5 w-16 h-16 rounded-full bg-gradient-to-br from-teal-300/60 to-cyan-300/60 blur-sm transition-all duration-300 group-hover:scale-110"></div>
-
-                {/* Content */}
-                <div className="relative p-8 h-full">
-                  <h3 className="text-xl font-semibold mb-4 text-gray-800">
-                    Brand Strategy
-                  </h3>
-                  <p className="text-gray-700">
-                    Develop a comprehensive brand strategy that positions your
-                    business for long-term success in your industry.
-                  </p>
-                  <div className="w-full h-1 bg-gradient-to-r from-teal-400 to-cyan-400 mt-6 scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></div>
-                </div>
-              </div>
-
-              {/* Glass Morphism Card 2 */}
-              <div className="rounded-2xl overflow-hidden relative group">
-                {/* Glass Effect */}
-                <div className="absolute inset-0 backdrop-blur-md bg-white/20 border border-white/30 rounded-2xl transition-all duration-300 group-hover:bg-white/30"></div>
-
-                {/* Floating Element */}
-                <div className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full bg-gradient-to-br from-green-300/60 to-teal-300/60 blur-sm transition-all duration-300 group-hover:scale-110"></div>
-
-                {/* Content */}
-                <div className="relative p-8 h-full">
-                  <h3 className="text-xl font-semibold mb-4 text-gray-800">
-                    Content Creation
-                  </h3>
-                  <p className="text-gray-700">
-                    Produce engaging, high-quality content that tells your brand
-                    story and connects with your audience.
-                  </p>
-                  <div className="w-full h-1 bg-gradient-to-r from-green-400 to-teal-400 mt-6 scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></div>
-                </div>
-              </div>
-
-              {/* Glass Morphism Card 3 */}
-              <div className="rounded-2xl overflow-hidden relative group">
-                {/* Glass Effect */}
-                <div className="absolute inset-0 backdrop-blur-md bg-white/20 border border-white/30 rounded-2xl transition-all duration-300 group-hover:bg-white/30"></div>
-
-                {/* Floating Element */}
-                <div className="absolute -top-6 -left-6 w-18 h-18 rounded-full bg-gradient-to-br from-cyan-300/60 to-blue-300/60 blur-sm transition-all duration-300 group-hover:scale-110"></div>
-
-                {/* Content */}
-                <div className="relative p-8 h-full">
-                  <h3 className="text-xl font-semibold mb-4 text-gray-800">
-                    Digital Marketing
-                  </h3>
-                  <p className="text-gray-700">
-                    Implement data-driven marketing campaigns across multiple
-                    channels to maximize your reach and ROI.
-                  </p>
-                  <div className="w-full h-1 bg-gradient-to-r from-cyan-400 to-blue-400 mt-6 scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></div>
-                </div>
-              </div>
-            </div>
-            <div className="text-center mt-12">
-              <Link href="/services">
-                <div className="inline-block px-6 py-3 bg-gradient-to-r from-teal-400 to-cyan-500 text-white rounded-md font-medium uppercase tracking-wide hover:-translate-y-1 transition-transform duration-300 shadow-lg shadow-teal-300/20">
-                  Explore All Services
-                </div>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <OurServicesSection />
 
         {/* Second Image Section */}
         <section className="min-h-[80vh] bg-[url('/earth.jpg')] bg-cover bg-center bg-fixed flex items-center justify-center relative px-6">
           <CombinedSection />
         </section>
-
-        {/* Third Image Section */}
-        {/* <CampaignSection /> */}
 
         <div className="relative z-10">
           <svg
@@ -381,21 +245,6 @@ export default function HomePage() {
         </div>
 
         <VisitContactSection />
-
-        {/* Second Image Section */}
-        <div className="relative h-24 w-full flex justify-center items-center overflow-hidden">
-          <div className="absolute w-72 h-72 rounded-full bg-gradient-to-br from-emerald-300/20 to-purple-700/30 blur-2xl" />
-        </div>
-        <section className="min-h-[80vh] bg-[url('/forest.jpg')] bg-cover bg-center bg-fixed flex items-center justify-center relative px-6">
-          <div className="bg-black/60 backdrop-blur-sm p-12 rounded-xl flex flex-col items-center max-w-2xl w-full text-center">
-            <h2 className="text-white text-3xl md:text-4xl font-bold mb-6">
-              Ready to Transform Your Brand?
-            </h2>
-            <button className="border border-white text-white py-2 px-6 rounded hover:bg-white/10 transition-colors duration-300">
-              Contact Us Today
-            </button>
-          </div>
-        </section>
       </main>
     </>
   );
