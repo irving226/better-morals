@@ -202,14 +202,6 @@ const serviceTiers = [
   },
 ];
 
-const clientTypes = [
-  "Creators & artists who want systems that scale",
-  "Ethical, sustainable and cruelty free brands",
-  "Startups and small brands ready for the next level",
-  "Collectives, communities, and ethical companies on a mission",
-  "Entertainment & gaming brands pushing boundaries",
-];
-
 // Custom AnimatedSection component for scroll animations
 const AnimatedSection = ({
   children = null as React.ReactNode,
@@ -446,35 +438,37 @@ export default function ServicesSection() {
   return (
     <div className="relative overflow-hidden">
       {/* Dark background with gradient transitions */}
-      <section className="relative py-12 bg-gradient-to-b from-gray-950 to-gray-900 overflow-hidden">
-        {/* Floating particles */}
-        <div className="absolute inset-0 z-0">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full"
-              style={{
-                width: Math.random() * 3 + 1 + "px",
-                height: Math.random() * 3 + 1 + "px",
-                backgroundColor: `hsl(${180 + Math.random() * 60}, 100%, ${
-                  70 + Math.random() * 20
-                }%)`,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                opacity: Math.random() * 0.4,
-                boxShadow: `0 0 ${Math.random() * 6 + 2}px ${
-                  Math.random() * 2 + 1
-                }px hsl(${180 + Math.random() * 60}, 100%, 80%)`,
-                animation: `float-particle ${
-                  Math.random() * 30 + 20
-                }s linear infinite`,
-              }}
-            />
-          ))}
-        </div>
+      <div id="services-section" className="relative overflow-hidden">
+        <section className="relative py-12 bg-gradient-to-b from-gray-950 to-gray-900 overflow-hidden">
+          {/* Floating particles */}
+          <div className="absolute inset-0 z-0">
+            {Array.from({ length: 15 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute rounded-full"
+                style={{
+                  width: Math.random() * 3 + 1 + "px",
+                  height: Math.random() * 3 + 1 + "px",
+                  backgroundColor: `hsl(${180 + Math.random() * 60}, 100%, ${
+                    70 + Math.random() * 20
+                  }%)`,
+                  top: `${Math.random() * 100}%`,
+                  left: `${Math.random() * 100}%`,
+                  opacity: Math.random() * 0.4,
+                  boxShadow: `0 0 ${Math.random() * 6 + 2}px ${
+                    Math.random() * 2 + 1
+                  }px hsl(${180 + Math.random() * 60}, 100%, 80%)`,
+                  animation: `float-particle ${
+                    Math.random() * 30 + 20
+                  }s linear infinite`,
+                }}
+              />
+            ))}
+          </div>
 
-        <OurEthos />
-      </section>
+          <OurEthos />
+        </section>
+      </div>
 
       {/* Wave transition */}
       <div className="relative h-20 bg-gray-900">
@@ -625,75 +619,77 @@ export default function ServicesSection() {
         )}
 
         {/* Section heading  */}
-        <AnimatedSection
-          className="relative z-10 max-w-7xl mx-auto text-center mb-8"
-          delay={0.2}
-        >
-          <h2 className="text-4xl font-bold mb-4">
-            <motion.span
-              animate={{
-                color: expandedService ? "#ffffff" : "#111827",
-              }}
-              transition={{ duration: 0.4 }}
-            >
-              Our
-            </motion.span>
-            <span className="relative">
-              <span className="absolute inset-0 animate-pulse-slow bg-amber-400/20 blur-xl rounded-lg -z-10"></span>
+        <div id="services-tab-section">
+          <AnimatedSection
+            className="relative z-10 max-w-7xl mx-auto text-center mb-8"
+            delay={0.2}
+          >
+            <h2 className="text-4xl font-bold mb-4">
               <motion.span
-                className="text-neon-amber"
                 animate={{
-                  textShadow: expandedService
-                    ? "0 0 10px rgba(245, 158, 11, 0.6), 0 0 20px rgba(245, 158, 11, 0.4)"
-                    : "0 0 5px rgba(245, 158, 11, 0.4), 0 0 10px rgba(245, 158, 11, 0.2)",
+                  color: expandedService ? "#ffffff" : "#111827",
                 }}
                 transition={{ duration: 0.4 }}
               >
-                {activeTab === "services" ? " Services" : " Packages"}
+                Our
               </motion.span>
-            </span>
-          </h2>
+              <span className="relative">
+                <span className="absolute inset-0 animate-pulse-slow bg-amber-400/20 blur-xl rounded-lg -z-10"></span>
+                <motion.span
+                  className="text-neon-amber"
+                  animate={{
+                    textShadow: expandedService
+                      ? "0 0 10px rgba(245, 158, 11, 0.6), 0 0 20px rgba(245, 158, 11, 0.4)"
+                      : "0 0 5px rgba(245, 158, 11, 0.4), 0 0 10px rgba(245, 158, 11, 0.2)",
+                  }}
+                  transition={{ duration: 0.4 }}
+                >
+                  {activeTab === "services" ? " Services" : " Packages"}
+                </motion.span>
+              </span>
+            </h2>
 
-          <div className="w-24 h-0.5 bg-amber-400 mx-auto mb-6 shadow-neon-amber"></div>
+            <div className="w-24 h-0.5 bg-amber-400 mx-auto mb-6 shadow-neon-amber"></div>
 
-          {/* Tab navigation */}
-          <div className="flex justify-center mb-8">
-            <div className="bg-white/80 backdrop-blur-sm p-1 rounded-full shadow-md">
-              <button
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                  activeTab === "services"
-                    ? "bg-amber-400 text-white shadow-md"
-                    : "text-gray-600 hover:bg-gray-100"
-                }`}
-                onClick={() => handleTabChange("services")}
-              >
-                Services
-              </button>
-              <button
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                  activeTab === "tiers"
-                    ? "bg-amber-400 text-white shadow-md"
-                    : "text-gray-600 hover:bg-gray-100"
-                }`}
-                onClick={() => handleTabChange("tiers")}
-              >
-                Packages
-              </button>
+            {/* Tab navigation */}
+            <div className="flex justify-center mb-8">
+              <div className="bg-white/80 backdrop-blur-sm p-1 rounded-full shadow-md">
+                <button
+                  className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
+                    activeTab === "services"
+                      ? "bg-amber-400 text-white shadow-md"
+                      : "text-gray-600 hover:bg-gray-100"
+                  }`}
+                  onClick={() => handleTabChange("services")}
+                >
+                  Services
+                </button>
+                <button
+                  className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
+                    activeTab === "tiers"
+                      ? "bg-amber-400 text-white shadow-md"
+                      : "text-gray-600 hover:bg-gray-100"
+                  }`}
+                  onClick={() => handleTabChange("tiers")}
+                >
+                  Packages
+                </button>
+              </div>
             </div>
-          </div>
 
-          <motion.p
-            animate={{
-              color: expandedService ? "rgb(209 213 219)" : "rgb(75 85 99)",
-            }}
-            transition={{ duration: 0.4 }}
-            className="max-w-2xl mx-auto"
-          >
-            {activeTab === "services"
-              ? "We specialize in creating ethical systems and powerful stories for brands that want to build a better world."
-              : "Whether you're just starting out, scaling up, or creating your legacy—we've got a package for where you are and where you're going."}
-          </motion.p>
-        </AnimatedSection>
+            <motion.p
+              animate={{
+                color: expandedService ? "rgb(209 213 219)" : "rgb(75 85 99)",
+              }}
+              transition={{ duration: 0.4 }}
+              className="max-w-2xl mx-auto"
+            >
+              {activeTab === "services"
+                ? "We specialize in creating ethical systems and powerful stories for brands that want to build a better world."
+                : "Whether you're just starting out, scaling up, or creating your legacy—we've got a package for where you are and where you're going."}
+            </motion.p>
+          </AnimatedSection>
+        </div>
 
         {/* Services grid with expanding card functionality */}
         <div className="max-w-7xl mx-auto">

@@ -223,8 +223,9 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-
-        <OurServicesSection />
+        <div>
+          <OurServicesSection />
+        </div>
 
         {/* Second Image Section */}
         <section className="min-h-[80vh] bg-[url('/earth.jpg')] bg-cover bg-center bg-fixed flex items-center justify-center relative px-6">

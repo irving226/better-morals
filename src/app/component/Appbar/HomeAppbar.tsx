@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -23,6 +22,31 @@ export default function AppBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleGetStarted = (e) => {
+    e.preventDefault();
+
+    // Find the services section element
+    const servicesSection = document.getElementById("services-tab-section");
+
+    if (servicesSection) {
+      // Log that we found the element (for debugging)
+      console.log("Found services section, scrolling now");
+
+      // Get the y-position of the section
+      const yPosition =
+        servicesSection.getBoundingClientRect().top + window.pageYOffset;
+
+      // Scroll with a slight offset to prevent the section from being right at the top
+      window.scrollTo({
+        top: yPosition - 80,
+        behavior: "smooth",
+      });
+    } else {
+      // Log if we couldn't find the element (for debugging)
+      console.log("Could not find services section element");
+    }
+  };
+
   // Determine active link based on current path
   useEffect(() => {
     const path = window.location.pathname;
@@ -31,6 +55,29 @@ export default function AppBar() {
     else if (path.includes("/contact")) setActiveLink("contact");
     else setActiveLink("");
   }, []);
+
+  // Scroll to services section when on homepage
+  const scrollToServices = (e) => {
+    const isHomepage = window.location.pathname === "/";
+
+    if (isHomepage) {
+      e.preventDefault();
+      const servicesTabSection = document.getElementById("services-section");
+      if (servicesTabSection) {
+        // Get the y-position of the section
+        const yPosition =
+          servicesTabSection.getBoundingClientRect().top + window.pageYOffset;
+
+        // Scroll with a slight offset (80px) to prevent the section from being right at the top
+        window.scrollTo({
+          top: yPosition - 80, // Adjust this value based on your navbar height
+          behavior: "smooth",
+        });
+
+        setActiveLink("services");
+      }
+    }
+  };
 
   // Menu item variants for animations
   const menuItemVariants = {
@@ -99,6 +146,7 @@ export default function AppBar() {
                 key={item}
                 href={`/${item}`}
                 className="relative group py-1 px-1"
+                onClick={item === "services" ? scrollToServices : undefined}
               >
                 {/* Animated background on hover */}
                 <span className="absolute inset-0 rounded-lg bg-cyan-500/0 group-hover:bg-cyan-500/10 transition-all duration-300" />
@@ -124,16 +172,21 @@ export default function AppBar() {
             ))}
 
             {/* CTA button with glow effect */}
-            <motion.button
+            <Link
+              href="/services#services-tab-section" // This will navigate to the services page and then to the services section
               className="relative group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
             >
-              <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 blur opacity-70 group-hover:opacity-100 transition duration-300" />
-              <span className="relative block px-5 py-2 bg-gray-900 rounded-lg text-white font-medium border border-cyan-500/30">
-                Get Started
-              </span>
-            </motion.button>
+              <motion.button
+                className="relative group"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 blur opacity-70 group-hover:opacity-100 transition duration-300" />
+                <span className="relative block px-5 py-2 bg-gray-900 rounded-lg text-white font-medium border border-cyan-500/30">
+                  Get Started
+                </span>
+              </motion.button>
+            </Link>
           </nav>
 
           {/* Hamburger Menu with animation */}
@@ -211,7 +264,12 @@ export default function AppBar() {
                   >
                     <Link
                       href={`/${item}`}
-                      onClick={() => setMenuOpen(false)}
+                      onClick={(e) => {
+                        setMenuOpen(false);
+                        if (item === "services") {
+                          scrollToServices(e);
+                        }
+                      }}
                       className="block py-3 px-2 text-lg font-medium text-white hover:text-cyan-300 transition-colors border-b border-white/10"
                     >
                       {item.charAt(0).toUpperCase() + item.slice(1)}
@@ -226,6 +284,7 @@ export default function AppBar() {
                   variants={menuItemVariants}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
+                  onClick={handleGetStarted}
                 >
                   <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 blur opacity-70 group-hover:opacity-100 transition duration-300" />
                   <span className="relative block py-3 bg-gray-900 rounded-lg text-white font-medium border border-cyan-500/30">
