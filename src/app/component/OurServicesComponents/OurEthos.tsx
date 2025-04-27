@@ -294,6 +294,7 @@ export default function OurEthos() {
     "Startups and small brands ready for the next level",
     "Collectives, communities, and ethical companies on a mission",
     "Entertainment & gaming brands pushing boundaries",
+    "Innovators and tech disruptors building the future",
   ];
 
   return (
@@ -547,8 +548,6 @@ export default function OurEthos() {
               of clients
             </motion.p>
           </div>
-
-          {/* Exciting new client cards with 3D effect */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {clientTypes.map((client, index) => (
               <motion.div
@@ -614,7 +613,6 @@ export default function OurEthos() {
               </motion.div>
             ))}
           </div>
-
           {/* Bottom flourish */}
           <motion.div
             className="mt-20 text-center"

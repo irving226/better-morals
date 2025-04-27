@@ -44,3 +44,21 @@
     will-change: transform, opacity;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  scroll-padding-top: 80px; /* Adjust based on your header height */
+}
+.perspective-1600px {
+  perspective: 1600px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
