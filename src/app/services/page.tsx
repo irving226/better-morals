@@ -202,6 +202,14 @@ const serviceTiers = [
   },
 ];
 
+const clientTypes = [
+  "Creators & artists who want systems that scale",
+  "Ethical, sustainable and cruelty free brands",
+  "Startups and small brands ready for the next level",
+  "Collectives, communities, and ethical companies on a mission",
+  "Entertainment & gaming brands pushing boundaries",
+];
+
 // Custom AnimatedSection component for scroll animations
 const AnimatedSection = ({
   children = null as React.ReactNode,
