@@ -149,7 +149,7 @@ export default function CombinedSection() {
   };
 
   return (
-    <section className="relative bg-gradient-to-b from-[#ecfdf5] to-white pt-16 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative pt-16 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Top curve transition */}
       <div className="absolute top-0 left-0 w-full -translate-y-full z-0 pointer-events-none">
         <svg
@@ -351,7 +351,7 @@ export default function CombinedSection() {
 
       {/* AI Features Section */}
       <div className="relative z-10 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
+        <h2 className="text-3xl font-bold text-yellow-400 text-center mb-12">
           Our AI-Powered Solutions
         </h2>
 

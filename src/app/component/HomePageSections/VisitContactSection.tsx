@@ -2,7 +2,7 @@
 
 export default function VisitUs() {
   return (
-    <section className="relative bg-gradient-to-b from-[#ecfdf5] to-white pt-16 pb-0 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative  pt-16 pb-0 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Top curve transition */}
       <div className="absolute top-0 left-0 w-full -translate-y-full z-0 pointer-events-none">
         <svg
