@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const renderIcon = (iconName, size = 6) => {
+const renderIcon = (iconName: string, size = 6) => {
   switch (iconName) {
     case "leaf":
       return (
@@ -506,8 +506,8 @@ export default function OurEthos() {
             </div>
 
             <p className="text-gray-100 text-xl text-center leading-relaxed relative z-10">
-              At BetterMorals we don't just do marketing, we co-create systems
-              and stories with people who want to build a better world!
+              At BetterMorals we don&apos;t just do marketing, we co-create
+              systems and stories with people who want to build a better world!
             </p>
           </motion.div>
         </div>

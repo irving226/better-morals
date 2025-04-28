@@ -22,7 +22,7 @@ export default function AppBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleGetStarted = (e) => {
+  const handleGetStarted = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     // Find the services section element
@@ -57,7 +57,7 @@ export default function AppBar() {
   }, []);
 
   // Scroll to services section when on homepage
-  const scrollToServices = (e) => {
+  const scrollToServices = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const isHomepage = window.location.pathname === "/";
 
     if (isHomepage) {
@@ -82,7 +82,7 @@ export default function AppBar() {
   // Menu item variants for animations
   const menuItemVariants = {
     hidden: { opacity: 0, y: -10 },
-    visible: (i) => ({
+    visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
