@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function ContactPage() {
@@ -113,6 +113,13 @@ export default function ContactPage() {
     },
   };
 
+  const particleKeyframes = useMemo(() => {
+    return [
+      { x: Math.random() * 50 - 25, y: Math.random() * 50 - 25 },
+      { x: Math.random() * 50 - 25, y: Math.random() * 50 - 25 },
+    ];
+  }, []);
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-950 to-gray-900 py-24 px-6 relative overflow-hidden">
       {/* Digital grid background */}
@@ -187,8 +194,8 @@ export default function ContactPage() {
         </h1>
         <div className="w-24 h-0.5 bg-cyan-400 mx-auto my-8 rounded-full shadow-glow-cyan"></div>
         <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
-          We'd love to hear from you. Fill out the form and we'll respond as
-          soon as we can.
+          We&apos;d love to hear from you. Fill out the form and we&apos;ll
+          respond as soon as we can.
         </p>
       </motion.div>
 
@@ -565,14 +572,14 @@ export default function ContactPage() {
           }
           33% {
             transform: translate(
-              ${Math.random() * 50 - 25}px,
-              ${Math.random() * 50 - 25}px
+              ${particleKeyframes[0].x}px,
+              ${particleKeyframes[0].y}px
             );
           }
           66% {
             transform: translate(
-              ${Math.random() * 50 - 25}px,
-              ${Math.random() * 50 - 25}px
+              ${particleKeyframes[1].x}px,
+              ${particleKeyframes[1].y}px
             );
           }
           100% {

@@ -11,7 +11,7 @@ export default function Footer() {
 
   // Update mouse position for glow effect
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
@@ -20,7 +20,7 @@ export default function Footer() {
   }, []);
 
   // Handle newsletter subscription
-  const handleSubscribe = (e) => {
+  const handleSubscribe = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (email) {
       // In reality, you would send this to your backend

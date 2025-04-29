@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const features = [
@@ -26,24 +25,9 @@ const features = [
 
 export default function DiscoverSection() {
   // Track window dimensions for responsive adjustments
-  const [viewportWidth, setViewportWidth] = useState(0);
-
-  useEffect(() => {
-    // Get viewport width for responsive adjustments
-    const updateWindowDimensions = () => {
-      setViewportWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", updateWindowDimensions);
-    updateWindowDimensions();
-
-    return () => {
-      window.removeEventListener("resize", updateWindowDimensions);
-    };
-  }, []);
 
   // Render icons based on the feature
-  const renderIcon = (iconName) => {
+  const renderIcon = (iconName: string) => {
     switch (iconName) {
       case "history":
         return (

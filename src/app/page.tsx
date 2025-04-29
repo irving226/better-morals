@@ -14,8 +14,8 @@ export default function HomePage() {
   const [ctaVisible, setCtaVisible] = useState(false);
   const [whiteSection, setWhiteSection] = useState(false);
   const [grayscapeVisible, setGrayscapeVisible] = useState(false);
-  const journeyRef = useRef(null);
-  const grayscapeRef = useRef(null);
+  const journeyRef = useRef<HTMLDivElement | null>(null);
+  const grayscapeRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {

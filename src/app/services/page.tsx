@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, SetStateAction } from "react";
-import { motion, AnimatePresence, useInView, MotionValue } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import Link from "next/link";
 import OurEthos from "../component/OurServicesComponents/OurEthos";
 
@@ -127,24 +127,6 @@ const services = [
   },
 ];
 
-const coreValues = [
-  {
-    title: "Better Systems",
-    icon: "settings",
-    bgColor: "bg-emerald-400",
-  },
-  {
-    title: "Better Stories",
-    icon: "compass",
-    bgColor: "bg-purple-400",
-  },
-  {
-    title: "Better Morals",
-    icon: "shield",
-    bgColor: "bg-amber-400",
-  },
-];
-
 const serviceTiers = [
   {
     id: "tier1",
@@ -200,14 +182,6 @@ const serviceTiers = [
       "Launch support + short-term campaign strategy",
     ],
   },
-];
-
-const clientTypes = [
-  "Creators & artists who want systems that scale",
-  "Ethical, sustainable and cruelty free brands",
-  "Startups and small brands ready for the next level",
-  "Collectives, communities, and ethical companies on a mission",
-  "Entertainment & gaming brands pushing boundaries",
 ];
 
 // Custom AnimatedSection component for scroll animations
@@ -912,13 +886,17 @@ export default function ServicesSection() {
                 layoutId={`card-${expandedService}`}
               >
                 <div
-                  className={`bg-gray-800/80 backdrop-blur-md rounded-xl overflow-hidden border border-gray-700/60 shadow-neon-${expandedServiceData.shadowColor} transition-all duration-300`}
+                  className={`bg-gray-800/80 backdrop-blur-md rounded-xl overflow-hidden border border-gray-700/60 shadow-neon-${expandedServiceData?.shadowColor} transition-all duration-300`}
                 >
                   {/* Back button */}
                   <div className="absolute top-4 left-4 z-10">
                     <button
                       onClick={handleCollapse}
-                      className={`p-2 rounded-full bg-gray-800 shadow-md hover:shadow-neon-${expandedServiceData.shadowColor} transition-all duration-300 text-white group border border-gray-700/60`}
+                      className={`p-2 rounded-full bg-gray-800 shadow-md ${
+                        expandedServiceData
+                          ? `hover:shadow-neon-${expandedServiceData.shadowColor}`
+                          : ""
+                      } transition-all duration-300 text-white group border border-gray-700/60`}
                     >
                       {renderIcon("arrow-left", 5)}
                     </button>
@@ -927,10 +905,15 @@ export default function ServicesSection() {
                   {/* Expanded card header */}
                   <div className="p-8 pb-4 flex items-start">
                     <motion.div
-                      className={`w-16 h-16 ${expandedServiceData.darkColor} rounded-lg flex items-center justify-center text-white mr-6 shadow-neon-${expandedServiceData.shadowColor}`}
+                      className={`w-16 h-16 ${
+                        expandedServiceData?.darkColor || ""
+                      } rounded-lg flex items-center justify-center text-white mr-6 shadow-neon-${
+                        expandedServiceData?.shadowColor || ""
+                      }`}
                       layoutId={`icon-${expandedService}`}
                     >
-                      {renderIcon(expandedServiceData.icon, 7)}
+                      {expandedServiceData &&
+                        renderIcon(expandedServiceData.icon, 7)}
                     </motion.div>
 
                     <div>
@@ -938,14 +921,14 @@ export default function ServicesSection() {
                         className="text-2xl font-bold text-white mb-2"
                         layoutId={`title-${expandedService}`}
                       >
-                        {expandedServiceData.title}
+                        {expandedServiceData?.title}
                       </motion.h3>
 
                       <motion.p
                         className="text-gray-300"
                         layoutId={`desc-${expandedService}`}
                       >
-                        {expandedServiceData.desc}
+                        {expandedServiceData?.desc}
                       </motion.p>
                     </div>
                   </div>
@@ -956,22 +939,22 @@ export default function ServicesSection() {
                   <div className="p-8">
                     {/* Headline with neon glow */}
                     <motion.h4
-                      className={`text-xl font-semibold text-neon-${expandedServiceData.shadowColor} mb-6`}
+                      className={`text-xl font-semibold text-neon-${expandedServiceData?.shadowColor} mb-6`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.1 }}
                       style={{
-                        textShadow: `0 0 10px ${expandedServiceData.glowColor}, 0 0 20px ${expandedServiceData.glowColor}`,
+                        textShadow: `0 0 10px ${expandedServiceData?.glowColor}, 0 0 20px ${expandedServiceData?.glowColor}`,
                       }}
                     >
-                      {expandedServiceData.detailedContent.headline}
+                      {expandedServiceData?.detailedContent.headline}
                     </motion.h4>
 
                     {/* Main content in 2 columns on larger screens */}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                       {/* Left column - Paragraphs */}
                       <div className="lg:col-span-2 space-y-4">
-                        {expandedServiceData.detailedContent.paragraphs.map(
+                        {expandedServiceData?.detailedContent.paragraphs.map(
                           (paragraph, idx) => (
                             <motion.p
                               key={idx}
@@ -996,17 +979,17 @@ export default function ServicesSection() {
                           transition={{ duration: 0.5, delay: 0.5 }}
                         >
                           <p className="text-gray-300 mb-2">
-                            "
+                            &quot;
                             {
-                              expandedServiceData.detailedContent.testimonial
+                              expandedServiceData?.detailedContent.testimonial
                                 .quote
                             }
-                            "
+                            &quot;
                           </p>
                           <p className="text-gray-400 text-sm not-italic">
                             —{" "}
                             {
-                              expandedServiceData.detailedContent.testimonial
+                              expandedServiceData?.detailedContent.testimonial
                                 .author
                             }
                           </p>
@@ -1024,7 +1007,7 @@ export default function ServicesSection() {
                           Key Results
                         </motion.h5>
 
-                        {expandedServiceData.detailedContent.stats.map(
+                        {expandedServiceData?.detailedContent.stats.map(
                           (stat, idx) => (
                             <motion.div
                               key={idx}
@@ -1059,14 +1042,14 @@ export default function ServicesSection() {
                           transition={{ duration: 0.5, delay: 0.6 }}
                         >
                           <button
-                            className={`group w-full py-3 px-6 bg-gray-800 border border-${expandedServiceData.shadowColor}-500/50 text-white rounded-lg shadow-neon-${expandedServiceData.shadowColor} hover:shadow-neon-lg-${expandedServiceData.shadowColor} transition-all duration-500 relative overflow-hidden`}
+                            className={`group w-full py-3 px-6 bg-gray-800 border border-${expandedServiceData?.shadowColor}-500/50 text-white rounded-lg shadow-neon-${expandedServiceData?.shadowColor} hover:shadow-neon-lg-${expandedServiceData?.shadowColor} transition-all duration-500 relative overflow-hidden`}
                             style={{
-                              textShadow: `0 0 5px ${expandedServiceData.glowColor}`,
+                              textShadow: `0 0 5px ${expandedServiceData?.glowColor}`,
                             }}
                           >
                             {/* Glow effect on hover */}
                             <span
-                              className={`absolute inset-0 w-0 bg-${expandedServiceData.shadowColor}-500/20 group-hover:w-full transition-all duration-700`}
+                              className={`absolute inset-0 w-0 bg-${expandedServiceData?.shadowColor}-500/20 group-hover:w-full transition-all duration-700`}
                             ></span>
 
                             {/* Text content */}
@@ -1099,7 +1082,7 @@ export default function ServicesSection() {
                       {Array.from({ length: 5 }).map((_, i) => (
                         <motion.div
                           key={`h-${i}`}
-                          className={`absolute h-px bg-gradient-to-r from-transparent via-${expandedServiceData.shadowColor}-400/40 to-transparent`}
+                          className={`absolute h-px bg-gradient-to-r from-transparent via-${expandedServiceData?.shadowColor}-400/40 to-transparent`}
                           style={{
                             top: `${15 + i * 20}%`,
                             left: 0,
@@ -1126,7 +1109,7 @@ export default function ServicesSection() {
                       {Array.from({ length: 3 }).map((_, i) => (
                         <motion.div
                           key={`v-${i}`}
-                          className={`absolute w-px bg-gradient-to-b from-transparent via-${expandedServiceData.shadowColor}-400/40 to-transparent`}
+                          className={`absolute w-px bg-gradient-to-b from-transparent via-${expandedServiceData?.shadowColor}-400/40 to-transparent`}
                           style={{
                             left: `${25 + i * 25}%`,
                             top: 0,
@@ -1224,14 +1207,15 @@ export default function ServicesSection() {
           delay={0.3}
         >
           <p className="text-gray-300 leading-relaxed text-lg">
-            We're not here to chase trends or push tactics that don't align.
-            We're here to help you grow in a way that feels aligned, ethical,
-            and sustainable. Our approach is grounded in compassion, driven by
-            data, and powered by AI that amplifies humanity—not replaces it.
+            We&apos;re not here to chase trends or push tactics that don&apos;t
+            align. We&apos;re here to help you grow in a way that feels aligned,
+            ethical, and sustainable. Our approach is grounded in compassion,
+            driven by data, and powered by AI that amplifies humanity—not
+            replaces it.
           </p>
           <p className="text-gray-300 mt-6 leading-relaxed text-lg">
-            If you're here to change the world (or even just your corner of it),
-            we're ready to build alongside you.
+            If you&apos;re here to change the world (or even just your corner of
+            it), we&apos;re ready to build alongside you.
           </p>
         </AnimatedSection>
       </div>
