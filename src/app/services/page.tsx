@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import OurEthos from "../component/OurServicesComponents/OurEthos";
 import ServicesOverviewCards from "../component/OurServicesComponents/ServicesOverviewCards";
@@ -26,36 +26,45 @@ const AnimatedSection = ({
     </motion.div>
   );
 };
+const FloatingParticle = () => {
+  const [style, setStyle] = useState({});
+
+  useEffect(() => {
+    const randomWidth = Math.random() * 3 + 1;
+    const randomHeight = Math.random() * 3 + 1;
+    const randomHue = 180 + Math.random() * 60;
+    const randomLightness = 70 + Math.random() * 20;
+    const randomOpacity = Math.random() * 0.4;
+    const randomShadowBlur = Math.random() * 6 + 2;
+    const randomShadowSpread = Math.random() * 2 + 1;
+
+    setStyle({
+      width: `${randomWidth}px`,
+      height: `${randomHeight}px`,
+      backgroundColor: `hsl(${randomHue}, 100%, ${randomLightness}%)`,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      opacity: randomOpacity,
+      boxShadow: `0 0 ${randomShadowBlur}px ${randomShadowSpread}px hsl(${randomHue}, 100%, 80%)`,
+      animation: `float-particle ${Math.random() * 30 + 20}s linear infinite`,
+    });
+  }, []);
+
+  return <div className="absolute rounded-full" style={style} />;
+};
 
 export default function ServicesSection() {
+  const numberOfParticles = 15;
+
   return (
     <div className="relative overflow-hidden">
       {/* Dark background with gradient transitions */}
       <div id="services-section" className="relative overflow-hidden">
-        <section className="relative py-12 bg-gradient-to-b from-gray-950 to-gray-900 overflow-hidden">
+        <section className="relative py-12 bg-gradient-to-b from-gray-950 to-gray-950 overflow-hidden">
           {/* Floating particles */}
           <div className="absolute inset-0 z-0">
-            {Array.from({ length: 15 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute rounded-full"
-                style={{
-                  width: Math.random() * 3 + 1 + "px",
-                  height: Math.random() * 3 + 1 + "px",
-                  backgroundColor: `hsl(${180 + Math.random() * 60}, 100%, ${
-                    70 + Math.random() * 20
-                  }%)`,
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                  opacity: Math.random() * 0.4,
-                  boxShadow: `0 0 ${Math.random() * 6 + 2}px ${
-                    Math.random() * 2 + 1
-                  }px hsl(${180 + Math.random() * 60}, 100%, 80%)`,
-                  animation: `float-particle ${
-                    Math.random() * 30 + 20
-                  }s linear infinite`,
-                }}
-              />
+            {Array.from({ length: numberOfParticles }).map((_, i) => (
+              <FloatingParticle key={i} />
             ))}
           </div>
 
@@ -64,7 +73,7 @@ export default function ServicesSection() {
       </div>
 
       {/* Wave transition */}
-      <div className="relative h-20 bg-gray-900">
+      <div className="relative h-20 bg-gray-950">
         <svg
           className="absolute bottom-0 w-full h-20"
           viewBox="0 0 1440 120"

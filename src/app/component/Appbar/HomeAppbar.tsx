@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+// You can use Image from next/image for better image optimization
+import Image from "next/image";
 
 export default function AppBar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -57,11 +59,10 @@ export default function AppBar() {
   }, []);
 
   // Scroll to services section when on homepage
-  const scrollToServices = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const scrollToServices = () => {
     const isHomepage = window.location.pathname === "/";
 
     if (isHomepage) {
-      e.preventDefault();
       const servicesTabSection = document.getElementById("services-section");
       if (servicesTabSection) {
         // Get the y-position of the section
@@ -117,7 +118,7 @@ export default function AppBar() {
         {/* Main navbar content */}
         <div className="flex justify-between items-center px-6 py-4">
           {/* Logo with animated gradient */}
-          <Link href="/" className="relative group">
+          <Link href="/" className="relative group flex items-center">
             <motion.div
               className="absolute -inset-1 rounded-lg opacity-0 group-hover:opacity-70 transition duration-300 blur-md"
               animate={{
@@ -129,11 +130,23 @@ export default function AppBar() {
               }}
               transition={{ duration: 5, repeat: Infinity }}
             />
+
+            {/* Logo Image - Add your logo here */}
+            <div className="relative w-8 h-8 mr-2 z-10">
+              <Image
+                src="/BMI-Large.png"
+                alt="Better Morals Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+              />
+            </div>
+
             <span className="relative text-2xl font-bold tracking-tight z-10">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-cyan-100 mr-1">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-300 mr-1">
                 Better
               </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-300">
                 Morals
               </span>
             </span>
@@ -153,7 +166,7 @@ export default function AppBar() {
 
                 {/* Animated underline for active link */}
                 <span
-                  className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-cyan-400 to-cyan-200 rounded-full transition-all duration-300 ${
+                  className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-amber-400 to-yellow-300 rounded-full transition-all duration-300 ${
                     activeLink === item ? "w-full" : "w-0 group-hover:w-full"
                   }`}
                 />
@@ -162,8 +175,8 @@ export default function AppBar() {
                 <span
                   className={`relative text-sm ${
                     activeLink === item
-                      ? "text-cyan-300 font-semibold"
-                      : "text-gray-300 group-hover:text-white"
+                      ? "text-amber-300 font-semibold"
+                      : "text-amber-300 group-hover:text-purple-300"
                   } transition-all duration-300`}
                 >
                   {item.charAt(0).toUpperCase() + item.slice(1)}
@@ -264,10 +277,10 @@ export default function AppBar() {
                   >
                     <Link
                       href={`/${item}`}
-                      onClick={(e) => {
+                      onClick={() => {
                         setMenuOpen(false);
                         if (item === "services") {
-                          scrollToServices(e);
+                          scrollToServices();
                         }
                       }}
                       className="block py-3 px-2 text-lg font-medium text-white hover:text-cyan-300 transition-colors border-b border-white/10"
