@@ -500,7 +500,7 @@ export default function ContactPage() {
           </div>
           <h3 className="text-lg font-semibold text-white mb-2">Email Us</h3>
           <p className="text-gray-400 hover:text-cyan-300 transition-colors duration-300">
-            contact@bettermorals.ai
+            clarity@bettermoralsmarketing.com
           </p>
         </motion.div>
 
@@ -527,12 +527,12 @@ export default function ContactPage() {
           </div>
           <h3 className="text-lg font-semibold text-white mb-2">Call Us</h3>
           <p className="text-gray-400 hover:text-purple-300 transition-colors duration-300">
-            +1 (555) 123-4567
+            1 (505) 803-9717
           </p>
         </motion.div>
 
         {/* Visit */}
-        <motion.div
+        {/* <motion.div
           className="group bg-gray-800/30 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50 hover:border-emerald-500/50 transition-colors duration-300"
           whileHover={{ y: -5, transition: { duration: 0.2 } }}
         >
@@ -562,7 +562,7 @@ export default function ContactPage() {
           <p className="text-gray-400 hover:text-emerald-300 transition-colors duration-300">
             123 Eco Avenue, Denver, CO
           </p>
-        </motion.div>
+        </motion.div> */}
       </motion.div>
 
       {/* CSS animations and custom classes */}
