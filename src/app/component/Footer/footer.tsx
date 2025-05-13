@@ -33,33 +33,38 @@ export default function Footer() {
 
   // Footer sections with links
   const footerSections = [
-    {
-      title: "Services",
-      links: [
-        { name: "AI Automation Systems", href: "/services#ai-automation" },
-        { name: "Marketing Strategy", href: "/services#marketing-strategy" },
-        { name: "Content Creation", href: "/services#content-creation" },
-        { name: "Brand Development", href: "/services#brand-development" },
-      ],
-    },
+    // {
+    //   title: "Services",
+    //   links: [
+    //     { name: "AI Automation Systems", href: "/services#ai-automation" },
+    //     { name: "Marketing Strategy", href: "/services#marketing-strategy" },
+    //     { name: "Content Creation", href: "/services#content-creation" },
+    //     { name: "Brand Development", href: "/services#brand-development" },
+    //   ],
+    // },
     {
       title: "Company",
       links: [
         { name: "About Us", href: "/about" },
         { name: "Our Team", href: "/about#team" },
-        { name: "Careers", href: "/careers" },
+        // { name: "Careers", href: "/careers" },
+        { name: "", href: "/about#team" },
+
         { name: "Contact", href: "/contact" },
       ],
     },
-    {
-      title: "Resources",
-      links: [
-        { name: "Case Studies", href: "/resources/case-studies" },
-        { name: "Blog", href: "/blog" },
-        { name: "Knowledge Base", href: "/knowledge-base" },
-        { name: "FAQs", href: "/faqs" },
-      ],
-    },
+    // {
+    //   title: "Resources",
+    //   links: [
+    //     { name: "Case Studies", href: "/resources/case-studies" },
+    //     // { name: "Blog", href: "/blog" },
+    //     // { name: "Ethics in A.I Transparency", href: "/transparency" },
+    // general call/invitation to action for A.I. ethics SMEs to collaborate/train
+
+    //     // { name: "Knowledge Base", href: "/knowledge-base" },
+    //     // { name: "FAQs", href: "/faqs" },
+    //   ],
+    // },
   ];
 
   // Social media links with icons
@@ -224,8 +229,7 @@ export default function Footer() {
               better world. Our approach is grounded in compassion, driven by
               data, and powered by AI that amplifies humanity—not replaces it.
             </p>
-
-            {/* Social links */}
+            {/* Social links
             <div className="flex space-x-4">
               {socialLinks.map((item) => (
                 <a
@@ -238,7 +242,7 @@ export default function Footer() {
                   <span className="relative">{item.icon}</span>
                 </a>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Newsletter subscription */}
