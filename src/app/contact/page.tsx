@@ -86,6 +86,7 @@ export default function ContactPage() {
   // Define subjects list for dropdown
   const subjects = [
     "General Inquiry",
+    "Free Strategy Session",
     "AI Marketing Solutions",
     "Sustainability Consultation",
     "Partnership Opportunities",
