@@ -39,7 +39,6 @@
 
   .hero-background {
     @apply fixed top-0 left-0 w-full h-screen bg-cover bg-center z-[-1];
-    background-image: url("/leaves.jpg");
     background-repeat: repeat;
     will-change: transform, opacity;
   }

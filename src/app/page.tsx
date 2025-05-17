@@ -15,33 +15,9 @@ export default function HomePage() {
         <HeroSection />
 
         {/* Wave Transition - Creates the curved shape */}
-        <div className="relative z-10 mt-8">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1440 180"
-            className="w-full h-auto relative z-10"
-          >
-            <defs>
-              <linearGradient id="servicesWave" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#0f172a" stopOpacity="0" />{" "}
-                {/* transparent start */}
-                <stop offset="70%" stopColor="#0f172a" stopOpacity="0.6" />{" "}
-                {/* darker fade-in */}
-                <stop
-                  offset="100%"
-                  stopColor="#0f172a"
-                  stopOpacity="0.85"
-                />{" "}
-                {/* strong base */}
-              </linearGradient>
-            </defs>
-
-            <path
-              fill="url(#servicesWave)"
-              d="M0,96L48,106.7C96,117,192,139,288,138.7C384,139,480,117,576,112C672,107,768,117,864,122.7C960,128,1056,128,1152,117.3C1248,107,1344,85,1392,74.7L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-            />
-          </svg>
-          <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 w-[80vw] h-40 bg-emerald-400/20 blur-3xl rounded-full pointer-events-none z-0" />
+        {/* <div className="relative z-10 mt-8"> */}
+        <div>
+          {/* <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 w-[80vw] h-40 bg-emerald-400/20 blur-3xl rounded-full pointer-events-none z-0" /> */}
 
           {/* Bridge Element - Positioned to appear on top of the wave */}
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl px-6 z-20">
@@ -115,10 +91,10 @@ export default function HomePage() {
         </div>
 
         {/* Second Image Section */}
-        <section className="relative z-10">
+        <section>
           <CombinedSection />
         </section>
-        <div className="relative z-4">
+        <div>
           {/* <svg
             className="w-full h-2"
             viewBox="0 0 1440 320"
@@ -134,113 +110,6 @@ export default function HomePage() {
         <VisitContactSection />
       </main>
       {/* CSS for animations - add to globals.css */}
-      <style jsx global>{`
-        /* Hero background styling */
-        .hero-background {
-          background-image: linear-gradient(
-              to bottom right,
-              rgba(20, 30, 70, 0.5),
-              rgba(10, 15, 50, 0.5)
-            ),
-            url("/leaves.jpg");
-          background-size: cover;
-          background-position: center;
-          width: 100%;
-          height: 100%;
-        }
-
-        /* Light ray animations */
-        .light-ray {
-          position: absolute;
-          background: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.1) 50%,
-            rgba(255, 255, 255, 0) 100%
-          );
-          width: 150px;
-          height: 100%;
-          transform: rotate(-45deg);
-          filter: blur(5px);
-          opacity: 0.4;
-        }
-
-        .light-ray-1 {
-          top: -50%;
-          left: 20%;
-          animation: ray-move-1 8s ease-in-out infinite;
-        }
-
-        .light-ray-2 {
-          top: -20%;
-          left: 60%;
-          animation: ray-move-2 12s ease-in-out infinite;
-        }
-
-        .light-ray-3 {
-          top: 30%;
-          left: 10%;
-          animation: ray-move-3 10s ease-in-out infinite;
-        }
-
-        @keyframes ray-move-1 {
-          0%,
-          100% {
-            transform: rotate(-45deg) translateY(0);
-          }
-          50% {
-            transform: rotate(-45deg) translateY(30vh);
-          }
-        }
-
-        @keyframes ray-move-2 {
-          0%,
-          100% {
-            transform: rotate(-45deg) translateY(0);
-          }
-          50% {
-            transform: rotate(-45deg) translateY(-30vh);
-          }
-        }
-
-        @keyframes ray-move-3 {
-          0%,
-          100% {
-            transform: rotate(-45deg) translateX(0);
-          }
-          50% {
-            transform: rotate(-45deg) translateX(30vw);
-          }
-        }
-
-        /* Enhanced neon text effect */
-        .neon-text {
-          position: relative;
-          text-shadow: 0 0 10px rgba(255, 230, 90, 0.5),
-            0 0 20px rgba(255, 230, 90, 0.3), 0 0 30px rgba(255, 230, 90, 0.1);
-        }
-
-        /* Text shimmer animation */
-        .animate-shimmer {
-          background-size: 200% auto;
-          animation: shimmer 3s linear infinite;
-        }
-
-        @keyframes shimmer {
-          0% {
-            background-position: -200% center;
-          }
-          100% {
-            background-position: 200% center;
-          }
-        }
-
-        /* Glass effect improvements */
-        .glass-overlay {
-          backdrop-filter: blur(5px);
-          -webkit-backdrop-filter: blur(5px);
-        }
-      `}</style>
     </>
   );
 }

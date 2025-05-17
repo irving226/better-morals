@@ -2,11 +2,11 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
-// This component can replace just your hero section
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [blurStrength, setBlurStrength] = useState(8); // Reduced initial blur
+  const [blurStrength, setBlurStrength] = useState(8);
   const [parallaxY, setParallaxY] = useState(0);
   const [whiteSection, setWhiteSection] = useState(false);
   const [isHeroVisible, setIsHeroVisible] = useState(false);
@@ -18,7 +18,6 @@ const HeroSection = () => {
   // Element references
   const journeyRef = useRef(null);
   const grayscapeRef = useRef(null);
-
 
   useEffect(() => {
     // Set initial visibility for entrance animations
@@ -82,159 +81,396 @@ const HeroSection = () => {
     };
   }, [journeyVisible, ctaVisible, grayscapeVisible]);
 
+  // Floating particle animation for the hero section
+  const renderParticles = () => {
+    return Array.from({ length: 30 }).map((_, i) => (
+      <motion.div
+        key={`particle-${i}`}
+        className="absolute rounded-full"
+        animate={{
+          opacity: [0, Math.random() * 0.7, 0],
+          scale: [0, 1, 0],
+          x: [
+            Math.random() * 100 - 50,
+            Math.random() * 200 - 100,
+            Math.random() * 100 - 50,
+          ],
+          y: [
+            Math.random() * 100 - 50,
+            Math.random() * 200 - 100,
+            Math.random() * 100 - 50,
+          ],
+        }}
+        transition={{
+          duration: Math.random() * 8 + 5,
+          repeat: Infinity,
+          delay: Math.random() * 5,
+          ease: "easeInOut",
+        }}
+        style={{
+          width: Math.random() * 6 + 2 + "px",
+          height: Math.random() * 6 + 2 + "px",
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          backgroundColor: `hsl(${
+            Math.random() < 0.33
+              ? "230, 100%"
+              : Math.random() < 0.66
+              ? "270, 70%"
+              : "45, 100%"
+          }, ${70 + Math.random() * 20}%)`,
+          boxShadow: `0 0 ${Math.random() * 8 + 2}px ${
+            Math.random() * 3 + 1
+          }px hsl(${
+            Math.random() < 0.33
+              ? "230, 100%"
+              : Math.random() < 0.66
+              ? "270, 70%"
+              : "45, 100%"
+          }, 80%)`,
+        }}
+      />
+    ));
+  };
+
   return (
     <>
-     {/* Modern Hero Section with large heading - fixed positioning */}
-            <section className="relative min-h-screen w-full overflow-hidden pt-16">
-              {" "}
-              {/* Added pt-16 for navbar spacing */}
-              {/* Enhanced Background with reduced overlay opacity */}
-              <div
-                className="absolute inset-0 hero-background"
-                style={{
-                  transform: `translateY(${parallaxY * 0.5}px)`,
-                  filter: `blur(${blurStrength}px)`,
-                  opacity: whiteSection ? 0 : 1,
-                  transition: "opacity 500ms ease-out, filter 500ms ease-out",
-                }}
-              >
-                {/* Gradient overlay with reduced opacity to see background better */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#121935]/30 via-[#1a1c45]/30 to-[#0c1228]/30 mix-blend-overlay"></div>
-    
-                {/* Dynamic light rays */}
-                <div className="light-ray light-ray-1"></div>
-                <div className="light-ray light-ray-2"></div>
-                <div className="light-ray light-ray-3"></div>
+      <section className="relative min-h-screen w-full overflow-hidden pt-16 bg-gray-950">
+        {/* Animated background grid */}
+        <div className="absolute inset-0 z-0 opacity-5">
+          <div className="h-full w-full grid grid-cols-12 grid-rows-12">
+            {Array.from({ length: 144 }).map((_, i) => (
+              <div key={i} className="border-[0.5px] border-white/30" />
+            ))}
+          </div>
+        </div>
+
+        {/* Improved background with enhanced effects */}
+        <div
+          className="absolute inset-0 hero-background"
+          style={{
+            transform: `translateY(${parallaxY * 0.5}px)`,
+            filter: `blur(${blurStrength}px)`,
+            opacity: whiteSection ? 0 : 0.7,
+            transition: "opacity 500ms ease-out, filter 500ms ease-out",
+          }}
+        >
+          {/* Gradient overlay with neon color tones */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1a1040]/40 via-[#2a1068]/40 to-[#0c102a]/40 mix-blend-overlay"></div>
+
+          {/* Dynamic light rays with enhanced colors */}
+          <div className="light-ray light-ray-1 bg-gradient-to-r from-transparent via-purple-500/10 to-transparent"></div>
+          <div className="light-ray light-ray-2 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent"></div>
+          <div className="light-ray light-ray-3 bg-gradient-to-r from-transparent via-yellow-500/10 to-transparent"></div>
+        </div>
+
+        {/* Floating particles */}
+        <div className="absolute inset-0 z-1 overflow-hidden">
+          {renderParticles()}
+        </div>
+
+        {/* Glowing orbs */}
+        <motion.div
+          className="absolute top-1/4 -right-20 w-96 h-96 rounded-full z-0"
+          animate={{ opacity: [0.05, 0.12, 0.05] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 70%)",
+          }}
+        />
+
+        <motion.div
+          className="absolute bottom-1/4 -left-20 w-96 h-96 rounded-full z-0"
+          animate={{ opacity: [0.05, 0.12, 0.05] }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 4,
+          }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(234, 179, 8, 0.15), transparent 70%)",
+          }}
+        />
+
+        {/* Improved glass overlay with reduced opacity */}
+        <div className="absolute inset-0 backdrop-blur-sm bg-black/10 glass-overlay z-1"></div>
+
+        {/* Content Container - adjusted for navbar space */}
+        <div className="relative z-10 max-w-7xl mx-auto h-screen flex flex-col justify-center items-center px-6 text-center pt-16">
+          {/* Logo section with animation */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ 
+              opacity: isHeroVisible ? 1 : 0, 
+              y: isHeroVisible ? 0 : -20 
+            }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="flex items-center justify-center mb-8"
+          >
+            <motion.div 
+              className="w-14 h-14 rounded-full flex items-center justify-center relative"
+              animate={{ boxShadow: [
+                "0 0 15px rgba(139, 92, 246, 0.5)",
+                "0 0 25px rgba(139, 92, 246, 0.7)",
+                "0 0 15px rgba(139, 92, 246, 0.5)"
+              ]}}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {/* Animated gradient border */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600"></div>
+              
+              {/* Icon with glow */}
+              <div className="absolute inset-0.5 rounded-full bg-gray-900 flex items-center justify-center">
+                <motion.svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8 text-purple-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  animate={{ 
+                    filter: [
+                      "drop-shadow(0 0 3px rgba(139, 92, 246, 0.5))",
+                      "drop-shadow(0 0 6px rgba(139, 92, 246, 0.7))",
+                      "drop-shadow(0 0 3px rgba(139, 92, 246, 0.5))"
+                    ]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                  <path
+                    fillRule="evenodd"
+                    d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                    clipRule="evenodd"
+                  />
+                </motion.svg>
               </div>
-              {/* Improved glass overlay with reduced opacity */}
-              <div className="absolute inset-0 backdrop-blur-sm bg-black/10 glass-overlay"></div>
-              {/* Content Container - adjusted for navbar space */}
-              <div className="relative z-10 max-w-7xl mx-auto h-screen flex flex-col justify-center items-center px-6 text-center pt-16">
-                {" "}
-                {/* Added pt-16 for navbar spacing */}
-                {/* Logo section with animation */}
-                <div
-                  className={`transform transition-all duration-1000 ease-out ${
-                    isHeroVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-10"
-                  }`}
-                >
-                  <div className="flex items-center justify-center mb-8">
-                    <div className="w-14 h-14 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/20">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-8 w-8 text-white"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                    <span className="ml-3 text-xl font-bold bg-gradient-to-r from-purple-400 to-yellow-200 bg-clip-text text-transparent">
-                      BetterMorals
-                    </span>
-                  </div>
-                </div>
-                {/* Main heading with enhanced typography and colors */}
-                <div
-                  className={`transform transition-all duration-1000 ease-out ${
-                    isHeroVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-10"
-                  }`}
-                  style={{ transitionDelay: "100ms" }}
-                >
-                  <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-8 leading-tight">
-                    <span className="text-white">Marketing with </span>
-                    <span className="relative inline-block">
-                      {/* Glow effect behind the text */}
-                      <span className="absolute -inset-1 blur-xl bg-gradient-to-r from-yellow-400 to-yellow-200 opacity-30"></span>
-                      <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 animate-shimmer neon-text">
-                        Integrity
-                      </span>
-                    </span>
-                    <span className="text-white"> In Mind</span>
-                  </h1>
-                </div>
-                {/* Tagline with staggered animation */}
-                <p
-                  className={`text-lg md:text-xl max-w-xl text-gray-200 mb-10 transition-all duration-1000 ${
-                    isHeroVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-10"
-                  }`}
-                  style={{ transitionDelay: "200ms" }}
-                >
-                  We co-create systems and stories with people who want to build a
-                  better world through authentic ethical marketing.
+            </motion.div>
+            
+            <motion.span 
+              className="ml-3 text-xl font-bold bg-gradient-to-r from-purple-400 to-yellow-300 bg-clip-text text-transparent"
+              animate={{
+                textShadow: [
+                  "0 0 5px rgba(139, 92, 246, 0.3)",
+                  "0 0 10px rgba(139, 92, 246, 0.5)",
+                  "0 0 5px rgba(139, 92, 246, 0.3)"
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              BetterMorals
+            </motion.span>
+          </motion.div>
+
+          {/* Main heading with enhanced typography and colors */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ 
+              opacity: isHeroVisible ? 1 : 0, 
+              y: isHeroVisible ? 0 : 20 
+            }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-8 leading-tight">
+              <span className="text-white">Marketing with </span>
+              <span className="relative inline-block">
+                {/* Enhanced glow effect behind the text */}
+                <motion.span 
+                  className="absolute -inset-1 blur-xl bg-gradient-to-r from-yellow-400 to-yellow-200 opacity-50 rounded-lg"
+                  animate={{ 
+                    opacity: [0.4, 0.7, 0.4],
+                    scale: [0.95, 1.05, 0.95]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                ></motion.span>
+                <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-300 animate-shimmer neon-text">
+                  Integrity
+                </span>
+              </span>
+              <span className="text-white"> In Mind</span>
+            </h1>
+          </motion.div>
+
+          {/* Tagline with staggered animation */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ 
+              opacity: isHeroVisible ? 1 : 0, 
+              y: isHeroVisible ? 0 : 20 
+            }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="text-lg md:text-xl max-w-xl text-gray-300 mb-10"
+          >
+            We co-create systems and stories with people who want to build a
+            better world through authentic ethical marketing.
+          </motion.p>
+
+          {/* CTA buttons with hover effects */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ 
+              opacity: isHeroVisible ? 1 : 0, 
+              y: isHeroVisible ? 0 : 20 
+            }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="flex flex-col sm:flex-row gap-4"
+          >
+            <motion.button 
+              className="px-8 py-4 relative group overflow-hidden rounded-lg"
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              {/* Button background with glow */}
+              <span className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-300 opacity-90 group-hover:opacity-100 transition-all duration-300"></span>
+              
+              {/* Animated light reflection */}
+              <span className="absolute -inset-full h-full w-1/2 z-5 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-all duration-1000 ease-in-out"></span>
+              
+              {/* Button text with shadow for better contrast */}
+              <span className="relative z-10 text-gray-900 font-medium text-shadow-sm">
+                Schedule a Free Consultation
+              </span>
+            </motion.button>
+
+            <motion.button 
+              className="px-8 py-4 relative group overflow-hidden rounded-lg"
+              whileHover={{ scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              {/* Glassmorphic background */}
+              <span className="absolute inset-0 bg-white/5 backdrop-blur-sm border border-white/20 opacity-80 group-hover:opacity-100 group-hover:bg-white/10 transition-all duration-300"></span>
+              
+              {/* Subtle border glow on hover */}
+              <motion.span 
+                className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{ boxShadow: "0 0 15px rgba(255, 255, 255, 0.3)" }}
+              ></motion.span>
+              
+              {/* Button text */}
+              <span className="relative z-10 text-white font-medium">
+                Explore Our Services
+              </span>
+            </motion.button>
+          </motion.div>
+
+          {/* Our Journey Section - appears on scroll */}
+          <motion.div
+            ref={journeyRef}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ 
+              opacity: journeyVisible ? 1 : 0, 
+              y: journeyVisible ? 0 : 40 
+            }}
+            transition={{ duration: 0.8 }}
+            className="relative z-10 flex flex-row items-center justify-center mt-32 max-w-6xl w-full"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div className="text-left">
+                <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-indigo-400 mb-6">
+                  Our Journey
+                </h2>
+                <p className="text-gray-300 leading-relaxed">
+                  At BetterMorals we don't just do marketing, we co-create
+                  systems and stories with people who want to build a better
+                  world! Every service we offer is designed to free up your
+                  time, sharpen your message, and fuel conscious growth
+                  through powerful automation as well as authentic ethical
+                  marketing and branding. Whether you're just starting out,
+                  scaling up, or creating your legacy—we've got a package for
+                  where you are and where you're going.
                 </p>
-                {/* CTA buttons with hover effects */}
-                <div
-                  className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 ${
-                    isHeroVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-10"
-                  }`}
-                  style={{ transitionDelay: "300ms" }}
-                >
-                  <button className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-yellow-300 text-gray-900 font-medium rounded-lg shadow-md hover:shadow-xl hover:shadow-yellow-400/20 transform hover:-translate-y-1 transition-all duration-300">
-                    Schedule a Free Consultation
-                  </button>
-                  <button className="px-8 py-4 bg-transparent border border-white/30 backdrop-blur-sm text-white font-medium rounded-lg hover:bg-white/10 transform hover:-translate-y-1 transition-all duration-300">
-                    Explore Our Services
-                  </button>
-                </div>
-                {/* Our Journey Section - appears on scroll */}
-                <div
-                  ref={journeyRef}
-                  className={`relative z-10 flex flex-row items-center justify-center mt-32 max-w-6xl w-full transition-all duration-700 ease-out ${
-                    journeyVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-10"
-                  }`}
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    <div className="text-left">
-                      <h2 className="text-3xl font-bold text-white mb-6">
-                        Our Journey
-                      </h2>
-                      <p className="text-white/90 leading-relaxed">
-                        At BetterMorals we don't just do marketing, we co-create
-                        systems and stories with people who want to build a better
-                        world! Every service we offer is designed to free up your
-                        time, sharpen your message, and fuel conscious growth
-                        through powerful automation as well as authentic ethical
-                        marketing and branding. Whether you're just starting out,
-                        scaling up, or creating your legacy—we've got a package for
-                        where you are and where you're going.
-                      </p>
-                    </div>
-    
-                    <div className="relative">
-                      <div className="aspect-video relative rounded-xl overflow-hidden shadow-2xl">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-accent-teal/40 to-accent-purple/40 mix-blend-multiply"></div>
-                        <Image
-                          src="/meeting.jpg"
-                          alt="Our journey"
-                          className="w-full h-full object-cover"
-                          width={800}
-                          height={600}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* Scroll indicator */}
               </div>
-            </section>
+
+              <div className="relative">
+                {/* Enhanced image container with glowing border */}
+                <motion.div 
+                  className="aspect-video relative rounded-xl overflow-hidden shadow-2xl"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {/* Animated border glow */}
+                  <motion.div 
+                    className="absolute -inset-0.5 rounded-xl z-0"
+                    animate={{ 
+                      boxShadow: [
+                        "0 0 15px rgba(139, 92, 246, 0.3)",
+                        "0 0 25px rgba(139, 92, 246, 0.5)",
+                        "0 0 15px rgba(139, 92, 246, 0.3)"
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ 
+                      background: "linear-gradient(-45deg, rgba(139, 92, 246, 0.5), rgba(79, 70, 229, 0.5))"
+                    }}
+                  ></motion.div>
+                  
+                  {/* Gradient overlay for the image */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/40 to-blue-900/40 mix-blend-multiply z-10"></div>
+                  
+                  {/* Subtle scan line effect */}
+                  <motion.div 
+                    className="absolute inset-0 z-20 pointer-events-none overflow-hidden opacity-20"
+                    style={{ mixBlendMode: "screen" }}
+                  >
+                    <motion.div
+                      className="h-20 w-full bg-gradient-to-b from-transparent via-indigo-400 to-transparent"
+                      animate={{ top: ["-20%", "120%"] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                      style={{ position: "absolute", left: 0 }}
+                    ></motion.div>
+                  </motion.div>
+                  
+                  {/* The actual image */}
+                  <div className="relative z-0">
+                    <Image
+                      src="/meeting.jpg"
+                      alt="Our journey"
+                      className="w-full h-full object-cover"
+                      width={800}
+                      height={600}
+                      style={{ filter: "contrast(1.1) brightness(0.85)" }}
+                    />
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Scroll indicator - neon style */}
+          <motion.div
+            className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+            animate={{ 
+              y: [0, 10, 0],
+              opacity: [0.4, 0.8, 0.4]
+            }}
+            transition={{ 
+              duration: 1.5, 
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="32" 
+              height="32" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+              className="text-purple-400"
+              style={{ filter: "drop-shadow(0 0 5px rgba(139, 92, 246, 0.5))" }}
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M19 14l-7 7m0 0l-7-7m7 7V3" 
+              />
+            </svg>
+          </motion.div>
+        </div>
+      </section>
     </>
-  
   );
 };
 
