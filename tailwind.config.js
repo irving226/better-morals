@@ -22,6 +22,7 @@ module.exports = {
         'accent-teal': 'linear-gradient(90deg, #00bcd4, #49c5b6)',
         'accent-purple': 'linear-gradient(90deg, #7e57c2, #b39ddb)',
         'accent-yellow': 'linear-gradient(90deg, #ffca28, #ffa726)',
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
       animation: {
         'neon-pulse': 'neon-pulse 1.5s infinite alternate',
