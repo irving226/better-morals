@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 
 const renderIcon = (iconName: string, size = 6) => {
   switch (iconName) {
@@ -264,6 +266,26 @@ const renderIcon = (iconName: string, size = 6) => {
 };
 
 export default function OurEthos() {
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => setIsClient(true), []);
+
+  const stars = useMemo(() => {
+    return Array.from({ length: 30 }).map((_, i) => {
+      return {
+        key: `star-${i}`,
+        opacity: Math.random() * 0.7,
+        duration: Math.random() * 5 + 3,
+        delay: Math.random() * 8,
+        size: Math.random() * 3 + 1,
+        hue: 180 + Math.random() * 60,
+        lightness: 70 + Math.random() * 20,
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        blur: Math.random() * 4 + 2,
+        spread: Math.random() * 2 + 1,
+      };
+    });
+  }, []);
   const coreValues = [
     {
       title: "Better Systems",
@@ -311,36 +333,28 @@ export default function OurEthos() {
         </div>
 
         {/* Animated stars/particles */}
-        <div className="absolute inset-0 z-0">
-          {Array.from({ length: 30 }).map((_, i) => (
+        {isClient &&
+          stars.map((star) => (
             <motion.div
-              key={`star-${i}`}
+              key={star.key}
               className="absolute rounded-full"
-              animate={{
-                opacity: [0, Math.random() * 0.7, 0],
-                scale: [0, 1, 0],
-              }}
+              animate={{ opacity: [0, star.opacity, 0], scale: [0, 1, 0] }}
               transition={{
-                duration: Math.random() * 5 + 3,
+                duration: star.duration,
+                delay: star.delay,
                 repeat: Infinity,
-                delay: Math.random() * 8,
                 ease: "easeInOut",
               }}
               style={{
-                width: Math.random() * 3 + 1 + "px",
-                height: Math.random() * 3 + 1 + "px",
-                backgroundColor: `hsl(${180 + Math.random() * 60}, 100%, ${
-                  70 + Math.random() * 20
-                }%)`,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                boxShadow: `0 0 ${Math.random() * 4 + 2}px ${
-                  Math.random() * 2 + 1
-                }px hsl(${180 + Math.random() * 60}, 100%, 80%)`,
+                width: `${star.size}px`,
+                height: `${star.size}px`,
+                backgroundColor: `hsl(${star.hue}, 100%, ${star.lightness}%)`,
+                top: star.top,
+                left: star.left,
+                boxShadow: `0 0 ${star.blur}px ${star.spread}px hsl(${star.hue}, 100%, 80%)`,
               }}
             />
           ))}
-        </div>
 
         {/* Glowing orbs */}
         <motion.div
@@ -506,7 +520,7 @@ export default function OurEthos() {
             </div>
 
             <p className="text-gray-100 text-xl text-center leading-relaxed relative z-10">
-              At BetterMorals we don&apos;t just do marketing, we co-create
+              At Better Morals we don&apos;t just do marketing, we co-create
               systems and stories with people who want to build a better world!
             </p>
           </motion.div>
@@ -548,8 +562,10 @@ export default function OurEthos() {
               of clients
             </motion.p>
           </div>
+
+          {/* First 3 client type cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {clientTypes.map((client, index) => (
+            {clientTypes.slice(0, 3).map((client, index) => (
               <motion.div
                 key={index}
                 className="relative w-full h-[200px] group perspective"
@@ -613,6 +629,244 @@ export default function OurEthos() {
               </motion.div>
             ))}
           </div>
+
+          {/* Ultra-Modern Moving Logo Showcase - Performance Optimized Infinite Scroll */}
+          <div className="relative my-32 overflow-hidden">
+            {/* Section divider with glow effect */}
+            <motion.div
+              className="w-full h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent mb-16"
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 1.5, delay: 0.5 }}
+            />
+
+            {/* Floating header */}
+            <motion.div
+              className="text-center mb-12 relative z-20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h3 className="text-2xl font-semibold text-gray-300 mb-4">
+                Trusted by innovative brands
+              </h3>
+              <div
+                className="w-16 h-0.5 bg-gradient-to-r from-purple-400 to-cyan-400 mx-auto rounded-full"
+                style={{ boxShadow: "0 0 10px rgba(139, 92, 246, 0.5)" }}
+              />
+            </motion.div>
+
+            {/* Main logo marquee container */}
+            <div className="relative h-32 flex items-center">
+              {/* Gradient masks for smooth edge fade */}
+              <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-gray-950 to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-gray-950 to-transparent z-10 pointer-events-none" />
+
+              {/* Top row - moving right (true infinite with CSS) */}
+              <div className="absolute top-4 w-full overflow-hidden">
+                <div className="flex gap-24 items-center animate-marquee-right">
+                  {/* Just enough logos for seamless loop (3 sets) */}
+                  {[...Array(3)].map((_, setIndex) =>
+                    [
+                      { src: "/dreamland.png", alt: "Client 1" },
+                      { src: "/looplasso.png", alt: "Client 2" },
+                      { src: "/gains.png", alt: "Client 3" },
+                      { src: "/lamb.png", alt: "Client 4" },
+                      { src: "/collarcut.png", alt: "Client 6" },
+                    ].map((logo, logoIndex) => (
+                      <motion.div
+                        key={`top-${setIndex}-${logoIndex}`}
+                        className="flex-shrink-0 group cursor-pointer"
+                        whileHover={{ scale: 1.1, y: -5 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                      >
+                        <div className="relative h-16 w-32 rounded-lg bg-white/5 backdrop-blur-sm flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 border border-white/10">
+                          {/* Glow effect on hover */}
+                          <div className="absolute -inset-0.5 rounded-lg blur-md opacity-0 group-hover:opacity-60 transition-opacity duration-300 bg-gradient-to-r from-cyan-500/50 to-purple-500/50" />
+
+                          {/* Logo image - FULL WIDTH */}
+
+                          <Image
+                            src={logo.src}
+                            alt={logo.alt}
+                            className="relative h-10 w-full object-contain filter brightness-90 group-hover:brightness-110 transition-all duration-300 z-10 px-2"
+                            width={128}
+                            height={40}
+                          />
+
+                          {/* Animated shine effect */}
+                          <div className="absolute inset-0 rounded-lg overflow-hidden">
+                            <motion.div
+                              className="absolute -inset-full h-full w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                              animate={{ x: ["-200%", "200%"] }}
+                              transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                delay: logoIndex * 0.2,
+                                ease: "easeInOut",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Bottom row - moving left (true infinite with CSS) */}
+              <div className="absolute bottom-4 w-full overflow-hidden">
+                <div className="flex gap-24 items-center animate-marquee-left">
+                  {/* Just enough logos for seamless loop (3 sets) */}
+                  {[...Array(3)].map((_, setIndex) =>
+                    [
+                      { src: "/looplasso.png", alt: "Client 6" },
+                      { src: "/dreamland.png", alt: "Client 7" },
+                      { src: "/gains.png", alt: "Client 8" },
+                      { src: "/betterbrand.png", alt: "Client 9" },
+                      { src: "/collarcut.png", alt: "Client 10" },
+                    ].map((logo, logoIndex) => (
+                      <motion.div
+                        key={`bottom-${setIndex}-${logoIndex}`}
+                        className="flex-shrink-0 group cursor-pointer"
+                        whileHover={{ scale: 1.1, y: -5 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                      >
+                        <div className="relative h-16 w-32 rounded-lg bg-white/5 backdrop-blur-sm flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 border border-white/10">
+                          {/* Glow effect on hover */}
+                          <div className="absolute -inset-0.5 rounded-lg blur-md opacity-0 group-hover:opacity-60 transition-opacity duration-300 bg-gradient-to-r from-cyan-500/50 to-purple-500/50" />
+
+                          {/* Logo image - FULL WIDTH */}
+                          <Image
+                            src={logo.src}
+                            alt={logo.alt}
+                            className="relative h-10 w-full object-contain filter brightness-90 group-hover:brightness-110 transition-all duration-300 z-10 px-2"
+                            width={128}
+                            height={40}
+                          />
+
+                          {/* Animated shine effect */}
+                          <div className="absolute inset-0 rounded-lg overflow-hidden">
+                            <motion.div
+                              className="absolute -inset-full h-full w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                              animate={{ x: ["-200%", "200%"] }}
+                              transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                delay: logoIndex * 0.2,
+                                ease: "easeInOut",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Floating particles around logos */}
+              <div className="absolute inset-0 pointer-events-none">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <motion.div
+                    key={`particle-${i}`}
+                    className="absolute w-1 h-1 bg-cyan-400 rounded-full"
+                    animate={{
+                      x: [Math.random() * 800, Math.random() * 800],
+                      y: [Math.random() * 100, Math.random() * 100],
+                      opacity: [0, 0.8, 0],
+                      scale: [0, 1, 0],
+                    }}
+                    transition={{
+                      duration: Math.random() * 5 + 3,
+                      repeat: Infinity,
+                      delay: Math.random() * 2,
+                      ease: "easeInOut",
+                    }}
+                    style={{
+                      boxShadow: "0 0 4px rgba(6, 182, 212, 0.8)",
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Bottom divider */}
+            <motion.div
+              className="w-full h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent mt-16"
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 1.5, delay: 1 }}
+            />
+          </div>
+
+          {/* Last 3 client type cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {clientTypes.slice(3).map((client, index) => (
+              <motion.div
+                key={index + 3}
+                className="relative w-full h-[200px] group perspective"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+              >
+                {/* 3D card flip container */}
+                <motion.div
+                  className="relative h-full w-full transition-all duration-500 preserve-3d"
+                  whileHover={{ rotateY: 15, rotateX: 10, z: 20 }}
+                >
+                  {/* Front of card with strong neon effect */}
+                  <div className="absolute inset-0 backface-hidden">
+                    {/* Card glow effect */}
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl opacity-0 group-hover:opacity-100 blur-md transition-all duration-500"></div>
+
+                    {/* Glass card */}
+                    <div className="absolute inset-0 bg-gray-900/90 backdrop-blur-md border border-gray-700/60 rounded-xl p-8 shadow-2xl transition-all duration-500 z-10 overflow-hidden">
+                      {/* Animated gradient edge */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100"
+                        animate={{
+                          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                        }}
+                        transition={{
+                          duration: 8,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                        style={{ backgroundSize: "200% 200%" }}
+                      />
+
+                      {/* Animated light reflection */}
+                      <div className="absolute -inset-full h-full w-1/2 z-10 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-all duration-1000 ease-in-out"></div>
+
+                      {/* Client type text with neon glow */}
+                      <div className="relative h-full flex items-center justify-center">
+                        <motion.p
+                          className="text-white text-center font-medium text-xl z-20"
+                          animate={{
+                            textShadow: [
+                              "0 0 4px rgba(6, 182, 212, 0.3), 0 0 8px rgba(6, 182, 212, 0.3)",
+                              "0 0 8px rgba(6, 182, 212, 0.5), 0 0 16px rgba(6, 182, 212, 0.5)",
+                              "0 0 4px rgba(6, 182, 212, 0.3), 0 0 8px rgba(6, 182, 212, 0.3)",
+                            ],
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: (index + 3) * 0.3,
+                          }}
+                        >
+                          {client}
+                        </motion.p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+
           {/* Bottom flourish */}
           <motion.div
             className="mt-20 text-center"
@@ -654,7 +908,7 @@ export default function OurEthos() {
           </motion.div>
         </div>
       </section>
-      {/* Added CSS for 3D effect */}
+      {/* Added CSS for 3D effect and infinite marquee animations */}
       <style jsx global>{`
         .perspective {
           perspective: 1000px;
@@ -666,6 +920,39 @@ export default function OurEthos() {
 
         .backface-hidden {
           backface-visibility: hidden;
+        }
+
+        /* Infinite marquee animations - precise calculations for seamless loop */
+        @keyframes marquee-right {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-33.333%);
+          }
+        }
+
+        @keyframes marquee-left {
+          0% {
+            transform: translateX(-33.333%);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+
+        .animate-marquee-right {
+          animation: marquee-right 30s linear infinite;
+          width: 300%;
+          display: flex;
+          gap: 6rem;
+        }
+
+        .animate-marquee-left {
+          animation: marquee-left 35s linear infinite;
+          width: 300%;
+          display: flex;
+          gap: 6rem;
         }
       `}</style>
     </>

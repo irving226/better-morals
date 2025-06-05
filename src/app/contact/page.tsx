@@ -5,22 +5,30 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function ContactPage() {
   const [formState, setFormState] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
+    company: "",
     message: "",
+    phone: "",
     subject: "General Inquiry", // Default subject
   });
 
-  const [activeField, setActiveField] = useState<string | null>(null);
+  const [activeField, setActiveField] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef(null);
+
+  // Replace this with your actual n8n webhook URL
+  const N8N_WEBHOOK_URL =
+    "https://better-morals.app.n8n.cloud/webhook-test/5d238ab6-5923-48e4-9650-f4dc8efdd490";
 
   // Track mouse position for interactive effects
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e) => {
       setCursorPosition({ x: e.clientX, y: e.clientY });
     };
 
@@ -28,15 +36,15 @@ export default function ContactPage() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
+  const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
+    // Clear any previous errors
+    if (submitError) {
+      setSubmitError("");
+    }
   };
 
-  const handleFocus = (fieldName: string) => {
+  const handleFocus = (fieldName) => {
     setActiveField(fieldName);
   };
 
@@ -44,31 +52,66 @@ export default function ContactPage() {
     setActiveField(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError("");
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      // Prepare data for n8n webhook
+      const formData = {
+        firstName: formState.firstName,
+        lastName: formState.lastName,
+        email: formState.email,
+        company: formState.company,
+        phone: formState.phone,
+        subject: formState.subject,
+        message: formState.message,
+        timestamp: new Date().toISOString(),
+        source: "website_contact_form",
+      };
 
-    // Success state
-    setIsSubmitting(false);
-    setFormSubmitted(true);
-
-    // Reset form after delay
-    setTimeout(() => {
-      setFormState({
-        name: "",
-        email: "",
-        message: "",
-        subject: "General Inquiry",
+      // Send to n8n webhook
+      const response = await fetch(N8N_WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-      setFormSubmitted(false);
-    }, 3000);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Success state
+      setIsSubmitting(false);
+      setFormSubmitted(true);
+
+      // Reset form after delay
+      setTimeout(() => {
+        setFormState({
+          firstName: "",
+          lastName: "",
+          email: "",
+          company: "",
+          message: "",
+          phone: "",
+          subject: "General Inquiry",
+        });
+        setFormSubmitted(false);
+      }, 5000);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setIsSubmitting(false);
+      setSubmitError(
+        "Sorry, there was an error sending your message. Please try again or contact us directly."
+      );
+    }
   };
 
   // Calculate glow position for focused input
-  const calculateGlowPosition = (fieldName: string) => {
+  const calculateGlowPosition = (fieldName) => {
     if (activeField !== fieldName) return {};
 
     const fieldElement = document.getElementById(fieldName);
@@ -195,8 +238,8 @@ export default function ContactPage() {
         </h1>
         <div className="w-24 h-0.5 bg-cyan-400 mx-auto my-8 rounded-full shadow-glow-cyan"></div>
         <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
-          We&apos;d love to hear from you. Fill out the form and we&apos;ll
-          respond as soon as we can.
+          We'd love to hear from you. Fill out the form and we'll respond as
+          soon as we can.
         </p>
       </motion.div>
 
@@ -233,49 +276,100 @@ export default function ContactPage() {
               Message Sent!
             </h3>
             <p className="text-gray-300">
-              Thank you for reaching out. We&apos;ll be in touch soon.
+              Thank you for reaching out. We'll be in touch soon.
             </p>
           </motion.div>
         ) : (
           <form ref={formRef} onSubmit={handleSubmit} className="grid gap-6">
-            {/* Name field */}
-            <motion.div variants={itemVariants}>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-300 mb-1"
+            {/* Error message */}
+            {submitError && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 text-red-300 text-sm"
               >
-                Name
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  value={formState.name}
-                  onChange={handleChange}
-                  onFocus={() => handleFocus("name")}
-                  onBlur={handleBlur}
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-md shadow-sm text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300"
-                />
-                <AnimatePresence>
-                  {activeField === "name" && (
-                    <motion.div
-                      className="absolute inset-0 rounded-md pointer-events-none"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <div className="absolute inset-x-0 h-px -bottom-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
-                      <div className="absolute inset-y-0 w-px right-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent"></div>
-                      <div className="absolute inset-x-0 h-px -top-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
-                      <div className="absolute inset-y-0 w-px left-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent"></div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.div>
+                {submitError}
+              </motion.div>
+            )}
+
+            {/* First Name and Last Name */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <motion.div variants={itemVariants}>
+                <label
+                  htmlFor="firstName"
+                  className="block text-sm font-medium text-gray-300 mb-1"
+                >
+                  First Name
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    value={formState.firstName}
+                    onChange={handleChange}
+                    onFocus={() => handleFocus("firstName")}
+                    onBlur={handleBlur}
+                    required
+                    className="w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-md shadow-sm text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300"
+                  />
+                  <AnimatePresence>
+                    {activeField === "firstName" && (
+                      <motion.div
+                        className="absolute inset-0 rounded-md pointer-events-none"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="absolute inset-x-0 h-px -bottom-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-y-0 w-px right-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-x-0 h-px -top-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-y-0 w-px left-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent"></div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <label
+                  htmlFor="lastName"
+                  className="block text-sm font-medium text-gray-300 mb-1"
+                >
+                  Last Name
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    value={formState.lastName}
+                    onChange={handleChange}
+                    onFocus={() => handleFocus("lastName")}
+                    onBlur={handleBlur}
+                    required
+                    className="w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-md shadow-sm text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300"
+                  />
+                  <AnimatePresence>
+                    {activeField === "lastName" && (
+                      <motion.div
+                        className="absolute inset-0 rounded-md pointer-events-none"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="absolute inset-x-0 h-px -bottom-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-y-0 w-px right-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-x-0 h-px -top-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-y-0 w-px left-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent"></div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+            </div>
 
             {/* Email field */}
             <motion.div variants={itemVariants}>
@@ -283,7 +377,7 @@ export default function ContactPage() {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-300 mb-1"
               >
-                Email
+                Email *
               </label>
               <div className="relative">
                 <input
@@ -316,6 +410,83 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
+            {/* Company and Phone */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <motion.div variants={itemVariants}>
+                <label
+                  htmlFor="company"
+                  className="block text-sm font-medium text-gray-300 mb-1"
+                >
+                  Company
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="company"
+                    id="company"
+                    value={formState.company}
+                    onChange={handleChange}
+                    onFocus={() => handleFocus("company")}
+                    onBlur={handleBlur}
+                    className="w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-md shadow-sm text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300"
+                  />
+                  <AnimatePresence>
+                    {activeField === "company" && (
+                      <motion.div
+                        className="absolute inset-0 rounded-md pointer-events-none"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="absolute inset-x-0 h-px -bottom-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-y-0 w-px right-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-x-0 h-px -top-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-y-0 w-px left-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent"></div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium text-gray-300 mb-1"
+                >
+                  Phone
+                </label>
+                <div className="relative">
+                  <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    value={formState.phone}
+                    onChange={handleChange}
+                    onFocus={() => handleFocus("phone")}
+                    onBlur={handleBlur}
+                    className="w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-md shadow-sm text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300"
+                  />
+                  <AnimatePresence>
+                    {activeField === "phone" && (
+                      <motion.div
+                        className="absolute inset-0 rounded-md pointer-events-none"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="absolute inset-x-0 h-px -bottom-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-y-0 w-px right-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-x-0 h-px -top-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                        <div className="absolute inset-y-0 w-px left-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent"></div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+            </div>
+
             {/* Subject field (dropdown) */}
             <motion.div variants={itemVariants}>
               <label
@@ -335,7 +506,11 @@ export default function ContactPage() {
                   className="w-full px-4 py-3 bg-gray-800/60 border border-gray-700 rounded-md shadow-sm text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all duration-300 appearance-none"
                 >
                   {subjects.map((subject) => (
-                    <option key={subject} value={subject}>
+                    <option
+                      key={subject}
+                      value={subject}
+                      className="bg-gray-800"
+                    >
                       {subject}
                     </option>
                   ))}
@@ -379,7 +554,7 @@ export default function ContactPage() {
                 htmlFor="message"
                 className="block text-sm font-medium text-gray-300 mb-1"
               >
-                Message
+                Message *
               </label>
               <div className="relative">
                 <textarea
@@ -417,35 +592,40 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="group relative w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-md font-medium overflow-hidden"
+                className="group relative w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-md font-medium overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {/* Background and hover effect */}
                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-cyan-500 to-blue-500"></span>
-                <span className="absolute inset-0 w-0 bg-gradient-to-r from-blue-600 to-cyan-600 transition-all duration-500 ease-out group-hover:w-full"></span>
+                {!isSubmitting && (
+                  <span className="absolute inset-0 w-0 bg-gradient-to-r from-blue-600 to-cyan-600 transition-all duration-500 ease-out group-hover:w-full"></span>
+                )}
 
                 {/* Text and loading state */}
                 <span className="relative flex items-center justify-center">
                   {isSubmitting ? (
-                    <svg
-                      className="animate-spin mr-2 h-5 w-5 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
+                    <>
+                      <svg
+                        className="animate-spin mr-2 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Sending...
+                    </>
                   ) : (
                     <span className="flex items-center">
                       Send Message
@@ -472,7 +652,7 @@ export default function ContactPage() {
 
       {/* Alternative contact methods */}
       <motion.div
-        className="max-w-3xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative z-10"
+        className="max-w-3xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 text-center relative z-10"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
@@ -530,39 +710,6 @@ export default function ContactPage() {
             1 (505) 803-9717
           </p>
         </motion.div>
-
-        {/* Visit */}
-        {/* <motion.div
-          className="group bg-gray-800/30 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50 hover:border-emerald-500/50 transition-colors duration-300"
-          whileHover={{ y: -5, transition: { duration: 0.2 } }}
-        >
-          <div className="w-12 h-12 mx-auto bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mb-4 shadow-glow-emerald">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-          </div>
-          <h3 className="text-lg font-semibold text-white mb-2">Visit Us</h3>
-          <p className="text-gray-400 hover:text-emerald-300 transition-colors duration-300">
-            123 Eco Avenue, Denver, CO
-          </p>
-        </motion.div> */}
       </motion.div>
 
       {/* CSS animations and custom classes */}

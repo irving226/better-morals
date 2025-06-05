@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-
+import Link from "next/link";
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [blurStrength, setBlurStrength] = useState(8);
@@ -14,6 +14,59 @@ const HeroSection = () => {
   const [ctaVisible, setCtaVisible] = useState(false);
   const [grayscapeVisible, setGrayscapeVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [particles, setParticles] = useState([]);
+
+useEffect(() => {
+  const newParticles = Array.from({ length: 30 }).map((_, i) => {
+    const width = Math.random() * 4 + 1;
+    const height = Math.random() * 4 + 1;
+    const left = `${Math.random() * 100}%`;
+    const top = `${Math.random() * 100}%`;
+    const h = Math.random() < 0.33 ? 180 : Math.random() < 0.66 ? 270 : 45;
+    const bgColor = `hsl(${h}, 100%, ${70 + Math.random() * 20}%)`;
+    const boxShadow = `0 0 ${Math.random() * 8 + 2}px ${
+      Math.random() * 2 + 1
+    }px hsl(${h}, 80%)`;
+
+    return (
+      <motion.div
+        key={`particle-${i}`}
+        className="absolute rounded-full"
+        animate={{
+          opacity: [0, Math.random() * 0.7, 0],
+          scale: [0, 1, 0],
+          x: [
+            Math.random() * 100 - 50,
+            Math.random() * 200 - 100,
+            Math.random() * 100 - 50,
+          ],
+          y: [
+            Math.random() * 100 - 50,
+            Math.random() * 200 - 100,
+            Math.random() * 100 - 50,
+          ],
+        }}
+        transition={{
+          duration: Math.random() * 8 + 5,
+          repeat: Infinity,
+          delay: Math.random() * 5,
+          ease: "easeInOut",
+        }}
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+          left,
+          top,
+          backgroundColor: bgColor,
+          boxShadow,
+        }}
+      />
+    );
+  });
+
+  setParticles(newParticles);
+}, []);
+
 
   // Element references
   const journeyRef = useRef(null);
@@ -108,22 +161,22 @@ const HeroSection = () => {
           ease: "easeInOut",
         }}
         style={{
-          width: Math.random() * 6 + 2 + "px",
-          height: Math.random() * 6 + 2 + "px",
+          width: Math.random() * 4 + 1 + "px",
+          height: Math.random() * 4 + 1 + "px",
           left: `${Math.random() * 100}%`,
           top: `${Math.random() * 100}%`,
           backgroundColor: `hsl(${
             Math.random() < 0.33
-              ? "230, 100%"
+              ? "180, 100%"
               : Math.random() < 0.66
               ? "270, 70%"
               : "45, 100%"
           }, ${70 + Math.random() * 20}%)`,
           boxShadow: `0 0 ${Math.random() * 8 + 2}px ${
-            Math.random() * 3 + 1
+            Math.random() * 2 + 1
           }px hsl(${
             Math.random() < 0.33
-              ? "230, 100%"
+              ? "180, 100%"
               : Math.random() < 0.66
               ? "270, 70%"
               : "45, 100%"
@@ -136,11 +189,11 @@ const HeroSection = () => {
   return (
     <>
       <section className="relative min-h-screen w-full overflow-hidden pt-16 bg-gray-950">
-        {/* Animated background grid */}
-        <div className="absolute inset-0 z-0 opacity-5">
+        {/* Animated background grid - matching Our Ethos section */}
+        <div className="absolute inset-0 z-0 opacity-10">
           <div className="h-full w-full grid grid-cols-12 grid-rows-12">
             {Array.from({ length: 144 }).map((_, i) => (
-              <div key={i} className="border-[0.5px] border-white/30" />
+              <div key={i} className="border-[0.5px] border-cyan-500/30" />
             ))}
           </div>
         </div>
@@ -166,7 +219,7 @@ const HeroSection = () => {
 
         {/* Floating particles */}
         <div className="absolute inset-0 z-1 overflow-hidden">
-          {renderParticles()}
+        {particles}
         </div>
 
         {/* Glowing orbs */}
@@ -176,7 +229,7 @@ const HeroSection = () => {
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           style={{
             background:
-              "radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent 70%)",
+              "radial-gradient(circle, rgba(139, 92, 246, 0.3), transparent 70%)",
           }}
         />
 
@@ -191,9 +244,34 @@ const HeroSection = () => {
           }}
           style={{
             background:
-              "radial-gradient(circle, rgba(234, 179, 8, 0.15), transparent 70%)",
+              "radial-gradient(circle, rgba(6, 182, 212, 0.3), transparent 70%)",
           }}
         />
+
+        {/* Digital flowing lines in background */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <motion.div
+              key={`h-line-${i}`}
+              className="absolute h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent"
+              style={{
+                top: `${15 + i * 20}%`,
+                left: 0,
+                right: 0,
+              }}
+              animate={{
+                opacity: 0.4,
+                translateX: ["calc(-100% - 50px)", "calc(100% + 50px)"],
+              }}
+              transition={{
+                duration: 15 + i * 3,
+                repeat: Infinity,
+                ease: "linear",
+                delay: i * 2,
+              }}
+            />
+          ))}
+        </div>
 
         {/* Improved glass overlay with reduced opacity */}
         <div className="absolute inset-0 backdrop-blur-sm bg-black/10 glass-overlay z-1"></div>
@@ -208,10 +286,10 @@ const HeroSection = () => {
               y: isHeroVisible ? 0 : -20 
             }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="flex items-center justify-center mb-8"
+            className="flex items-center justify-center mb-12"
           >
             <motion.div 
-              className="w-14 h-14 rounded-full flex items-center justify-center relative"
+              className="w-16 h-16 rounded-full flex items-center justify-center relative"
               animate={{ boxShadow: [
                 "0 0 15px rgba(139, 92, 246, 0.5)",
                 "0 0 25px rgba(139, 92, 246, 0.7)",
@@ -219,14 +297,14 @@ const HeroSection = () => {
               ]}}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
-              {/* Animated gradient border */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600"></div>
+              {/* Purple gradient border */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-purple-500 opacity-70"></div>
               
-              {/* Icon with glow */}
+              {/* Eye icon with glow */}
               <div className="absolute inset-0.5 rounded-full bg-gray-900 flex items-center justify-center">
                 <motion.svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-purple-400"
+                  className="h-9 w-9 text-purple-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   animate={{ 
@@ -249,7 +327,7 @@ const HeroSection = () => {
             </motion.div>
             
             <motion.span 
-              className="ml-3 text-xl font-bold bg-gradient-to-r from-purple-400 to-yellow-300 bg-clip-text text-transparent"
+              className="ml-3 text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400"
               animate={{
                 textShadow: [
                   "0 0 5px rgba(139, 92, 246, 0.3)",
@@ -259,7 +337,7 @@ const HeroSection = () => {
               }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
-              BetterMorals
+              Better Morals
             </motion.span>
           </motion.div>
 
@@ -277,14 +355,14 @@ const HeroSection = () => {
               <span className="relative inline-block">
                 {/* Enhanced glow effect behind the text */}
                 <motion.span 
-                  className="absolute -inset-1 blur-xl bg-gradient-to-r from-yellow-400 to-yellow-200 opacity-50 rounded-lg"
+                  className="absolute -inset-1 blur-xl bg-gradient-to-r from-cyan-400 to-cyan-200 opacity-50 rounded-lg"
                   animate={{ 
                     opacity: [0.4, 0.7, 0.4],
                     scale: [0.95, 1.05, 0.95]
                   }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                 ></motion.span>
-                <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-300 animate-shimmer neon-text">
+                <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-cyan-200 to-cyan-300 animate-shimmer neon-text">
                   Integrity
                 </span>
               </span>
@@ -300,7 +378,7 @@ const HeroSection = () => {
               y: isHeroVisible ? 0 : 20 
             }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-lg md:text-xl max-w-xl text-gray-300 mb-10"
+            className="text-lg md:text-xl max-w-2xl text-gray-300 mb-10"
           >
             We co-create systems and stories with people who want to build a
             better world through authentic ethical marketing.
@@ -316,6 +394,8 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="flex flex-col sm:flex-row gap-4"
           >
+            <Link href="/contact" >
+
             <motion.button 
               className="px-8 py-4 relative group overflow-hidden rounded-lg"
               whileHover={{ scale: 1.03 }}
@@ -331,8 +411,11 @@ const HeroSection = () => {
               <span className="relative z-10 text-gray-900 font-medium text-shadow-sm">
                 Schedule a Free Consultation
               </span>
-            </motion.button>
 
+            </motion.button>
+</Link>
+
+<Link href="/services" >
             <motion.button 
               className="px-8 py-4 relative group overflow-hidden rounded-lg"
               whileHover={{ scale: 1.03 }}
@@ -351,7 +434,10 @@ const HeroSection = () => {
               <span className="relative z-10 text-white font-medium">
                 Explore Our Services
               </span>
-            </motion.button>
+            </motion.button>  
+                    </Link>
+
+
           </motion.div>
 
           {/* Our Journey Section - appears on scroll */}
@@ -437,37 +523,7 @@ const HeroSection = () => {
             </div>
           </motion.div>
 
-          {/* Scroll indicator - neon style */}
-          <motion.div
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-            animate={{ 
-              y: [0, 10, 0],
-              opacity: [0.4, 0.8, 0.4]
-            }}
-            transition={{ 
-              duration: 1.5, 
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="32" 
-              height="32" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-              className="text-purple-400"
-              style={{ filter: "drop-shadow(0 0 5px rgba(139, 92, 246, 0.5))" }}
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M19 14l-7 7m0 0l-7-7m7 7V3" 
-              />
-            </svg>
-          </motion.div>
+         
         </div>
       </section>
     </>

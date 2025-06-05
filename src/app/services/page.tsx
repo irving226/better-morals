@@ -1,31 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import React, { useEffect, useState } from "react";
 import OurEthos from "../component/OurServicesComponents/OurEthos";
 import ServicesOverviewCards from "../component/OurServicesComponents/ServicesOverviewCards";
 
-// Custom AnimatedSection component for scroll animations
-const AnimatedSection = ({
-  children = null as React.ReactNode,
-  delay = 0,
-  className = "",
-}) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ y: 50, opacity: 0 }}
-      animate={isInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-      transition={{ duration: 0.6, delay: delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-};
 const FloatingParticle = () => {
   const [style, setStyle] = useState({});
 
@@ -37,6 +15,7 @@ const FloatingParticle = () => {
     const randomOpacity = Math.random() * 0.4;
     const randomShadowBlur = Math.random() * 6 + 2;
     const randomShadowSpread = Math.random() * 2 + 1;
+    const animationDuration = Math.random() * 30 + 20;
 
     setStyle({
       width: `${randomWidth}px`,
@@ -46,9 +25,13 @@ const FloatingParticle = () => {
       left: `${Math.random() * 100}%`,
       opacity: randomOpacity,
       boxShadow: `0 0 ${randomShadowBlur}px ${randomShadowSpread}px hsl(${randomHue}, 100%, 80%)`,
-      animation: `float-particle ${Math.random() * 30 + 20}s linear infinite`,
+      animation: `float-particle ${animationDuration}s linear infinite`,
     });
   }, []);
+
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => setIsClient(true), []);
+  if (!isClient) return null;
 
   return <div className="absolute rounded-full" style={style} />;
 };
@@ -88,52 +71,6 @@ export default function ServicesSection() {
       </div>
       <ServicesOverviewCards />
 
-      {/* Changed to dark background for the bottom section */}
-      <div className="relative py-24 bg-gray-900 text-white">
-        {/* Floating particles */}
-        <div className="absolute inset-0 z-0">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full"
-              style={{
-                width: Math.random() * 3 + 1 + "px",
-                height: Math.random() * 3 + 1 + "px",
-                backgroundColor: `hsl(${180 + Math.random() * 60}, 100%, ${
-                  70 + Math.random() * 20
-                }%)`,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                opacity: Math.random() * 0.4,
-                boxShadow: `0 0 ${Math.random() * 6 + 2}px ${
-                  Math.random() * 2 + 1
-                }px hsl(${180 + Math.random() * 60}, 100%, 80%)`,
-                animation: `float-particle ${
-                  Math.random() * 30 + 20
-                }s linear infinite`,
-              }}
-            />
-          ))}
-        </div>
-
-        <AnimatedSection
-          className="relative z-10 max-w-4xl mx-auto text-center px-6"
-          delay={0.3}
-        >
-          <p className="text-gray-300 leading-relaxed text-lg">
-            We&apos;re not here to chase trends or push tactics that don&apos;t
-            align. We&apos;re here to help you grow in a way that feels aligned,
-            ethical, and sustainable. Our approach is grounded in compassion,
-            driven by data, and powered by AI that amplifies humanity—not
-            replaces it.
-          </p>
-          <p className="text-gray-300 mt-6 leading-relaxed text-lg">
-            If you&apos;re here to change the world (or even just your corner of
-            it), we&apos;re ready to build alongside you.
-          </p>
-        </AnimatedSection>
-      </div>
-
       {/* CSS animations and custom classes */}
       <style jsx>{`
         @keyframes float-particle {
@@ -141,16 +78,10 @@ export default function ServicesSection() {
             transform: translate(0, 0);
           }
           33% {
-            transform: translate(
-              ${Math.random() * 50 - 25}px,
-              ${Math.random() * 50 - 25}px
-            );
+            transform: translate(10px, -10px);
           }
           66% {
-            transform: translate(
-              ${Math.random() * 50 - 25}px,
-              ${Math.random() * 50 - 25}px
-            );
+            transform: translate(-10px, 15px);
           }
           100% {
             transform: translate(0, 0);

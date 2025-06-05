@@ -19,15 +19,33 @@ export default function Footer() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Handle newsletter subscription
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
-    if (email) {
-      // In reality, you would send this to your backend
-      console.log("Subscribed:", email);
+
+    if (!email) return;
+
+    try {
+      const res = await fetch(
+        "https://better-morals.app.n8n.cloud/webhook-test/8628cf76-1b42-4bdd-99f1-68c8442d6cdd",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            source: "footer",
+          }),
+        }
+      );
+
+      if (!res.ok) throw new Error("Subscription failed");
+
       setSubscribed(true);
       setTimeout(() => setSubscribed(false), 5000);
       setEmail("");
+    } catch (err) {
+      console.error("Error subscribing:", err);
     }
   };
 
@@ -44,32 +62,31 @@ export default function Footer() {
       ],
     },
     // Reserved sections for post-launch additions
-    /* 
-    {
-      title: "Services",
-      links: [
-        { name: "AI Automation Systems", href: "/services#ai-automation" },
-        { name: "Marketing Strategy", href: "/services#marketing-strategy" },
-        { name: "Content Creation", href: "/services#content-creation" },
-        { name: "Brand Development", href: "/services#brand-development" },
-      ],
-    },
+
+    // {
+    //   title: "Services",
+    //   links: [
+    //     { name: "AI Automation Systems", href: "/services#ai-automation" },
+    //     { name: "Marketing Strategy", href: "/services#marketing-strategy" },
+    //     { name: "Content Creation", href: "/services#content-creation" },
+    //     { name: "Brand Development", href: "/services#brand-development" },
+    //   ],
+    // },
     {
       title: "Resources",
       links: [
-        { name: "Case Studies", href: "/resources/case-studies" },
+        // { name: "Case Studies", href: "/case-studies" },
         { name: "Blog", href: "/blog" },
-        { name: "Ethics in A.I Transparency", href: "/transparency" },
+        // { name: "Ethics in A.I Transparency", href: "/transparency" },
         { name: "Knowledge Base", href: "/knowledge-base" },
         { name: "FAQs", href: "/faqs" },
       ],
     },
-    */
   ];
 
   // Social media links - ready to uncomment post-launch
-  const socialLinks = [
-    /* 
+  // const socialLinks = [
+  /* 
     {
       name: "Twitter",
       href: "https://twitter.com",
@@ -135,7 +152,7 @@ export default function Footer() {
       ),
     },
     */
-  ];
+  // ];
 
   return (
     <footer className="relative overflow-hidden bg-gray-950 border-t border-cyan-500/20">
@@ -233,7 +250,7 @@ export default function Footer() {
             </p>
 
             {/* Social links section - ready to enable post-launch */}
-            {socialLinks.length > 0 && (
+            {/* {socialLinks.length > 0 && (
               <div className="flex space-x-4">
                 {socialLinks.map((item) => (
                   <a
@@ -247,7 +264,7 @@ export default function Footer() {
                   </a>
                 ))}
               </div>
-            )}
+            )} */}
           </div>
 
           {/* Newsletter subscription */}

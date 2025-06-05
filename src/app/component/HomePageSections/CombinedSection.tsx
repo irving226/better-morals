@@ -317,7 +317,7 @@ export default function CombinedSection() {
             <span className="relative inline-block">
               <span className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 to-purple-400/30 blur-xl rounded-lg"></span>
               <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-500">
-                Our Campaigns
+                Campaigns
               </span>
             </span>
           </motion.h2>
@@ -653,7 +653,7 @@ export default function CombinedSection() {
             <span className="relative inline-block">
               <span className="absolute -inset-1 bg-gradient-to-r from-purple-600/30 to-blue-400/30 blur-xl rounded-lg"></span>
               <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-blue-300">
-                AI-Powered Solutions
+                Automated Solutions
               </span>
             </span>
           </motion.h2>
@@ -755,9 +755,7 @@ export default function CombinedSection() {
                           .replace("from-", "")}`,
                       }}
                     >
-                      <div
-                        className={`text-transparent bg-clip-text bg-gradient-to-r ${feature.color}`}
-                      >
+                      <div className="text-white">
                         {renderIcon(feature.icon)}
                       </div>
                     </div>

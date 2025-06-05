@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-// You can use Image from next/image for better image optimization
 import Image from "next/image";
 
 export default function AppBar() {
@@ -10,307 +9,353 @@ export default function AppBar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("");
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 10);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleGetStarted = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-
-    // Find the services section element
-    const servicesSection = document.getElementById("services-tab-section");
-
-    if (servicesSection) {
-      // Log that we found the element (for debugging)
-      console.log("Found services section, scrolling now");
-
-      // Get the y-position of the section
-      const yPosition =
-        servicesSection.getBoundingClientRect().top + window.pageYOffset;
-
-      // Scroll with a slight offset to prevent the section from being right at the top
-      window.scrollTo({
-        top: yPosition - 80,
-        behavior: "smooth",
-      });
-    } else {
-      // Log if we couldn't find the element (for debugging)
-      console.log("Could not find services section element");
-    }
-  };
-
-  // Determine active link based on current path
   useEffect(() => {
     const path = window.location.pathname;
     if (path.includes("/about")) setActiveLink("about");
     else if (path.includes("/services")) setActiveLink("services");
     else if (path.includes("/contact")) setActiveLink("contact");
+    else if (path.includes("/case-studies")) setActiveLink("case-studies");
+    else if (path.includes("/blog")) setActiveLink("blog");
     else setActiveLink("");
   }, []);
 
-  // Scroll to services section when on homepage
+  const handleGetStarted = (e) => {
+    e.preventDefault();
+    const servicesSection = document.getElementById("services-tab-section");
+    if (servicesSection) {
+      const yPosition =
+        servicesSection.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: yPosition - 80,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const scrollToServices = () => {
     const isHomepage = window.location.pathname === "/";
-
     if (isHomepage) {
       const servicesTabSection = document.getElementById("services-section");
       if (servicesTabSection) {
-        // Get the y-position of the section
         const yPosition =
           servicesTabSection.getBoundingClientRect().top + window.pageYOffset;
-
-        // Scroll with a slight offset (80px) to prevent the section from being right at the top
         window.scrollTo({
-          top: yPosition - 80, // Adjust this value based on your navbar height
+          top: yPosition - 80,
           behavior: "smooth",
         });
-
         setActiveLink("services");
       }
     }
   };
 
-  // Menu item variants for animations
-  const menuItemVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    }),
-    exit: { opacity: 0, y: -10 },
-  };
-
   return (
-    <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-gray-900/70 backdrop-blur-xl border-b border-cyan-500/20 shadow-xl"
-          : "bg-transparent backdrop-blur-md border-b border-white/5"
-      }`}
-    >
-      <div className="relative max-w-7xl mx-auto">
-        {/* Animated gradient border on scroll */}
-        <div
-          className={`absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-cyan-500 via-purple-500 to-cyan-500 transition-all duration-500 ease-in-out ${
-            scrolled ? "w-full" : "w-0"
-          }`}
-          style={{
-            backgroundSize: "200% 100%",
-            animation: scrolled ? "gradient-shift 3s linear infinite" : "none",
-          }}
-        />
-
-        {/* Main navbar content */}
-        <div className="flex justify-between items-center px-6 py-4">
-          {/* Logo with animated gradient */}
-          <Link href="/" className="relative group flex items-center">
-            <motion.div
-              className="absolute -inset-1 rounded-lg opacity-0 group-hover:opacity-70 transition duration-300 blur-md"
-              animate={{
-                background: [
-                  "linear-gradient(90deg, rgba(6, 182, 212, 0.4) 0%, rgba(124, 58, 237, 0.4) 100%)",
-                  "linear-gradient(90deg, rgba(124, 58, 237, 0.4) 0%, rgba(6, 182, 212, 0.4) 100%)",
-                  "linear-gradient(90deg, rgba(6, 182, 212, 0.4) 0%, rgba(124, 58, 237, 0.4) 100%)",
-                ],
-              }}
-              transition={{ duration: 5, repeat: Infinity }}
-            />
-
-            {/* Logo Image - Add your logo here */}
-            <div className="relative w-8 h-8 mr-2 z-10">
-              <Image
-                src="/BMI-Large.png"
-                alt="Better Morals Logo"
-                width={32}
-                height={32}
-                className="object-contain"
-              />
-            </div>
-
-            <span className="relative text-2xl font-bold tracking-tight z-10">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-300 mr-1">
-                Better
-              </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-300">
-                Morals
-              </span>
-            </span>
-          </Link>
-
-          {/* Desktop Nav with hover effects and active indicators */}
-          <nav className="hidden md:flex gap-8 items-center text-sm font-medium">
-            {["about", "services", "contact"].map((item) => (
-              <Link
-                key={item}
-                href={`/${item}`}
-                className="relative group py-1 px-1"
-                onClick={item === "services" ? scrollToServices : undefined}
-              >
-                {/* Animated background on hover */}
-                <span className="absolute inset-0 rounded-lg bg-cyan-500/0 group-hover:bg-cyan-500/10 transition-all duration-300" />
-
-                {/* Animated underline for active link */}
-                <span
-                  className={`absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-amber-400 to-yellow-300 rounded-full transition-all duration-300 ${
-                    activeLink === item ? "w-full" : "w-0 group-hover:w-full"
-                  }`}
-                />
-
-                {/* Link text with glow effect */}
-                <span
-                  className={`relative text-sm ${
-                    activeLink === item
-                      ? "text-amber-300 font-semibold"
-                      : "text-amber-300 group-hover:text-purple-300"
-                  } transition-all duration-300`}
-                >
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
-                </span>
-              </Link>
-            ))}
-
-            {/* CTA button with glow effect */}
-            <Link
-              href="/services#services-tab-section" // This will navigate to the services page and then to the services section
-              className="relative group"
-            >
-              <motion.button
-                className="relative group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 blur opacity-70 group-hover:opacity-100 transition duration-300" />
-                <span className="relative block px-5 py-2 bg-gray-900 rounded-lg text-white font-medium border border-cyan-500/30">
-                  Get Started
-                </span>
-              </motion.button>
-            </Link>
-          </nav>
-
-          {/* Hamburger Menu with animation */}
-          <motion.button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden relative z-50 w-10 h-10 rounded-full bg-gray-800/50 flex items-center justify-center border border-gray-700/50 backdrop-blur-sm"
-            whileHover={{
-              boxShadow: "0 0 8px rgba(6, 182, 212, 0.5)",
-              borderColor: "rgba(6, 182, 212, 0.5)",
+    <>
+      {/* Main Header */}
+      <motion.header
+        className={`fixed top-0 w-full z-50 transition-all duration-500 ease-out ${
+          scrolled || menuOpen
+            ? "bg-gray-900/95 backdrop-blur-xl border-b border-cyan-500/30 shadow-2xl"
+            : "bg-transparent backdrop-blur-md border-b border-white/5"
+        }`}
+        animate={{
+          height: menuOpen ? "100vh" : "auto",
+          backgroundColor: menuOpen ? "rgba(17, 24, 39, 0.98)" : undefined,
+        }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+      >
+        <div className="relative max-w-7xl mx-auto">
+          {/* Animated gradient border */}
+          <motion.div
+            className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-cyan-500 via-amber-400 to-purple-500"
+            style={{
+              backgroundSize: "200% 100%",
             }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <div className="w-6 h-6 flex flex-col justify-center items-center">
-              <motion.span
-                className="w-5 h-0.5 bg-cyan-400 block mb-1.5"
-                animate={{ rotateZ: menuOpen ? 45 : 0, y: menuOpen ? 6 : 0 }}
-                transition={{ duration: 0.3 }}
-              />
-              <motion.span
-                className="w-5 h-0.5 bg-cyan-400 block"
-                animate={{ width: menuOpen ? 0 : 20 }}
-                transition={{ duration: 0.3 }}
-              />
-              <motion.span
-                className="w-5 h-0.5 bg-cyan-400 block mt-1.5"
-                animate={{ rotateZ: menuOpen ? -45 : 0, y: menuOpen ? -6 : 0 }}
-                transition={{ duration: 0.3 }}
-              />
-            </div>
-          </motion.button>
-        </div>
+            animate={{
+              width: scrolled || menuOpen ? "100%" : "0%",
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+            }}
+            transition={{
+              width: { duration: 0.5 },
+              backgroundPosition: {
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear",
+              },
+            }}
+          />
 
-        {/* Animated Mobile Menu with glassmorphism */}
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              className="md:hidden absolute top-full left-0 w-full bg-gray-900/90 backdrop-blur-xl border-b border-cyan-500/20 shadow-2xl overflow-hidden"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              {/* Digital lines animation */}
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {[...Array(3)].map((_, i) => (
-                  <motion.div
-                    key={`line-${i}`}
-                    className="absolute h-px w-full bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent"
-                    style={{ top: `${30 + i * 30}%` }}
-                    initial={{ opacity: 0, left: "-100%" }}
-                    animate={{
-                      opacity: 0.5,
-                      left: "100%",
-                      transition: {
-                        duration: 5 + i,
-                        repeat: Infinity,
-                        ease: "linear",
-                        repeatType: "loop",
-                      },
-                    }}
-                  />
-                ))}
+          {/* Top Navigation Bar */}
+          <div className="flex justify-between items-center px-6 py-4 relative z-10">
+            {/* Logo with enhanced hover */}
+            <Link href="/" className="relative group flex items-center">
+              <motion.div
+                className="absolute -inset-2 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300"
+                style={{
+                  background:
+                    "linear-gradient(45deg, rgba(6, 182, 212, 0.2), rgba(251, 191, 36, 0.2), rgba(124, 58, 237, 0.2))",
+                  filter: "blur(8px)",
+                }}
+              />
+
+              <div className="relative w-8 h-8 mr-3 z-10">
+                <Image
+                  src="/BMI-Large.png"
+                  alt="Better Morals Logo"
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
               </div>
 
-              {/* Mobile menu items */}
-              <nav className="flex flex-col py-6 px-6 relative z-10">
-                {["about", "services", "contact"].map((item, i) => (
-                  <motion.div
+              <motion.span
+                className="relative text-2xl font-bold tracking-tight z-10"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-300 mr-1">
+                  Better
+                </span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-300">
+                  Morals
+                </span>
+              </motion.span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex gap-8 items-center text-sm font-medium">
+              {["about", "services", "case-studies", "blog", "contact"].map(
+                (item) => (
+                  <Link
                     key={item}
-                    custom={i}
-                    variants={menuItemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
+                    href={`/${item}`}
+                    className="relative group py-2 px-3"
+                    onClick={item === "services" ? scrollToServices : undefined}
                   >
-                    <Link
-                      href={`/${item}`}
-                      onClick={() => {
-                        setMenuOpen(false);
-                        if (item === "services") {
-                          scrollToServices();
-                        }
+                    {/* Morphing hover background */}
+                    <motion.span
+                      className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/0 via-amber-400/0 to-purple-500/0 group-hover:from-cyan-500/10 group-hover:via-amber-400/10 group-hover:to-purple-500/10"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.2 }}
+                    />
+
+                    {/* Active/hover indicator line */}
+                    <motion.span
+                      className="absolute bottom-0 left-1/2 h-0.5 bg-gradient-to-r from-amber-400 to-yellow-300 rounded-full"
+                      initial={{ width: 0, x: "-50%" }}
+                      animate={{
+                        width: activeLink === item ? "80%" : "0%",
                       }}
-                      className="block py-3 px-2 text-lg font-medium text-white hover:text-cyan-300 transition-colors border-b border-white/10"
+                      whileHover={{ width: "80%" }}
+                      transition={{ duration: 0.3 }}
+                    />
+
+                    <span
+                      className={`relative text-sm capitalize transition-all duration-300 ${
+                        activeLink === item
+                          ? "text-amber-300 font-semibold"
+                          : "text-amber-200 group-hover:text-white"
+                      }`}
                     >
-                      {item.charAt(0).toUpperCase() + item.slice(1)}
-                    </Link>
-                  </motion.div>
-                ))}
+                      {item === "case-studies" ? "Work" : item}
+                    </span>
+                  </Link>
+                )
+              )}
 
-                {/* Mobile CTA button */}
-                <motion.button
-                  className="mt-6 w-full relative group"
-                  custom={3}
-                  variants={menuItemVariants}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handleGetStarted}
+              {/* Enhanced CTA Button */}
+              <motion.div
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="relative"
+              >
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500 to-amber-400 blur-md opacity-70" />
+                <Link
+                  href="/services#services-tab-section"
+                  className="relative block px-6 py-2 bg-gray-900 rounded-lg text-white font-medium border border-amber-400/30 hover:border-amber-400/60 transition-all duration-300"
                 >
-                  <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-500 blur opacity-70 group-hover:opacity-100 transition duration-300" />
-                  <span className="relative block py-3 bg-gray-900 rounded-lg text-white font-medium border border-cyan-500/30">
-                    Get Started
-                  </span>
-                </motion.button>
-              </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+                  Get Started
+                </Link>
+              </motion.div>
+            </nav>
 
-      {/* Global styles for animations */}
+            {/* Morphing Hamburger Menu */}
+            <motion.button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="md:hidden relative z-50 w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden"
+              style={{
+                background: menuOpen
+                  ? "linear-gradient(45deg, rgba(6, 182, 212, 0.2), rgba(251, 191, 36, 0.2))"
+                  : "rgba(31, 41, 55, 0.8)",
+                border: menuOpen
+                  ? "1px solid rgba(251, 191, 36, 0.5)"
+                  : "1px solid rgba(75, 85, 99, 0.5)",
+                backdropFilter: "blur(12px)",
+              }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: menuOpen
+                  ? "0 0 20px rgba(251, 191, 36, 0.3)"
+                  : "0 0 15px rgba(6, 182, 212, 0.3)",
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="w-6 h-6 flex flex-col justify-center items-center">
+                <motion.span
+                  className="w-5 h-0.5 bg-amber-300 block"
+                  animate={{
+                    rotateZ: menuOpen ? 45 : 0,
+                    y: menuOpen ? 6 : -3,
+                    width: menuOpen ? 20 : 20,
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                />
+                <motion.span
+                  className="w-5 h-0.5 bg-amber-300 block"
+                  animate={{
+                    opacity: menuOpen ? 0 : 1,
+                    x: menuOpen ? 20 : 0,
+                  }}
+                  transition={{ duration: 0.2 }}
+                />
+                <motion.span
+                  className="w-5 h-0.5 bg-amber-300 block"
+                  animate={{
+                    rotateZ: menuOpen ? -45 : 0,
+                    y: menuOpen ? -6 : 3,
+                    width: menuOpen ? 20 : 20,
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                />
+              </div>
+            </motion.button>
+          </div>
+
+          {/* Full-Screen Mobile Menu */}
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                className="md:hidden absolute top-0 left-0 w-full h-screen flex flex-col justify-center items-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Background Effects */}
+                <div className="absolute inset-0 overflow-hidden">
+                  {/* Floating gradient orbs */}
+                  {[...Array(5)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-32 h-32 rounded-full opacity-10"
+                      style={{
+                        background: `linear-gradient(45deg, ${
+                          i % 2 === 0 ? "#06b6d4, #f59e0b" : "#8b5cf6, #06b6d4"
+                        })`,
+                        left: `${20 + i * 15}%`,
+                        top: `${10 + i * 20}%`,
+                      }}
+                      animate={{
+                        y: [0, -30, 0],
+                        x: [0, 15, 0],
+                        scale: [1, 1.1, 1],
+                      }}
+                      transition={{
+                        duration: 4 + i,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* Navigation Items */}
+                <nav className="relative z-10 flex flex-col items-center gap-8">
+                  {["about", "services", "case-studies", "blog", "contact"].map(
+                    (item, index) => (
+                      <motion.div
+                        key={item}
+                        initial={{ y: 50, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 50, opacity: 0 }}
+                        transition={{
+                          delay: index * 0.1,
+                          duration: 0.4,
+                          ease: "easeOut",
+                        }}
+                      >
+                        <Link
+                          href={`/${item}`}
+                          onClick={() => {
+                            setMenuOpen(false);
+                            if (item === "services") scrollToServices();
+                          }}
+                          className="relative group block text-center"
+                        >
+                          <motion.div
+                            className="text-4xl font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-amber-400 group-hover:to-cyan-400 transition-all duration-300 capitalize"
+                            whileHover={{ scale: 1.1, y: -5 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            {item === "case-studies" ? "Work" : item}
+                          </motion.div>
+
+                          {/* Underline effect */}
+                          <motion.div
+                            className="absolute -bottom-2 left-1/2 h-1 bg-gradient-to-r from-amber-400 to-cyan-400 rounded-full"
+                            initial={{ width: 0, x: "-50%" }}
+                            whileHover={{ width: "100%" }}
+                            transition={{ duration: 0.3 }}
+                          />
+                        </Link>
+                      </motion.div>
+                    )
+                  )}
+
+                  {/* Mobile CTA */}
+                  <motion.div
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 50, opacity: 0 }}
+                    transition={{ delay: 0.5, duration: 0.4 }}
+                    className="mt-8"
+                  >
+                    <motion.button
+                      onClick={(e) => {
+                        setMenuOpen(false);
+                        handleGetStarted(e);
+                      }}
+                      className="relative px-8 py-4 bg-gradient-to-r from-cyan-600 to-amber-500 text-white font-bold text-xl rounded-2xl shadow-2xl"
+                      whileHover={{
+                        scale: 1.05,
+                        boxShadow: "0 20px 40px rgba(251, 191, 36, 0.3)",
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span className="relative z-10">Get Started</span>
+                      <motion.div
+                        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-500 to-cyan-600"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </motion.button>
+                  </motion.div>
+                </nav>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.header>
+
+      {/* Global Styles */}
       <style jsx global>{`
         @keyframes gradient-shift {
           0% {
@@ -324,6 +369,6 @@ export default function AppBar() {
           }
         }
       `}</style>
-    </header>
+    </>
   );
 }

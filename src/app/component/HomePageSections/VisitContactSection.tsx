@@ -406,7 +406,7 @@ export default function VisitContactSection() {
                     textShadow: "0 0 8px rgba(139, 92, 246, 0.7)",
                   }}
                 >
-                  hello@example.com
+                  clarityskyz@bettermoralsmarketing.com
                   <motion.span
                     className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-purple-400 to-pink-400"
                     initial={{ width: "0%" }}

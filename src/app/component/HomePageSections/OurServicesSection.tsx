@@ -253,7 +253,7 @@ export default function OurServicesSection() {
                       }}
                     >
                       <div
-                        className={`text-transparent bg-clip-text bg-gradient-to-r ${service.color}`}
+                        className={`bg-clip-text bg-gradient-to-r ${service.color}`}
                       >
                         {renderIcon(service.icon, 8)}
                       </div>
