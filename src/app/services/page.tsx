@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import OurEthos from "../component/OurServicesComponents/OurEthos";
-import ServicesOverviewCards from "../component/OurServicesComponents/ServicesOverviewCards";
+import OurEthos from "../component/services/OurEthos";
+import ServicesOverviewCards from "../component/services/ServicesOverviewCards";
 
 const FloatingParticle = () => {
   const [style, setStyle] = useState({});

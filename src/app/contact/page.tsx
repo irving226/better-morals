@@ -23,8 +23,7 @@ export default function ContactPage() {
   const formRef = useRef(null);
 
   // Replace this with your actual n8n webhook URL
-  const N8N_WEBHOOK_URL =
-    "https://better-morals.app.n8n.cloud/webhook-test/5d238ab6-5923-48e4-9650-f4dc8efdd490";
+  const N8N_WEBHOOK_URL = process.env.NEXT_PUBLIC_LEAD_GENERATION_WEBHOOK_URL;
 
   // Track mouse position for interactive effects
   useEffect(() => {

@@ -2,6 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
+
+// --- CHANGE 1: Dynamically import the StarField component and disable SSR for it ---
+const StarField = dynamic(
+  () => import("./star-particles/StarField"), // Assuming StarField.tsx is in the same folder
+  { ssr: false }
+);
 
 type Campaign = {
   id: string;
@@ -247,36 +254,9 @@ export default function CombinedSection() {
         </div>
       </div>
 
-      {/* Animated stars/particles */}
+      {/* --- CHANGE 2: Replace the old star generation with our new component --- */}
       <div className="absolute inset-0 z-0">
-        {Array.from({ length: 30 }).map((_, i) => (
-          <motion.div
-            key={`star-${i}`}
-            className="absolute rounded-full"
-            animate={{
-              opacity: [0, Math.random() * 0.7, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 5 + 3,
-              repeat: Infinity,
-              delay: Math.random() * 8,
-              ease: "easeInOut",
-            }}
-            style={{
-              width: Math.random() * 3 + 1 + "px",
-              height: Math.random() * 3 + 1 + "px",
-              backgroundColor: `hsl(${Math.random() * 360}, 100%, ${
-                70 + Math.random() * 20
-              }%)`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              boxShadow: `0 0 ${Math.random() * 4 + 2}px ${
-                Math.random() * 2 + 1
-              }px hsl(${Math.random() * 360}, 100%, 80%)`,
-            }}
-          />
-        ))}
+        <StarField />
       </div>
 
       {/* Glowing orbs */}

@@ -8,10 +8,11 @@ export default function Footer() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const apiUrl = process.env.NEXT_PUBLIC_NEWSLETTER_WEBHOOK_URL;
 
   // Update mouse position for glow effect
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: { clientX: number; clientY: number }) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
@@ -19,25 +20,22 @@ export default function Footer() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const handleSubscribe = async (e) => {
+  const handleSubscribe = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (!email) return;
 
     try {
-      const res = await fetch(
-        "https://better-morals.app.n8n.cloud/webhook-test/8628cf76-1b42-4bdd-99f1-68c8442d6cdd",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            source: "footer",
-          }),
-        }
-      );
+      const res = await fetch(`${apiUrl}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          source: "footer",
+        }),
+      });
 
       if (!res.ok) throw new Error("Subscription failed");
 
@@ -75,10 +73,10 @@ export default function Footer() {
     {
       title: "Resources",
       links: [
-        // { name: "Case Studies", href: "/case-studies" },
+        { name: "Case Studies", href: "/case-studies" },
         { name: "Blog", href: "/blog" },
         // { name: "Ethics in A.I Transparency", href: "/transparency" },
-        { name: "Knowledge Base", href: "/knowledge-base" },
+        // { name: "Knowledge Base", href: "/knowledge-base" },
         { name: "FAQs", href: "/faqs" },
       ],
     },
