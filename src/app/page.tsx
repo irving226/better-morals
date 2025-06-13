@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-const AppBar = dynamic(() => import("./component/appbar/HomeAppbar"));
+const AppBar = dynamic(() => import("./component/appbar/AppBar"));
 const HeroSection = dynamic(() => import("./component/homepage/HeroSection"));
 const OurBeliefSection = dynamic(
   () => import("./component/homepage/OurBeliefSection")
