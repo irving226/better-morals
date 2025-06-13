@@ -800,10 +800,9 @@ export default function CombinedSection() {
                 }, transparent)`,
                 width: "100%",
                 top: `${(i + 1) * 15}%`,
-                left: 0,
               }}
               animate={{
-                translateX: ["-100%", "100%"],
+                x: ["-100%", "100%"],
               }}
               transition={{
                 duration: 8 + i * 2,

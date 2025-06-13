@@ -13,7 +13,7 @@ const ContactStarField = () => {
       duration: Math.random() * 5 + 3,
       repeat: Infinity,
       delay: Math.random() * 8,
-      ease: "easeInOut",
+      ease: [0.42, 0, 0.58, 1], // valid easing function
     },
     style: {
       width: `${Math.random() * 3 + 1}px`,
@@ -36,7 +36,6 @@ const ContactStarField = () => {
           key={`star-${star.id}`}
           className="absolute rounded-full"
           animate={star.animate}
-          transition={star.transition}
           style={star.style}
         />
       ))}

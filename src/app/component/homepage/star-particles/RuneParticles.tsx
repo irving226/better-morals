@@ -37,7 +37,6 @@ const RuneParticles = () => {
           className="absolute rounded-full"
           initial={{ scale: 0, x: 0, y: 0 }}
           animate={particle.animate}
-          transition={particle.transition}
           style={particle.style}
         />
       ))}

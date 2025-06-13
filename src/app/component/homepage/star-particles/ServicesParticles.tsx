@@ -31,7 +31,7 @@ export default function OurServicesSection() {
     },
   ];
 
-  const renderIcon = (iconName, size = 6) => {
+  const renderIcon = (iconName: string, size = 6) => {
     switch (iconName) {
       case "leaf":
         return (
