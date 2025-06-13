@@ -501,13 +501,13 @@ export default function OurEthos() {
                     left: 0,
                     right: 0,
                   }}
-                  initial={{ opacity: 0, translateX: "-100%" }}
+                  initial={{ opacity: 0, x: "-100%" }}
                   animate={{
                     opacity: 0.4,
-                    translateX: "100%",
+                    x: "100%",
                     transition: {
                       opacity: { duration: 0.5 },
-                      translateX: {
+                      x: {
                         duration: 15 + i * 3,
                         ease: "linear",
                         repeat: Infinity,

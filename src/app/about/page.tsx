@@ -110,13 +110,13 @@ export default function DiscoverSection() {
                 left: 0,
                 right: 0,
               }}
-              initial={{ opacity: 0, translateX: "-100%" }}
+              initial={{ opacity: 0, x: "-100%" }}
               animate={{
                 opacity: 0.3,
-                translateX: "100%",
+                x: "100%",
                 transition: {
                   opacity: { duration: 0.5, delay: 0.3 + i * 0.1 },
-                  translateX: {
+                  x: {
                     duration: 15 + i * 2,
                     ease: "linear",
                     repeat: Infinity,

@@ -216,7 +216,7 @@ export default function EthicalBlog() {
 
   const postsToDisplay = filteredAndSortedPosts.slice(0, visiblePostsCount);
 
-  const getCardSize = (size) => {
+  const getCardSize = (size: string) => {
     switch (size) {
       case "large":
         return "md:col-span-2 md:row-span-2";
@@ -368,6 +368,15 @@ export default function EthicalBlog() {
                   {type}
                 </button>
               ))}
+            </div>
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search posts..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="px-4 py-2 rounded-lg bg-gray-800 text-gray-300 border border-gray-700 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500"
+              />
             </div>
           </div>
         </section>

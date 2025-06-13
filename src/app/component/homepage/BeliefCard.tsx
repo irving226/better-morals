@@ -3,7 +3,26 @@
 import { memo } from "react";
 import { motion } from "framer-motion";
 
-const BeliefCard = ({ title, listItems, resultText, theme }) => {
+interface BeliefCardProps {
+  title: string;
+  listItems: string[];
+  resultText: string;
+  theme: {
+    initialX: number;
+    gradient: string;
+    border: string;
+    textColor: string;
+    listColor: string;
+    resultColor: string;
+  };
+}
+
+const BeliefCard = ({
+  title,
+  listItems,
+  resultText,
+  theme,
+}: BeliefCardProps) => {
   const cardVariants = {
     hidden: { opacity: 0, x: theme.initialX },
     visible: {

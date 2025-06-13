@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import Link from "next/link";
 
 // It's good practice to define variants if animations get more complex,
@@ -9,7 +9,22 @@ import Link from "next/link";
 // const DURATION_SECONDARY = 0.4;
 
 export default function CaseStudiesPage() {
-  const [selectedCase, setSelectedCase] = useState(null);
+  const [selectedCase, setSelectedCase] = useState<{
+    id: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    color: string;
+    image: string;
+    journey: {
+      phase: string;
+      title: string;
+      content: string;
+      metrics: string;
+      visual: string;
+      bg: string;
+    }[];
+  } | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const cases = [
@@ -189,13 +204,30 @@ export default function CaseStudiesPage() {
     violet: "text-violet-400",
   };
 
-  const borderColorMap = {
+  const borderColorMap: Record<"emerald" | "cyan" | "violet", string> = {
     emerald: "border-emerald-500/30",
     cyan: "border-cyan-500/30",
     violet: "border-violet-500/30",
   };
 
-  const handleCaseClick = (caseItem) => {
+  const handleCaseClick = (
+    caseItem: {
+      id: string;
+      title: string;
+      subtitle: string;
+      description: string;
+      color: string;
+      image: string;
+      journey: {
+        phase: string;
+        title: string;
+        content: string;
+        metrics: string;
+        visual: string;
+        bg: string;
+      }[];
+    } | null
+  ) => {
     // OPTIMIZATION: Scroll to top instantly before state change to ensure
     // the new view appears at the top without conflicting scroll animations.
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -217,7 +249,7 @@ export default function CaseStudiesPage() {
     }
   };
 
-  const goToSlide = (index) => {
+  const goToSlide = (index: SetStateAction<number>) => {
     setCurrentSlide(index);
   };
 
@@ -272,8 +304,8 @@ export default function CaseStudiesPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                We don't do case studies to brag. We do them to show how ethical
-                creativity scales. Click any project to explore the full
+                We don&apos;t do case studies to brag. We do them to show how
+                ethical creativity scales. Click any project to explore the full
                 journey.
               </motion.p>
               <div className="grid md:grid-cols-3 gap-12 max-w-7xl mx-auto">
@@ -282,7 +314,7 @@ export default function CaseStudiesPage() {
                     key={c.id} // OPTIMIZATION: Use stable 'id' for key.
                     layout // OPTIMIZATION: Helps if grid items reflow due to other changes.
                     className={`group rounded-2xl overflow-hidden border ${
-                      borderColorMap[c.color]
+                      borderColorMap[c.color as "emerald" | "cyan" | "violet"]
                     } bg-gray-900/80 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-500 hover:border-opacity-60 cursor-pointer`}
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -326,7 +358,9 @@ export default function CaseStudiesPage() {
                         {c.title}
                       </h2>
                       <p
-                        className={`${textColorMap[c.color]} font-medium mb-4`}
+                        className={`${
+                          textColorMap[c.color as keyof typeof textColorMap]
+                        } font-medium mb-4`}
                       >
                         {c.subtitle}
                       </p>
@@ -425,7 +459,9 @@ export default function CaseStudiesPage() {
                       <div
                         className={`text-xs font-medium ${
                           index <= currentSlide
-                            ? textColorMap[selectedCase.color]
+                            ? textColorMap[
+                                selectedCase.color as keyof typeof textColorMap
+                              ]
                             : "text-gray-500"
                         }`}
                       >
@@ -483,7 +519,9 @@ export default function CaseStudiesPage() {
                           <div>
                             <div
                               className={`text-sm font-medium ${
-                                textColorMap[selectedCase.color]
+                                textColorMap[
+                                  selectedCase.color as keyof typeof textColorMap
+                                ]
                               } mb-1`}
                             >
                               {selectedCase.journey[currentSlide].phase}
@@ -555,7 +593,13 @@ export default function CaseStudiesPage() {
                   <h3 className="text-xl font-bold text-white">
                     {selectedCase.title}
                   </h3>
-                  <p className={`text-sm ${textColorMap[selectedCase.color]}`}>
+                  <p
+                    className={`text-sm ${
+                      textColorMap[
+                        selectedCase.color as "emerald" | "cyan" | "violet"
+                      ]
+                    }`}
+                  >
                     {selectedCase.subtitle}
                   </p>
                 </div>
@@ -593,7 +637,7 @@ export default function CaseStudiesPage() {
               <span className="absolute inset-0 border-2 border-cyan-400 rounded-lg"></span>
               <span className="absolute inset-0 scale-0 rounded-lg bg-gradient-to-r from-cyan-600 to-emerald-600 transition-transform duration-500 group-hover:scale-100"></span>
               <span className="relative text-cyan-300 group-hover:text-white transition-colors duration-300 flex items-center">
-                Let's Build Something Worth Bragging About
+                Let&apos;s Build Something Worth Bragging About
                 <svg
                   className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300"
                   fill="none"

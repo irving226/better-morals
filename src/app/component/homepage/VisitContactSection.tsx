@@ -15,15 +15,6 @@ const RuneParticles = dynamic(() => import("./star-particles/RuneParticles"), {
 });
 
 export default function VisitContactSection() {
-  // This data is deterministic and safe for SSR
-  const digitalPoints = [
-    { x: 15, y: 20 },
-    { x: 85, y: 30 },
-    { x: 25, y: 70 },
-    { x: 75, y: 80 },
-    { x: 50, y: 50 },
-  ];
-
   return (
     <section className="relative px-4 sm:px-6 lg:px-8 overflow-hidden bg-gray-950 py-24">
       {/* Animated background grid */}

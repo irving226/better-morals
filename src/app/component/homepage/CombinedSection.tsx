@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 
@@ -110,6 +110,18 @@ export default function CombinedSection() {
   const [autoplay, setAutoplay] = useState(true);
   const autoplayTime = 5000; // 5 seconds
 
+  // Pause autoplay on hover
+  const handleMouseEnter = () => setAutoplay(false);
+  const handleMouseLeave = () => setAutoplay(true);
+
+  const navigateWithDirection = useCallback(
+    (newIndex: number) => {
+      setDirection(newIndex > currentIndex ? 1 : -1);
+      setCurrentIndex(newIndex);
+    },
+    [currentIndex]
+  );
+
   // Handle autoplay
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -125,16 +137,7 @@ export default function CombinedSection() {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [currentIndex, autoplay]);
-
-  // Pause autoplay on hover
-  const handleMouseEnter = () => setAutoplay(false);
-  const handleMouseLeave = () => setAutoplay(true);
-
-  const navigateWithDirection = (newIndex: number) => {
-    setDirection(newIndex > currentIndex ? 1 : -1);
-    setCurrentIndex(newIndex);
-  };
+  }, [currentIndex, autoplay, navigateWithDirection]);
 
   const goToNext = () => {
     const isLastSlide = currentIndex === campaigns.length - 1;
