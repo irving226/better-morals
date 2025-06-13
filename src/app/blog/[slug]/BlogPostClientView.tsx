@@ -1,31 +1,28 @@
-// src/app/blog/[slug]/BlogPostClientView.tsx
-"use client"; // This makes it a Client Component
-
+"use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useEffect } from "react"; // If you need client-side effects
-import { BlogPost } from "@/lib/blogData"; // Adjust path for your BlogPost type
+import { useEffect } from "react";
+import { BlogPost } from "@/lib/blogData";
+import Image from "next/image";
 
 interface BlogPostClientViewProps {
   post: BlogPost;
 }
 
 export default function BlogPostClientView({ post }: BlogPostClientViewProps) {
-  // useEffect for client-side actions, e.g., scroll to top if needed for specific animations
   useEffect(() => {
-    window.scrollTo(0, 0); // Example: scroll to top on component mount
+    window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="relative bg-gray-950 min-h-screen">
-      {/* Optional: Consistent background effects */}
       <div className="fixed inset-0 z-0 opacity-50">
         <div className="absolute top-1/4 -left-32 w-96 h-96 rounded-full opacity-10 bg-gradient-to-br from-cyan-500/30 to-transparent blur-[80px]"></div>
         <div className="absolute bottom-1/3 -right-32 w-80 h-80 rounded-full opacity-15 bg-gradient-to-br from-purple-500/30 to-transparent blur-[80px]"></div>
       </div>
 
       <motion.div
-        key={post.slug} // Animate on slug change
+        key={post.slug}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
@@ -94,10 +91,11 @@ export default function BlogPostClientView({ post }: BlogPostClientViewProps) {
 
           {post.image && (
             <div className="my-8 rounded-xl overflow-hidden shadow-lg border border-gray-700/50">
-              {/* Replace with <Image /> from next/image for optimization */}
-              <img
+              <Image
                 src={post.image}
                 alt={post.title}
+                width={1280}
+                height={720}
                 className="w-full h-auto object-cover aspect-[16/9]"
               />
             </div>
@@ -135,7 +133,6 @@ export default function BlogPostClientView({ post }: BlogPostClientViewProps) {
           )}
         </article>
       </motion.div>
-      {/* If you have page-specific <style jsx global>, it should go here or be handled via global CSS */}
     </div>
   );
 }

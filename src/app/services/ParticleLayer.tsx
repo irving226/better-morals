@@ -18,7 +18,7 @@ const ParticleLayer = () => {
       duration: Math.random() * 5 + 3,
       delay: Math.random() * 2,
     }));
-  }, [isClient]);
+  }, []);
 
   if (!isClient) return null;
 

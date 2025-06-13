@@ -287,8 +287,9 @@ export default function EthicalFAQ() {
               </span>
             </h3>
             <p className="text-gray-300 mb-6">
-              We're committed to transparency and honest dialogue. If there's
-              something we haven't covered, we'd love to hear from you.
+              We&apos;re committed to transparency and honest dialogue. If
+              there&apos;s something we haven&apos;t covered, we&apos;d love to
+              hear from you.
             </p>
             <button className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-medium transition-all duration-300">
               <span className="absolute inset-0 border-2 border-cyan-400 rounded-lg"></span>

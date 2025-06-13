@@ -2,7 +2,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { memo } from "react";
+import {
+  JSXElementConstructor,
+  Key,
+  memo,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+} from "react";
 
 // --- BeliefCard Component Definition (can be in the same file or imported) ---
 // For simplicity, I'm including it here. If it's in another file, just import it.
@@ -26,34 +33,85 @@ const beliefCardThemes = {
   },
 };
 
-const BeliefCard = memo(({ title, listItems, resultText, theme }) => {
-  const cardVariants = {
-    hidden: { opacity: 0, x: theme.initialX },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.8 },
-    },
+interface BeliefCardProps {
+  title: string;
+  listItems: Array<string | ReactNode>;
+  resultText: string;
+  theme: {
+    initialX: number;
+    gradient: string;
+    border: string;
+    textColor: string;
+    listColor: string;
+    resultColor: string;
   };
+}
 
-  return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.5 }}
-      variants={cardVariants}
-      className={`bg-gradient-to-br ${theme.gradient} p-6 rounded-xl border ${theme.border} shadow-md`}
-    >
-      <h3 className={`text-2xl font-bold mb-3 ${theme.textColor}`}>{title}</h3>
-      <ul className={`list-disc ml-6 space-y-2 text-sm ${theme.listColor}`}>
-        {listItems.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-      <p className={`mt-4 text-sm italic ${theme.resultColor}`}>{resultText}</p>
-    </motion.div>
-  );
-});
+const BeliefCard = memo(
+  ({ title, listItems, resultText, theme }: BeliefCardProps) => {
+    const cardVariants = {
+      hidden: { opacity: 0, x: theme.initialX },
+      visible: {
+        opacity: 1,
+        x: 0,
+        transition: { duration: 0.8 },
+      },
+    };
+
+    return (
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={cardVariants}
+        className={`bg-gradient-to-br ${theme.gradient} p-6 rounded-xl border ${theme.border} shadow-md`}
+      >
+        <h3 className={`text-2xl font-bold mb-3 ${theme.textColor}`}>
+          {title}
+        </h3>
+        <ul className={`list-disc ml-6 space-y-2 text-sm ${theme.listColor}`}>
+          {listItems.map(
+            (
+              item:
+                | string
+                | number
+                | bigint
+                | boolean
+                | ReactElement<
+                    unknown,
+                    string | JSXElementConstructor<ReactNode>
+                  >
+                | Iterable<ReactNode>
+                | ReactPortal
+                | Promise<
+                    | string
+                    | number
+                    | bigint
+                    | boolean
+                    | ReactPortal
+                    | ReactElement<
+                        unknown,
+                        string | JSXElementConstructor<ReactNode>
+                      >
+                    | Iterable<ReactNode>
+                    | null
+                    | undefined
+                  >
+                | null
+                | undefined,
+              index: Key | null | undefined
+            ) => (
+              <li key={index}>{item}</li>
+            )
+          )}
+        </ul>
+        <p className={`mt-4 text-sm italic ${theme.resultColor}`}>
+          {resultText}
+        </p>
+      </motion.div>
+    );
+  }
+);
 BeliefCard.displayName = "BeliefCard";
 
 // --- Main OurBeliefSection Component ---
@@ -155,9 +213,10 @@ export default function OurBeliefSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true, amount: 0.5 }}
         >
-          At BetterMorals, we don't just automate. We amplify. We're not here to
-          trick people into clicking—we're here to build trust, champion
-          creators, and change the narrative around what marketing can be.
+          At BetterMorals, we don&apos;t just automate. We amplify. We&apos;re
+          not here to trick people into clicking—we&apos;re here to build trust,
+          champion creators, and change the narrative around what marketing can
+          be.
         </motion.p>
 
         <div className="grid md:grid-cols-2 gap-12 text-left">

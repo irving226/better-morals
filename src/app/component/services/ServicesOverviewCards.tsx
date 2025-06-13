@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useInView } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { SetStateAction, useRef, useState } from "react";
 
@@ -141,28 +141,6 @@ export default function ServicesOverviewCards() {
       default:
         return null;
     }
-  };
-
-  // Custom AnimatedSection component for scroll animations
-  const AnimatedSection = ({
-    children = null as React.ReactNode,
-    delay = 0,
-    className = "",
-  }) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, amount: 0.2 });
-
-    return (
-      <motion.div
-        ref={ref}
-        initial={{ y: 50, opacity: 0 }}
-        animate={isInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-        transition={{ duration: 0.6, delay: delay }}
-        className={className}
-      >
-        {children}
-      </motion.div>
-    );
   };
 
   // Handler for expanding a service card

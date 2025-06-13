@@ -1,4 +1,3 @@
-// Lazy-loaded components
 import dynamic from "next/dynamic";
 
 const AppBar = dynamic(() => import("./component/appbar/HomeAppbar"));

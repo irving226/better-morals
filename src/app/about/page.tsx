@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -8,8 +8,8 @@ import {
   useTransform,
 } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
-// Team members data (remains unchanged)
 const teamMembers = [
   {
     name: "Clarity Skyz",
@@ -18,7 +18,7 @@ const teamMembers = [
     fullBio:
       "Clarity Skyz is the visionary behind Better Morals—a company born from the belief that marketing doesn't have to be manipulative to be effective, and that technology should be used to *amplify* creativity, not erase it. With a career rooted in storytelling, brand-building, and automation design, Clarity blends the imaginative with the strategic. From launching full-scale brand ecosystems to building AI systems that support artists and small businesses, their work lives at the intersection of ethics, innovation, and deep human connection. Clarity has partnered with creators, visionaries, and cultural disruptors to develop authentic messaging, automate workflows, and scale with soul. They're especially passionate about helping marginalized voices find clarity, confidence, and momentum in a world that too often tries to silence them. A lifelong student of the strange and strategic Clarity founded Better Morals as both a business and a movement: to rewrite the rules, elevate the creative class, and build a future where doing the right thing isn't a compromise, it's the competitive edge.",
     skills: ["AI Ethics", "Marketing Strategy", "Neuroscience"],
-    image: "/team/alex.jpg",
+    image: "/placeholder.jpg",
     socialLinks: {
       twitter: "https://twitter.com/alexmorgan",
       linkedin: "https://linkedin.com/in/alexmorgan",
@@ -32,7 +32,7 @@ const teamMembers = [
     fullBio:
       "With a decade-long career as a Doctor of East Asian Medicine and an academic foundation in deconstructive sociology, Liz brings a rare synthesis of intuition, critical thinking, and artistic vision to Better Morals. Her creative work is informed by a deep understanding of global systems and the subtle forces that shape human behavior—making her a natural fit for a company committed to intentional, ethical marketing. She joined Better Morals during a self-directed sabbatical, seeking new ways to respond to a rapidly shifting technological and cultural landscape. Rather than retreating from change, Liz chose to channel her skills into creative direction that empowers small businesses and soulful entrepreneurs to tell their stories with clarity, depth, and integrity. Her approach is both justice oriented and deeply strategic and grounded in the belief that marketing can be used to redistribute resources, amplify marginalized voices, and challenge dominant narratives. As a lifelong student of collective wisdom, Liz sees this work as part of a broader project: helping shift global awareness and rebalance power during a time of massive change.",
     skills: ["Visual Design", "Narrative Strategy", "Brand Development"],
-    image: "So.png",
+    image: "/So.png",
     socialLinks: {
       twitter: "https://twitter.com/jordanrivers",
       linkedin: "https://linkedin.com/in/jordanrivers",
@@ -41,39 +41,37 @@ const teamMembers = [
   },
   {
     name: "Brian Irving",
-    role: "Tech Lead",
-    bio: "Brian serves a pivotal role at Better Morals thanks to his experience spanning elite tech and military environments, blending technical depth with a people-first mindset. His early years as a U.S. Army paratrooper shaped a bias for action and adaptability—skills he carried into roles building scalable AI and automation systems at AWS and beyond.",
+    role: "Technical Architect & Automation Lead",
+    bio: "Brian serves a pivotal role at Better Morals thanks to his experience spanning elite tech and military environments, blending technical depth with a people-first mindset. His early years as a U.S. Army paratrooper shaped a bias for action and adaptability, skills he carried into roles building scalable AI and automation systems at major tech companies and beyond.",
     fullBio:
-      "Brian serves a pivitol role at Better Morals thanks to his experience spanning elite tech and military environments, blending technical depth with a people-first mindset. His early years as a U.S. Army paratrooper shaped a bias for action and adaptability—skills he carried into roles building scalable AI and automation systems at AWS and beyond. At Better Morals, Brian focuses on ethical, human-centered tech that amplifies creativity rather than replaces it. From streamlining backend workflows to crafting intuitive AI tools, he helps creators, ethical brands, and mission-driven teams grow without compromising their values.A lifelong musician and active supporter of creative communities, Brian bridges engineering with culture—making tech that resonates just as much as it runs. Whether he's building infrastructure or supporting artists, his goal stays the same: use technology to scale impact and deepen connection.",
+      "Brian serves a pivitol role at Better Morals thanks to his experience spanning elite tech and military environments, blending technical depth with a people-first mindset. His early years as a U.S. Army paratrooper shaped a bias for action and adaptability, skills he carried into roles building scalable AI and automation systems at major tech companies and beyond. At Better Morals, Brian focuses on ethical, human-centered tech that amplifies creativity rather than replaces it. From streamlining backend workflows to crafting intuitive AI tools, he helps creators, ethical brands, and mission-driven teams grow without compromising their values. A lifelong musician and active supporter of creative communities, Brian bridges engineering with culturally impactful tech that resonates just as much as it runs. Whether he's building infrastructure or supporting artists, his goal stays the same: use technology to scale impact and deepen connection.",
     skills: ["Systems Architecture", "AI Implementation", "Automation"],
-    image: "irving.JPG",
+    image: "/irving.JPG",
     socialLinks: {
-      twitter: "https://twitter.com/taylorzhang",
-      linkedin: "https://linkedin.com/in/taylorzhang",
+      instagram: "https://instagram.com/swerve226",
+      linkedin: "https://linkedin.com/in/brianirv226",
     },
     accentColor: "from-blue-400 to-indigo-500",
   },
-];
-
-// About section content (remains unchanged)
-const aboutContent = [
   {
-    title: "Our History",
-    desc: "Better Morals began with a simple but rebellious idea: that marketing could be a force for good. Born out of late-night brainstorms between artists and strategists who were tired of soulless sales tactics and extractive business models. What started as a solo venture helping indie creators quickly grew into a full-service agency working with everyone from underground collectives to high-profile visionaries. With each client, our mission stayed the same: use AI and automation not to replace people—but to empower them.",
-    icon: "history",
-    color: "from-cyan-400 to-teal-300",
-  },
-  {
-    title: "Our Mission",
-    desc: "To empower good people to do great things with the help of technology that amplifies integrity, not replaces it. Whether you're an artist collective, a TTRPG creator, a high-profile visionary, or a small biz with a big dream—we meet you where you are and build systems that let your genius thrive. We're not here for short-term wins, we're here to create long-term impact. Every strategy we develop is rooted in transparency, empathy, and a commitment to lifting up the creative economy.",
-    icon: "target",
-    color: "from-purple-400 to-fuchsia-300",
+    name: "Erin Simmons",
+    role: "AI Integration & Optimization Specialist",
+    bio: "With a career that spans fine art photography, 3D printing, and project leadership. Erin Simmons brings a rare creative fluency to AI implementation. At BetterMorals he specializes in turning complex systems into accessible tools and bridging the gap between imaginative vision and operational clarity.",
+    fullBio:
+      "With a career that spans fine art photography, 3D printing, and project leadership. Erin Simmons brings a rare creative fluency to AI implementation. At BetterMorals he specializes in turning complex systems into accessible tools and bridging the gap between imaginative vision and operational clarity. Erin’s background includes international art exhibitions like the LPWA Worldwide Exhibition in Casablanca and teaching engagements at institutions such as the Princeton Photography Workshop and the Southampton Parrish Art Museum. Before joining BetterMorals Erin led residential renovation teams and managed high-stakes client relationships, developing a sharp instinct for systems that work in the real world, not just on paper. Whether training creative teams or building scalable AI workflows his approach is grounded, adaptable, and always aligned with each brand’s unique voice. Based in the Denver metro area Erin helps our clients implement AI solutions and makes sure things are always optimized!",
+    skills: ["Automation", "Optimization", "System Integration"],
+    image: "/Erin.JPG",
+    socialLinks: {
+      twitter: "https://twitter.com/alexmorgan",
+      linkedin: "https://linkedin.com/in/alexmorgan",
+    },
+    accentColor: "from-blue-400 to-teal-500",
   },
 ];
 
 export default function DiscoverSection() {
   const [activeTeamMember, setActiveTeamMember] = useState(0);
-  const [hoveredMember, setHoveredMember] = useState(null);
+  const [hoveredMember, setHoveredMember] = useState<null | number>(null);
   const [showFullBio, setShowFullBio] = useState(false);
   const { scrollYProgress } = useScroll();
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
@@ -85,47 +83,6 @@ export default function DiscoverSection() {
     }, 8000);
     return () => clearInterval(interval);
   }, []);
-
-  const renderIcon = (iconName: string) => {
-    // ... (renderIcon function remains unchanged)
-    switch (iconName) {
-      case "history":
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-6 h-6"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
-        );
-      case "target":
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="w-6 h-6"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <circle cx="12" cy="12" r="6"></circle>
-            <circle cx="12" cy="12" r="2"></circle>
-          </svg>
-        );
-      default:
-        return null;
-    }
-  };
 
   const currentMember = teamMembers[activeTeamMember];
 
@@ -175,58 +132,10 @@ export default function DiscoverSection() {
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
-        <motion.div
-          className="max-w-5xl mx-auto text-center mb-20"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-5xl sm:text-6xl font-bold tracking-tight text-white mb-6">
-            Discover{" "}
-            <span className="relative inline-block">
-              <span className="absolute -inset-2 bg-gradient-to-r from-cyan-600/30 to-cyan-400/30 blur-xl rounded-lg"></span>
-              <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-cyan-500">
-                Better Morals
-              </span>
-            </span>{" "}
-            Marketing
-          </h1>
 
-          <motion.div
-            className="max-w-3xl mx-auto mt-8 mb-8"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-          >
-            <p className="text-xl sm:text-2xl text-cyan-100 leading-relaxed font-light">
-              We empower your brand with AI-driven marketing that&apos;s both{" "}
-              <span className="font-medium text-white">highly effective</span>{" "}
-              and <span className="font-medium text-white">deeply ethical</span>
-              .
-            </p>
-            <p className="mt-3 text-lg text-gray-300">
-              Achieve remarkable results without compromising your core values.
-            </p>
-          </motion.div>
-
-          <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-fuchsia-400 mx-auto rounded-full shadow-glow"></div>
-        </motion.div>
         {/* About Section - New Wave Moral High Ground */}
         <div className="mb-32">
           <div className="text-center mb-20">
-            <motion.div
-              className="inline-block mb-8"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="relative">
-                <span className="text-sm font-medium tracking-widest text-emerald-400 uppercase bg-emerald-500/10 px-6 py-3 rounded-full border border-emerald-500/20 backdrop-blur-sm">
-                  ✨ New Wave Agency
-                </span>
-              </div>
-            </motion.div>
-
             <h2 className="text-4xl sm:text-6xl font-light mb-8 leading-tight tracking-wide">
               <span className="text-white">When Institutions</span>
               <br />
@@ -543,7 +452,7 @@ export default function DiscoverSection() {
               </motion.div>
 
               <h3 className="text-3xl sm:text-5xl font-light mb-6 text-white leading-tight">
-                We Don't Just Practice
+                We Don&apos;t Just Practice
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 font-medium">
                   We Teach
@@ -551,9 +460,9 @@ export default function DiscoverSection() {
               </h3>
 
               <p className="text-xl text-gray-200 max-w-4xl mx-auto font-light leading-relaxed">
-                Knowledge is power—but shared knowledge is transformation. We're
-                building the educational foundation for an ethical AI future,
-                one workshop, tool, and conversation at a time.
+                Knowledge is power, but shared knowledge is transformation.
+                We&apos;re building the educational foundation for an ethical AI
+                future; one workshop, tool, and conversation at a time.
               </p>
             </div>
 
@@ -685,12 +594,12 @@ export default function DiscoverSection() {
                 </h4>
 
                 <p className="text-lg text-gray-200 leading-relaxed font-light mb-6">
-                  We're not just teaching today's best practices—we're actively
-                  building tomorrow's ethical standards. Our roadmap includes
-                  industry-wide certification programs, policy advocacy, and
-                  partnerships with educational institutions to ensure the next
-                  generation of marketers and technologists prioritize human
-                  dignity alongside innovation.
+                  We&apos;re not just teaching today&apos;s best practices; our
+                  team is actively spearheading tomorrow&apos;s ethical
+                  standards. Our roadmap includes industry-wide certification
+                  programs, policy advocacy, and partnerships with educational
+                  institutions to ensure the next generation of marketers and
+                  technologists prioritize human dignity alongside innovation.
                 </p>
 
                 <div className="flex flex-wrap justify-center gap-4 text-sm">
@@ -719,7 +628,7 @@ export default function DiscoverSection() {
                   title: "Client Transformation Program",
                   subtitle: "Guided Implementation",
                   description:
-                    "Done-with-you programs helping businesses integrate ethical AI practices into their existing operations.",
+                    "Development of programs aimed at helping businesses integrate ethical AI practices into their existing operations.",
                   features: [
                     "Personalized roadmaps",
                     "Weekly check-ins",
@@ -749,7 +658,7 @@ export default function DiscoverSection() {
                 {
                   icon: "💡",
                   title: "Innovation Lab",
-                  subtitle: "Future-Forward Thinking",
+                  subtitle: "Forward Thinking",
                   description:
                     "Collaborative space for exploring cutting-edge ethical AI applications and sharing breakthrough discoveries.",
                   features: [
@@ -817,42 +726,44 @@ export default function DiscoverSection() {
             </div>
 
             {/* Bottom CTA Section */}
-            <motion.div
-              className="text-center mt-16"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <div className="max-w-3xl mx-auto p-8 rounded-2xl bg-gradient-to-r from-indigo-900/20 via-purple-900/20 to-pink-900/20 border border-indigo-500/20 backdrop-blur-sm">
-                <h4 className="text-2xl font-light mb-4 text-white">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-400">
-                    Ready to Lead the Ethical AI Revolution?
-                  </span>
-                </h4>
-                <p className="text-gray-200 leading-relaxed mb-6 font-light">
-                  Join our community of forward-thinking businesses who believe
-                  that technology should amplify human potential, not replace
-                  it.
-                </p>
-                <button className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-lg hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 shadow-lg shadow-indigo-500/25">
-                  Inquire About Our Programs
-                  <svg
-                    className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </motion.div>
+            <Link href="/contact">
+              <motion.div
+                className="text-center mt-16"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <div className="max-w-3xl mx-auto p-8 rounded-2xl bg-gradient-to-r from-indigo-900/20 via-purple-900/20 to-pink-900/20 border border-indigo-500/20 backdrop-blur-sm">
+                  <h4 className="text-2xl font-light mb-4 text-white">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-400">
+                      Ready to Lead the Ethical AI Revolution?
+                    </span>
+                  </h4>
+                  <p className="text-gray-200 leading-relaxed mb-6 font-light">
+                    Join our community of forward thinking businesses who
+                    believe that technology should amplify human potential, not
+                    replace it.
+                  </p>
+                  <button className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-lg hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 shadow-lg shadow-indigo-500/25">
+                    Inquire About Our Programs
+                    <svg
+                      className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </motion.div>
+            </Link>
           </motion.div>
         </div>
 
@@ -939,16 +850,24 @@ export default function DiscoverSection() {
 
                           {/* Main image container */}
                           <div className="w-80 h-80 rounded-full overflow-hidden relative border-2 border-white/10 shadow-xl">
-                            <img
+                            <Image
                               src={currentMember.image}
                               alt={currentMember.name}
                               className="w-full h-full object-cover"
                               onError={(e) => {
-                                e.target.style.display = "none";
-                                e.target.parentNode.querySelector(
-                                  ".fallback-circle"
-                                ).style.display = "flex";
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = "none";
+                                const fallbackCircle =
+                                  target.parentElement?.querySelector(
+                                    ".fallback-circle"
+                                  ) as HTMLElement;
+                                if (fallbackCircle) {
+                                  fallbackCircle.style.display = "flex";
+                                }
                               }}
+                              width={320}
+                              height={320}
+                              priority
                             />
 
                             {/* Fallback gradient circle */}
@@ -1087,14 +1006,24 @@ export default function DiscoverSection() {
                   ></div>
 
                   <div className="relative w-full h-full rounded-lg overflow-hidden border border-white/10">
-                    <img
+                    <Image
                       src={member.image}
                       alt={member.name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        e.target.style.display = "none";
-                        e.target.nextSibling.style.display = "flex";
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = "none";
+                        const fallbackCircle =
+                          target.parentElement?.querySelector(
+                            ".fallback-circle"
+                          ) as HTMLElement;
+                        if (fallbackCircle) {
+                          fallbackCircle.style.display = "flex";
+                        }
                       }}
+                      width={80}
+                      height={80}
+                      priority
                     />
 
                     {/* Fallback gradient */}

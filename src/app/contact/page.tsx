@@ -14,7 +14,7 @@ export default function ContactPage() {
     subject: "General Inquiry", // Default subject
   });
 
-  const [activeField, setActiveField] = useState(null);
+  const [activeField, setActiveField] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -27,7 +27,7 @@ export default function ContactPage() {
 
   // Track mouse position for interactive effects
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setCursorPosition({ x: e.clientX, y: e.clientY });
     };
 
@@ -35,7 +35,7 @@ export default function ContactPage() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e: { target: { name: string; value: string } }) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
     // Clear any previous errors
     if (submitError) {
@@ -43,7 +43,7 @@ export default function ContactPage() {
     }
   };
 
-  const handleFocus = (fieldName) => {
+  const handleFocus = (fieldName: string) => {
     setActiveField(fieldName);
   };
 
@@ -51,7 +51,7 @@ export default function ContactPage() {
     setActiveField(null);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError("");
@@ -71,6 +71,12 @@ export default function ContactPage() {
       };
 
       // Send to n8n webhook
+      if (!N8N_WEBHOOK_URL) {
+        throw new Error(
+          "Webhook URL is not defined. Please check your environment variables."
+        );
+      }
+
       const response = await fetch(N8N_WEBHOOK_URL, {
         method: "POST",
         headers: {
@@ -110,7 +116,7 @@ export default function ContactPage() {
   };
 
   // Calculate glow position for focused input
-  const calculateGlowPosition = (fieldName) => {
+  const calculateGlowPosition = (fieldName: string) => {
     if (activeField !== fieldName) return {};
 
     const fieldElement = document.getElementById(fieldName);
@@ -237,8 +243,8 @@ export default function ContactPage() {
         </h1>
         <div className="w-24 h-0.5 bg-cyan-400 mx-auto my-8 rounded-full shadow-glow-cyan"></div>
         <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
-          We'd love to hear from you. Fill out the form and we'll respond as
-          soon as we can.
+          We&apos;d love to hear from you. Fill out the form and we&apos;ll
+          respond as soon as we can.
         </p>
       </motion.div>
 
@@ -275,7 +281,7 @@ export default function ContactPage() {
               Message Sent!
             </h3>
             <p className="text-gray-300">
-              Thank you for reaching out. We'll be in touch soon.
+              Thank you for reaching out. We&apos;ll be in touch soon.
             </p>
           </motion.div>
         ) : (

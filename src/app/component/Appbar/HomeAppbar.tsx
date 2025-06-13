@@ -27,7 +27,7 @@ export default function AppBar() {
     else setActiveLink("");
   }, []);
 
-  const handleGetStarted = (e) => {
+  const handleGetStarted = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const servicesSection = document.getElementById("services-tab-section");
     if (servicesSection) {
@@ -120,10 +120,10 @@ export default function AppBar() {
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-300 mr-1">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-cyan-100 mr-1">
                   Better
                 </span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-300">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">
                   Morals
                 </span>
               </motion.span>
@@ -160,8 +160,8 @@ export default function AppBar() {
                     <span
                       className={`relative text-sm capitalize transition-all duration-300 ${
                         activeLink === item
-                          ? "text-amber-300 font-semibold"
-                          : "text-amber-200 group-hover:text-white"
+                          ? "text-purple-300 font-semibold"
+                          : "text-purple-200 group-hover:text-white"
                       }`}
                     >
                       {item === "case-studies" ? "Work" : item}
@@ -176,7 +176,7 @@ export default function AppBar() {
                 whileTap={{ scale: 0.98 }}
                 className="relative"
               >
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500 to-amber-400 blur-md opacity-70" />
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500 to-green-400 blur-md opacity-70" />
                 <Link
                   href="/services#services-tab-section"
                   className="relative block px-6 py-2 bg-gray-900 rounded-lg text-white font-medium border border-amber-400/30 hover:border-amber-400/60 transition-all duration-300"
