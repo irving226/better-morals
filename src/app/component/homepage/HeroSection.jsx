@@ -277,7 +277,8 @@ useEffect(() => {
         <div className="absolute inset-0 backdrop-blur-sm bg-black/10 glass-overlay z-1"></div>
 
         {/* Content Container - adjusted for navbar space */}
-        <div className="relative z-10 max-w-7xl mx-auto h-screen flex flex-col justify-center items-center px-6 text-center pt-16">
+        <div className="relative z-10 max-w-7xl mx-auto min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 text-center pt-20 pb-8"
+        >
           {/* Logo section with animation */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -286,8 +287,8 @@ useEffect(() => {
               y: isHeroVisible ? 0 : -20 
             }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="flex items-center justify-center mb-12"
-          >
+            className="flex items-center justify-center mb-6 sm:mb-8 md:mb-12"
+            >
             <motion.div 
               className="w-16 h-16 rounded-full flex items-center justify-center relative"
               animate={{ boxShadow: [
@@ -350,7 +351,8 @@ useEffect(() => {
             }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-8 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 sm:mb-8 leading-tight"
+            >
               <span className="text-white">Marketing with </span>
               <span className="relative inline-block">
                 {/* Enhanced glow effect behind the text */}
@@ -378,8 +380,8 @@ useEffect(() => {
               y: isHeroVisible ? 0 : 20 
             }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-lg md:text-xl max-w-2xl text-gray-300 mb-10"
-          >
+            className="text-base sm:text-lg md:text-xl max-w-sm sm:max-w-md md:max-w-2xl text-gray-300 mb-8 sm:mb-10 px-4 sm:px-0"
+            >
             We co-create systems and stories with people who want to build a
             better world through authentic ethical marketing.
           </motion.p>
@@ -392,8 +394,8 @@ useEffect(() => {
               y: isHeroVisible ? 0 : 20 
             }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="flex flex-col sm:flex-row gap-4"
-          >
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0"
+            >
             <Link href="/contact" >
 
             <motion.button 
